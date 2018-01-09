@@ -1,10 +1,11 @@
-package com.beemelonstudio.lanemania.screens;
+package com.beemelonstudio.lanemania.screens.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.beemelonstudio.lanemania.screens.GameScreen;
 
 /**
  * Created by Jann on 27.12.17.

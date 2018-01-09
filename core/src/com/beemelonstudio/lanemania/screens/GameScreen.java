@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.beemelon.physicsgame.PhysicsGame;
 import com.beemelonstudio.lanemania.LaneMania;
 
 import java.util.Stack;
@@ -25,7 +24,7 @@ import java.util.Stack;
 
 public class GameScreen implements Screen, InputProcessor {
 
-    protected LaneMania game;
+    public LaneMania game;
     protected Stack<GameScreen> screens;
 
     protected SpriteBatch batch;
@@ -43,7 +42,6 @@ public class GameScreen implements Screen, InputProcessor {
         this.game = game;
         this.screens = game.screens;
         this.batch = game.batch;
-        this.polygonBatch = game.polygonbatch;
         this.camera = game.camera;
         this.viewport = game.viewport;
         this.stage = game.stage;
