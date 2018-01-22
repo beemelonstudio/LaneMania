@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 /**
- * Created by Stampler on 09.01.2018.
+ * Created by Jann on 09.01.2018.
  */
 
 public class Goal extends Entity {

@@ -1,6 +1,5 @@
 package com.beemelonstudio.lanemania.entities;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -9,10 +8,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.beemelonstudio.lanemania.utils.BodyFactory;
 
 /**
- * Created by Stampler on 09.01.2018.
+ * Created by Jann on 09.01.2018.
  */
 
-public class Line extends Entity {
+public class StraightLine extends Entity {
 
     public float interval = 1f;
 
@@ -21,7 +20,7 @@ public class Line extends Entity {
 
     public Vector2 start, end;
 
-    public Line(float x, float y) {
+    public StraightLine(float x, float y) {
 
         loadTextureAtlas();
         textureRegion = textureAtlas.findRegion("rectangle_long");
@@ -30,7 +29,7 @@ public class Line extends Entity {
         end = new Vector2(x, y);
     }
 
-    public Line(Body body) {
+    public StraightLine(Body body) {
         super(body);
 
         type = EntityType.STRAIGHTLINE;
@@ -91,16 +90,11 @@ public class Line extends Entity {
         float dy = end.y - start.y;
         width = (float) Math.sqrt(dx*dx + dy*dy);
         rotation = (float) Math.toDegrees(Math.atan2(end.y - start.y, end.x - start.x)) + 180f;
-
-        Gdx.app.log("start", start.x + " - " + start.y);
-        Gdx.app.log("end", end.x + " - " + end.y);
-        Gdx.app.log("width - height", width + " - " + height);
-        Gdx.app.log("rotation", "" + rotation);
     }
 
     public void build() {
 
+        // TODO: LineType dependent on selected type in menu
         body = BodyFactory.createLine((start.x + end.x) / 2, (start.y + end.y) / 2, width, height, rotation, BodyDef.BodyType.StaticBody, LineType.SOLID);
-        //calculateSizes();
     }
 }

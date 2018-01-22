@@ -9,7 +9,7 @@ import com.beemelonstudio.lanemania.entities.EntityType;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 
 /**
- * Created by Stampler on 09.01.2018.
+ * Created by Jann on 09.01.2018.
  */
 
 public class CustomContactListener implements ContactListener {

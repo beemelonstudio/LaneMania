@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
- * Created by Stampler on 09.01.2018
+ * Created by Jann on 09.01.2018
  */
 
 public class WorldManager {

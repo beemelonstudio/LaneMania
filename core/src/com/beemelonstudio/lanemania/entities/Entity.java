@@ -6,7 +6,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.beemelonstudio.lanemania.utils.Assets;
 
 /**
- * Created by Stampler on 09.01.2018.
+ * Created by Jann on 09.01.2018.
  */
 
 public abstract class Entity implements Actable {

@@ -28,17 +28,15 @@ import com.badlogic.gdx.utils.Array;
 public class MapBodyBuilder {
 
     // The pixels per tile. If your tiles are 16x16, this is set to 16f
-    private static float ppt = 1/500f;//32f;
+    private static float unitScale = 1/500f;//32f;
 
-    public static Array<Body> buildShapes(TiledMap map, float pixels, World world) {
-        ppt = pixels;
+    public static Array<Body> buildShapes(TiledMap map, float unitScale, World world) {
+        MapBodyBuilder.unitScale = unitScale;
         MapObjects objects = map.getLayers().get(3).getObjects();
 
         Array<Body> bodies = new Array<Body>();
 
         Vector2 position = new Vector2();
-
-        Gdx.app.log("PPT", ppt +  "");
 
         for(MapObject object : objects) {
 
@@ -52,26 +50,26 @@ public class MapBodyBuilder {
             if (object instanceof RectangleMapObject) {
                 shape = getRectangle((RectangleMapObject)object);
                 position.set(
-                        ((RectangleMapObject)object).getRectangle().getX() * ppt,
-                        ((RectangleMapObject)object).getRectangle().getY() * ppt
+                        ((RectangleMapObject)object).getRectangle().getX() * unitScale,
+                        ((RectangleMapObject)object).getRectangle().getY() * unitScale
                 );
 
-                Gdx.app.log("Rectangle", position.y * ppt + " - " + position.x * ppt);
+                Gdx.app.log("Rectangle", position.y * unitScale + " - " + position.x * unitScale);
             }
             else if (object instanceof PolygonMapObject) {
                 shape = getPolygon((PolygonMapObject)object);
                 position.set(
-                    ((PolygonMapObject)object).getPolygon().getX() * ppt,
-                    ((PolygonMapObject)object).getPolygon().getY() * ppt
+                    ((PolygonMapObject)object).getPolygon().getX() * unitScale,
+                    ((PolygonMapObject)object).getPolygon().getY() * unitScale
                 );
 
-                Gdx.app.log("Polygon", position.y * ppt + " - " + position.x * ppt);
+                Gdx.app.log("Polygon", position.y * unitScale + " - " + position.x * unitScale);
             }
             else if (object instanceof PolylineMapObject) {
                 shape = getPolyline((PolylineMapObject)object);
                 position.set(
-                    ((PolylineMapObject)object).getPolyline().getX() * ppt,
-                    ((PolylineMapObject)object).getPolyline().getY() * ppt
+                    ((PolylineMapObject)object).getPolyline().getX() * unitScale,
+                    ((PolylineMapObject)object).getPolyline().getY() * unitScale
                 );
 
                 Gdx.app.log("Polyline", "" + position.toString());
@@ -79,8 +77,8 @@ public class MapBodyBuilder {
             else if (object instanceof CircleMapObject) {
                 shape = getCircle((CircleMapObject)object);
                 position.set(
-                    ((CircleMapObject)object).getCircle().x * ppt,
-                    ((CircleMapObject)object).getCircle().y * ppt
+                    ((CircleMapObject)object).getCircle().x * unitScale,
+                    ((CircleMapObject)object).getCircle().y * unitScale
                 );
 
                 Gdx.app.log("Circle", "" + position.toString());
@@ -99,6 +97,8 @@ public class MapBodyBuilder {
 
             bodies.add(body);
 
+            body.setUserData(object.getProperties().get("entity"));
+
             shape.dispose();
         }
         return bodies;
@@ -107,22 +107,22 @@ public class MapBodyBuilder {
     private static PolygonShape getRectangle(RectangleMapObject rectangleObject) {
         Rectangle rectangle = rectangleObject.getRectangle();
         PolygonShape polygon = new PolygonShape();
-        //Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) * ppt,
-                //(rectangle.y + rectangle.height * 0.5f ) * ppt);
-        polygon.setAsBox(rectangle.width * 0.5f * ppt,
-                rectangle.height * 0.5f * ppt);//,
+        //Vector2 size = new Vector2((rectangle.x + rectangle.width * 0.5f) * unitScale,
+                //(rectangle.y + rectangle.height * 0.5f ) * unitScale);
+        polygon.setAsBox(rectangle.width * 0.5f * unitScale,
+                rectangle.height * 0.5f * unitScale);//,
                 //size,
                 //0.0f);
 
-        Gdx.app.log("box", rectangle.width * 0.5f * ppt + " - " + rectangle.height * 0.5f * ppt);
+        Gdx.app.log("box", rectangle.width * 0.5f * unitScale + " - " + rectangle.height * 0.5f * unitScale);
         return polygon;
     }
 
     private static CircleShape getCircle(CircleMapObject circleObject) {
         Circle circle = circleObject.getCircle();
         CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(circle.radius * ppt);
-        circleShape.setPosition(new Vector2(circle.x * ppt, circle.y * ppt));
+        circleShape.setRadius(circle.radius * unitScale);
+        circleShape.setPosition(new Vector2(circle.x * unitScale, circle.y * unitScale));
         return circleShape;
     }
 
@@ -134,7 +134,7 @@ public class MapBodyBuilder {
 
         for (int i = 0; i < vertices.length; ++i) {
             System.out.println(vertices[i]);
-            worldVertices[i] = vertices[i] * ppt;
+            worldVertices[i] = vertices[i] * unitScale;
         }
 
         polygon.set(worldVertices);
@@ -147,8 +147,8 @@ public class MapBodyBuilder {
 
         for (int i = 0; i < vertices.length / 2; ++i) {
             worldVertices[i] = new Vector2();
-            worldVertices[i].x = vertices[i * 2] * ppt;
-            worldVertices[i].y = vertices[i * 2 + 1] * ppt;
+            worldVertices[i].x = vertices[i * 2] * unitScale;
+            worldVertices[i].y = vertices[i * 2 + 1] * unitScale;
         }
 
         ChainShape chain = new ChainShape();

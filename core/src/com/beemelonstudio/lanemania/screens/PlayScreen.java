@@ -4,23 +4,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.entities.Ball;
+import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.EntityType;
 import com.beemelonstudio.lanemania.entities.Goal;
-import com.beemelonstudio.lanemania.entities.Line;
-import com.beemelonstudio.lanemania.entities.PolyLine;
+import com.beemelonstudio.lanemania.entities.StraightLine;
 import com.beemelonstudio.lanemania.screens.ui.PlayScreenUI;
 import com.beemelonstudio.lanemania.utils.Assets;
 import com.beemelonstudio.lanemania.utils.BodyFactory;
 import com.beemelonstudio.lanemania.utils.CustomContactListener;
 import com.beemelonstudio.lanemania.utils.CustomInputListener;
+import com.beemelonstudio.lanemania.utils.MapAnalyser;
+import com.beemelonstudio.lanemania.utils.MapBodyBuilder;
 import com.beemelonstudio.lanemania.utils.WorldManager;
 
 /**
- * Created by Stampler on 09.01.2018.
+ * Created by Jann on 09.01.2018.
  */
 
 public class PlayScreen extends GameScreen {
@@ -29,35 +34,36 @@ public class PlayScreen extends GameScreen {
 
     private PlayScreenUI playScreenUI;
 
-    private TextureAtlas textureAtlas;
-    private TextureRegion ballTexture, goalTexture, lineTexture;
-
     private WorldManager worldManager;
 
+    private MapAnalyser mapAnalyser;
+
     public boolean gravity = false;
+
+    public String mapName;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
+    public float unitScale;
+    public float mapHeightInPixel;
 
     public EntityType currentType;
 
     public Ball ball;
     public Goal goal;
-    public Array<PolyLine> polyLines;
-    public Array<Line> straightLines;
+    public Array<StraightLine> straightLines;
 
     public PlayScreen(LaneMania game) {
         super(game);
     }
 
+    public PlayScreen(LaneMania game, String mapName) {
+        super(game);
+        this.mapName = mapName;
+    }
+
     @Override
     public void show() {
         super.show();
-
-        playScreenUI = new PlayScreenUI(this);
-
-        textureAtlas = (TextureAtlas) Assets.get("orange-theme");
-
-        ballTexture = textureAtlas.findRegion("ball");
-        goalTexture = textureAtlas.findRegion("goal_3d");
-        lineTexture = textureAtlas.findRegion("rectangle_long");
 
         debugRenderer = new Box2DDebugRenderer(true,true,false,true,true,true);
 
@@ -73,13 +79,9 @@ public class PlayScreen extends GameScreen {
                 customInputListener.createGestureListener()
         ));
 
-        currentType = EntityType.STRAIGHTLINE;
+        loadLevel();
 
-        ball = new Ball(BodyFactory.createBall(LaneMania.WIDTH / 3, LaneMania.HEIGHT * 0.9f));
-        goal = new Goal(BodyFactory.createGoal(LaneMania.WIDTH - 0.1f, 0.1f));
-
-        polyLines = new Array<PolyLine>();
-        straightLines = new Array<Line>();
+        playScreenUI = new PlayScreenUI(this);
     }
 
     @Override
@@ -92,18 +94,19 @@ public class PlayScreen extends GameScreen {
         if(gravity)
             worldManager.world.step(delta, 10, 8);
 
-        debugRenderer.render(worldManager.world, camera.combined);
-
         ball.act(delta);
         goal.act(delta);
 
-        for(PolyLine line : polyLines)
-            line.act(delta);
+        for(StraightLine straightLine : straightLines)
+            straightLine.act(delta);
 
-        for(Line line : straightLines)
-            line.act(delta);
+        for(Entity entity : mapAnalyser.obstacles)
+            entity.act(delta);
 
         // Drawing
+        renderer.setView(camera);
+        renderer.render();
+
         playScreenUI.draw(batch);
 
         batch.begin();
@@ -114,17 +117,36 @@ public class PlayScreen extends GameScreen {
         ball.draw(batch);
         goal.draw(batch);
 
-        for(Line line : straightLines)
-            line.draw(batch);
+        for(StraightLine straightLine : straightLines)
+            straightLine.draw(batch);
+
+        for(Entity entity : mapAnalyser.obstacles)
+            entity.draw(batch);
 
         batch.end();
 
-        polygonBatch.begin();
+        debugRenderer.render(worldManager.world, camera.combined);
+    }
 
-        for(PolyLine line : polyLines)
-            line.draw(polygonBatch);
+    private void loadLevel() {
 
-        polygonBatch.end();
+        currentType = EntityType.STRAIGHTLINE;
+        straightLines = new Array<StraightLine>();
+
+        map = new TmxMapLoader().load(mapName);
+        float mapWidth = (float) map.getProperties().get("width", Integer.class);
+        float tileWidth = (float) map.getProperties().get("tilewidth", Integer.class);
+        unitScale = 1/(mapWidth * tileWidth);
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+
+        float mapHeight = (float) map.getProperties().get("height", Integer.class);
+        float tileHeight = (float) map.getProperties().get("tileheight", Integer.class);
+        mapHeightInPixel = mapHeight * tileHeight;
+
+        mapAnalyser = new MapAnalyser(map, unitScale);
+
+        ball = new Ball(mapAnalyser.ball);
+        goal = new Goal(mapAnalyser.goal);
     }
 
     public void endLevel() {

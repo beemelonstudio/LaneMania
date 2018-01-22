@@ -5,24 +5,18 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.beemelonstudio.lanemania.entities.Line;
-import com.beemelonstudio.lanemania.entities.PolyLine;
+import com.beemelonstudio.lanemania.entities.StraightLine;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 
 /**
- * Created by Stampler on 09.01.2018.
+ * Created by Jann on 09.01.2018.
  */
 public class CustomInputListener implements GestureDetector.GestureListener, InputProcessor {
 
     private PlayScreen screen;
 
     private Vector3 coordinates;
-    private PolyLine polyLine;
-    private Line straightLine;
-
-    private float dx = 0f;
-    private float dy = 0f;
-    private float distance = 0f;
+    private StraightLine straightStraightLine;
 
     public CustomInputListener(PlayScreen screen) {
 
@@ -104,13 +98,8 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         switch (screen.currentType) {
 
             case STRAIGHTLINE:
-                straightLine = new Line(coordinates.x, coordinates.y);
-                screen.straightLines.add(straightLine);
-                break;
-
-            case POLYGONLINE:
-                polyLine = new PolyLine(coordinates.x, coordinates.y);
-                screen.polyLines.add(polyLine);
+                straightStraightLine = new StraightLine(coordinates.x, coordinates.y);
+                screen.straightLines.add(straightStraightLine);
                 break;
 
             default: break;
@@ -130,13 +119,8 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         switch (screen.currentType) {
 
             case STRAIGHTLINE:
-                straightLine.setEnd(coordinates.x, coordinates.y);
-                straightLine.build();
-                break;
-
-            case POLYGONLINE:
-                polyLine.insert(coordinates.x, coordinates.y);
-                polyLine.build();
+                straightStraightLine.setEnd(coordinates.x, coordinates.y);
+                straightStraightLine.build();
                 break;
 
             default: break;
@@ -156,17 +140,7 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         switch (screen.currentType) {
 
             case STRAIGHTLINE:
-                straightLine.setEnd(coordinates.x, coordinates.y);
-                break;
-
-            case POLYGONLINE:
-                dx = coordinates.x - polyLine.vertices.get(polyLine.vertices.size-2);
-                dy = coordinates.y - polyLine.vertices.get(polyLine.vertices.size-1);
-                distance = (float) Math.sqrt(dx*dx + dy*dy);
-
-                // Only process points more than 1 mm distance to the last point
-                if(distance > 0.05f)
-                    polyLine.insert(coordinates.x, coordinates.y);
+                straightStraightLine.setEnd(coordinates.x, coordinates.y);
                 break;
 
             default: break;

@@ -6,20 +6,23 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.LaneMania;
+import com.beemelonstudio.lanemania.utils.Assets;
 
 import java.util.Stack;
 
 /**
- * Created by Stampler on 9.01.2018.
+ * Created by Jann on 9.01.2018.
  */
 
 public class GameScreen implements Screen, InputProcessor {
@@ -28,12 +31,15 @@ public class GameScreen implements Screen, InputProcessor {
     protected Stack<GameScreen> screens;
 
     protected SpriteBatch batch;
-    protected PolygonSpriteBatch polygonBatch;
     public OrthographicCamera camera;
-    protected Viewport viewport;
+    protected Viewport viewport, backgroundViewport;
 
     protected Stage stage;
     protected Skin skin;
+
+    protected TextureAtlas textureAtlas;
+    protected TextureRegion backgroundTexture;
+    protected TiledDrawable backgroundTile;
 
     private boolean shown = false;
     private boolean backButtonLocked = false;
@@ -44,8 +50,13 @@ public class GameScreen implements Screen, InputProcessor {
         this.batch = game.batch;
         this.camera = game.camera;
         this.viewport = game.viewport;
+        this.backgroundViewport = game.backgroundViewport;
         this.stage = game.stage;
         this.skin = game.skin;
+
+        textureAtlas = (TextureAtlas) Assets.get("orange-theme");
+        backgroundTexture = textureAtlas.findRegion("background");
+        backgroundTile = new TiledDrawable(backgroundTexture);
 
         Gdx.input.setInputProcessor(this);
     }
@@ -65,6 +76,18 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        backgroundViewport.apply();
+        batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
+        batch.begin();
+        backgroundTile.draw(batch, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
+        batch.end();
+
+        stage.act(delta);
+        stage.draw();
+
+        // Set GL Viewport
+        Gdx.gl.glViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
+
         // Catch Androids native back button
         handleBackButton();
 
@@ -72,9 +95,6 @@ public class GameScreen implements Screen, InputProcessor {
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-
-        stage.act(delta);
-        stage.draw();
     }
 
     @Override

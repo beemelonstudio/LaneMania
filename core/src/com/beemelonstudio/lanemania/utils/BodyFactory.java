@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.beemelonstudio.lanemania.entities.LineType;
 
 /**
- * Created by Stampler on 09.01.2018.
+ * Created by Jann on 09.01.2018.
  */
 
 public class BodyFactory {
@@ -53,6 +53,45 @@ public class BodyFactory {
         return fixtureDef;
     }
 
+    private static FixtureDef createFixture(ObstacleType lineType, Shape shape) {
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+
+        switch (lineType) {
+
+            case SOLID:
+                fixtureDef.density = 1f;
+                fixtureDef.friction = 0.3f;
+                fixtureDef.restitution = 0.1f;
+                break;
+
+            default:
+        }
+
+        return fixtureDef;
+    }
+
+    public static Body createRectangle(float x, float y, float width, float height, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = bodyType;
+        bodyDef.position.x = x + (width / 2);
+        bodyDef.position.y = y + (height / 2);
+        bodyDef.fixedRotation = false;
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2, height / 2);
+
+        Body body = world.createBody(bodyDef);
+        body.setTransform(body.getPosition(), rotation * DEGTORAD);
+        body.createFixture(createFixture(obstacleType, shape));
+
+        shape.dispose();
+
+        return body;
+    }
+
     public static Body createLine(float x, float y, float width, float height, float rotation, BodyDef.BodyType bodyType, LineType lineType){
 
         BodyDef bodyDef = new BodyDef();
@@ -66,25 +105,6 @@ public class BodyFactory {
 
         Body body = world.createBody(bodyDef);
         body.setTransform(body.getPosition(), rotation * DEGTORAD);
-        body.createFixture(createFixture(lineType, shape));
-
-        shape.dispose();
-
-        return body;
-    }
-
-    public static Body createPolyLine(float x, float y, float[] vertices, BodyDef.BodyType bodyType, LineType lineType){
-
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = bodyType;
-        bodyDef.position.x = x;
-        bodyDef.position.y = y;
-
-        PolygonShape shape = new PolygonShape();
-        shape.set(vertices);
-        //shape.set(VectorUtils.libgdxArrayToJavaArray(vertices));
-
-        Body body = world.createBody(bodyDef);
         body.createFixture(createFixture(lineType, shape));
 
         shape.dispose();

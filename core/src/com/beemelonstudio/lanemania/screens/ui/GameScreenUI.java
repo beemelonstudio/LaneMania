@@ -13,14 +13,10 @@ import com.beemelonstudio.lanemania.screens.GameScreen;
 
 public class GameScreenUI {
 
-    protected GameScreen screen;
-
     protected Stage stage;
     protected Skin skin;
     protected Table table;
     protected TextureAtlas textureAtlas;
-
-    public GameScreenUI(){}
 
     public GameScreenUI( GameScreen screen) {
 
