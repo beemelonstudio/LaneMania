@@ -22,6 +22,8 @@ public class StraightLine extends Entity {
 
     public StraightLine(float x, float y) {
 
+        type = EntityType.STRAIGHTLINE;
+
         loadTextureAtlas();
         textureRegion = textureAtlas.findRegion("rectangle_long");
 
@@ -96,5 +98,6 @@ public class StraightLine extends Entity {
 
         // TODO: LineType dependent on selected type in menu
         body = BodyFactory.createLine((start.x + end.x) / 2, (start.y + end.y) / 2, width, height, rotation, BodyDef.BodyType.StaticBody, LineType.SOLID);
+        body.setUserData(type);
     }
 }

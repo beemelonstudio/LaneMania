@@ -34,7 +34,7 @@ public class PlayScreen extends GameScreen {
 
     private PlayScreenUI playScreenUI;
 
-    private WorldManager worldManager;
+    public WorldManager worldManager;
 
     private MapAnalyser mapAnalyser;
 
@@ -81,6 +81,7 @@ public class PlayScreen extends GameScreen {
 
         loadLevel();
 
+        isBackgroundDrawing = true;
         playScreenUI = new PlayScreenUI(this);
     }
 

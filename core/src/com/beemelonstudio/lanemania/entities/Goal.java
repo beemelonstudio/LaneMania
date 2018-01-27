@@ -30,7 +30,7 @@ public class Goal extends Entity {
 
         calculateSizes();
 
-        body.getFixtureList().get(3).setUserData(type);
+        body.setUserData(type);
     }
 
     @Override

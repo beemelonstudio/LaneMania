@@ -4,12 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
+import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.EntityType;
+import com.beemelonstudio.lanemania.entities.StraightLine;
 import com.beemelonstudio.lanemania.screens.GameScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
+import com.beemelonstudio.lanemania.screens.custombuttons.bmsImageButton;
 import com.beemelonstudio.lanemania.utils.Assets;
+
 
 /**
  * Created by Stampler on 09.01.2018.
@@ -88,6 +95,20 @@ public class PlayScreenUI extends GameScreenUI {
 
                 screen.gravity = false;
                 screen.ball.reset();
+
+                Array<Body> bodies = new Array<Body>();
+                screen.worldManager.world.getBodies(bodies);
+
+                for ( Array.ArrayIterator<Body> iter = new Array.ArrayIterator<Body>(bodies, true); iter.hasNext();) {
+                    Body body = iter.next();
+                    if (body != null) {
+                        EntityType type = asEntityType(body.getUserData().toString());
+                        if(type == EntityType.STRAIGHTLINE) {
+                            screen.worldManager.world.destroyBody(body);
+                            screen.straightLines = new Array<StraightLine>();
+                        }
+                    }
+                }
             }
         });
     }
@@ -114,5 +135,24 @@ public class PlayScreenUI extends GameScreenUI {
         for(int i = 0; i < lineButtons.length; i++)
             table.add(lineButtons[i]).height(height).width(width);
         table.top().right();
+
+        // TODO: This is for going back to the MapSelectionScreen
+        lineButtons[3].addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                screen.game.screens.pop();
+                screen.game.setScreen(screen.game.screens.peek());
+            }
+        });
+    }
+
+    private EntityType asEntityType(String str) {
+        for (EntityType me : EntityType.values()) {
+            if (me.name().equalsIgnoreCase(str))
+                return me;
+        }
+        return null;
     }
 }

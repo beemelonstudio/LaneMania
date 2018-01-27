@@ -18,7 +18,7 @@ public class GameScreenUI {
     protected Table table;
     protected TextureAtlas textureAtlas;
 
-    public GameScreenUI( GameScreen screen) {
+    public GameScreenUI(GameScreen screen) {
 
         this.stage = screen.game.stage;
         this.skin = screen.game.skin;
