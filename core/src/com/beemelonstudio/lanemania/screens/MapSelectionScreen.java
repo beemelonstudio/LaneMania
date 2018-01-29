@@ -87,7 +87,7 @@ public class MapSelectionScreen extends GameScreen {
             worldButtons.add(worldButton);
             worldsTable.add(worldButton).pad(10f);
 
-            for(int j = 0; j < worlds.size; j++) {
+            for(int j = 0; j < worlds.get(i).size; j++) {
 
                 final String map = worlds.get(i).get(j);
 
@@ -103,14 +103,15 @@ public class MapSelectionScreen extends GameScreen {
                 });
 
                 worldButton.addMapButton(mapButton);
-                mapsTable.add(mapButton).pad(10f);
+                mapsTable.add(mapButton).pad(10f).fillX().expandX();
 
-                if(j % 4 == 0)
+                if(j % 3 == 0)
                     mapsTable.row();
             }
         }
 
         worldButtons.get(0).setMapButtonVisibility(true);
+        setAllMapsVisibility(true);
     }
 
     public void setAllMapsVisibility(boolean visibility) {

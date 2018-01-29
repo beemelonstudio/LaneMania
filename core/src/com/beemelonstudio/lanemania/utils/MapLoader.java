@@ -3,6 +3,7 @@ package com.beemelonstudio.lanemania.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Sort;
 
 /**
  * Created by Jann on 27.01.18.
@@ -10,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class MapLoader {
 
-    private boolean debug = true;
+    private boolean debug = false;
 
     public Array<Array<String>> worlds;
 
@@ -32,16 +33,17 @@ public class MapLoader {
         worlds = new Array<Array<String>>();
 
         FileHandle[] worldsArray = debug ? Gdx.files.local("./maps").list() : Gdx.files.internal("maps").list();
-        for(FileHandle world : worldsArray) {
+        for(int i = worldsArray.length-1; i >= 0; i--) {
 
-            if(world.isDirectory()) {
+            if(worldsArray[i].isDirectory()) {
                 Array<String> maps = new Array<String>();
 
-                FileHandle[] mapsArray = Gdx.files.internal(world.path()).list();
-                for(FileHandle map : mapsArray) {
+                FileHandle[] mapsArray = Gdx.files.internal(worldsArray[i].path()).list();
+                for(int j = mapsArray.length-1; j >= 0; j--) {
 
-                    maps.add(map.path());
+                    maps.add(mapsArray[j].path());
                 }
+                Sort.instance().sort(maps);
                 worlds.add(maps);
             }
         }
