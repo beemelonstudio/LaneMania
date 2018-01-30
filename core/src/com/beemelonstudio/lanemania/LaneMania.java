@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.screens.GameScreen;
 import com.beemelonstudio.lanemania.screens.MapSelectionScreen;
+import com.beemelonstudio.lanemania.screens.MenuScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 import com.beemelonstudio.lanemania.utils.Assets;
 import com.beemelonstudio.lanemania.utils.MapLoader;
@@ -52,7 +53,8 @@ public class LaneMania extends Game {
         stage = new Stage(new ScreenViewport(hudCamera));
 
         screens = new Stack<GameScreen>();
-        screens.push(new MapSelectionScreen(this, mapLoader.worlds));
+        screens.push(new MenuScreen(this));
+        //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
         //screens.push(new PlayScreen(this, mapLoader.getMap(0,1)));
 
         setScreen(screens.peek());
