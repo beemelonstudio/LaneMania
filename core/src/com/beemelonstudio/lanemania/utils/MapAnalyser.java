@@ -78,12 +78,18 @@ public class MapAnalyser {
                 RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
                 Rectangle rectangle = rectangleMapObject.getRectangle();
 
+                float rotation = 0f;
+                if (rectangleMapObject.getProperties().get("rotation", Float.class) != null)
+                    rotation = rectangleMapObject.getProperties().get("rotation", Float.class);
+
+                Gdx.app.log("Rotation", rectangleMapObject.getProperties().get("rotation", Float.class) + "");
+
                 body = BodyFactory.createRectangle(
                         rectangle.x * unitScale,
                         rectangle.y * unitScale,
                         rectangle.width * unitScale,
                         rectangle.height * unitScale,
-                        0f, //(float) rectangleMapObject.getProperties().get("rotation", Float.class),
+                        rotation,
                         BodyDef.BodyType.StaticBody,
                         ObstacleType.SOLID);
                 body.setUserData(object.getProperties().get("type"));

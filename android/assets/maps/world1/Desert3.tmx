@@ -35,12 +35,12 @@
 </data>
  </layer>
  <objectgroup name="obstacles">
-  <object id="1" x="381.117" y="45.246" width="45.3333" height="293.333">
+  <object id="1" x="423.117" y="181.246" width="45.3333" height="293.333" rotation="50">
    <properties>
     <property name="type" value="rectangle"/>
    </properties>
   </object>
-  <object id="2" x="37.1167" y="487.912" width="242.667" height="38.6667">
+  <object id="2" x="2.47133" y="672.687" width="242.667" height="38.6667">
    <properties>
     <property name="type" value="rectangle"/>
    </properties>

@@ -59,6 +59,8 @@ public class PlayScreen extends GameScreen {
     public PlayScreen(LaneMania game, String mapName) {
         super(game);
         this.mapName = mapName;
+
+        Gdx.app.log("Map name", mapName);
     }
 
     @Override

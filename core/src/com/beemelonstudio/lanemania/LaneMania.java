@@ -52,8 +52,8 @@ public class LaneMania extends Game {
         stage = new Stage(new ScreenViewport(hudCamera));
 
         screens = new Stack<GameScreen>();
-        screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        //screens.push(new PlayScreen(this, mapLoader.getMap(0,1)));
+        //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
+        screens.push(new PlayScreen(this, mapLoader.getMap(0,2)));
 
         setScreen(screens.peek());
 	}
