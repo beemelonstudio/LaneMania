@@ -1,9 +1,10 @@
-package com.beemelonstudio.lanemania.screens.ui;
+package com.beemelonstudio.lanemania.screens.custombuttons;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.beemelonstudio.lanemania.LaneMania;
 
 /**
  * Created by Jann on 13.01.18.

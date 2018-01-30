@@ -50,28 +50,6 @@ public class Assets {
         return assetManager.get(files.get(hashmapKey).path, files.get(hashmapKey).type);
     }
 
-    public static Array<Array<String>> loadMaps() {
-
-        Array<Array<String>> worlds = new Array<Array<String>>();
-
-        FileHandle[] worldsArray = Gdx.files.internal("maps").list();
-        for(FileHandle world : worldsArray) {
-
-            if(world.isDirectory()) {
-                Array<String> maps = new Array<String>();
-
-                FileHandle[] mapsArray = Gdx.files.internal(world.path()).list();
-                for(FileHandle map : mapsArray) {
-
-                    maps.add(map.path());
-                }
-                worlds.add(maps);
-            }
-        }
-
-        return worlds;
-    }
-
     public static void dispose(){
         assetManager.dispose();
     }

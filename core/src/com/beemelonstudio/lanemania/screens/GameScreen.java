@@ -43,6 +43,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     private boolean shown = false;
     private boolean backButtonLocked = false;
+    protected boolean isBackgroundDrawing = false;
 
     public GameScreen(LaneMania game) {
         this.game = game;
@@ -76,11 +77,13 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        backgroundViewport.apply();
-        batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
-        batch.begin();
-        backgroundTile.draw(batch, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
-        batch.end();
+        if(isBackgroundDrawing) {
+            backgroundViewport.apply();
+            batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
+            batch.begin();
+            backgroundTile.draw(batch, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
+            batch.end();
+        }
 
         stage.act(delta);
         stage.draw();
@@ -177,6 +180,7 @@ public class GameScreen implements Screen, InputProcessor {
             screens.pop();
             game.setScreen(screens.peek());
         }
+        /* TODO: Pixthulu Skin doesn't have Dialog Skin
         else {
 
             // Only show the dialog once;
@@ -219,6 +223,7 @@ public class GameScreen implements Screen, InputProcessor {
             });
             stage.addActor(dialog);
         }
+        */
         backButtonLocked = true;
     }
 }

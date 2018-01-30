@@ -33,7 +33,7 @@ public class Ball extends Entity {
         width = radius * 2;
         height = radius * 2;
 
-        body.getFixtureList().get(0).setUserData(type);
+        body.setUserData(type);
     }
 
     @Override
@@ -51,7 +51,8 @@ public class Ball extends Entity {
 
     public void reset() {
 
-        body.setTransform(origin, 50);
+        body.setTransform(origin, 0);
         body.setActive(true);
+        body.setLinearVelocity(0f,0f);
     }
 }
