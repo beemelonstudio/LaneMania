@@ -5,6 +5,14 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Sort;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+import javax.crypto.AEADBadTagException;
+
 /**
  * Created by Jann on 27.01.18.
  */
@@ -16,6 +24,8 @@ public class MapLoader {
     public Array<Array<String>> worlds;
 
     public MapLoader() {
+
+        worlds = new Array<Array<String>>();
     }
 
     public String getMap(int world, int map) {
@@ -30,7 +40,7 @@ public class MapLoader {
      */
     public void loadMaps() {
 
-        worlds = new Array<Array<String>>();
+        Map tempWorlds = new HashMap<String, Array<String>>();
 
         FileHandle[] worldsArray = debug ? Gdx.files.local("./maps").list() : Gdx.files.internal("maps").list();
         for(int i = worldsArray.length-1; i >= 0; i--) {
@@ -43,9 +53,16 @@ public class MapLoader {
 
                     maps.add(mapsArray[j].path());
                 }
+                // Sort maps and add them to world
                 Sort.instance().sort(maps);
-                worlds.add(maps);
+                tempWorlds.put(worldsArray[i].name(), maps);
             }
         }
+        // Sort world by name
+        Map tw = new TreeMap<String, Array<String>>(tempWorlds);
+
+        Iterator<Map.Entry<String, Array<String>>> it = tw.entrySet().iterator();
+        while (it.hasNext())
+            worlds.add(it.next().getValue());
     }
 }
