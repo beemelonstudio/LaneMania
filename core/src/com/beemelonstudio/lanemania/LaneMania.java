@@ -14,8 +14,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.screens.GameScreen;
+import com.beemelonstudio.lanemania.screens.MapSelectionScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 import com.beemelonstudio.lanemania.utils.Assets;
+import com.beemelonstudio.lanemania.utils.MapLoader;
 
 import java.util.Stack;
 
@@ -32,13 +34,13 @@ public class LaneMania extends Game {
     public Skin skin;
 
     public Stack<GameScreen> screens;
-
-    public Array<Array<String>> worlds;
+    public MapLoader mapLoader;
 
     @Override
 	public void create () {
         Assets.load();
-        worlds = Assets.loadMaps();
+        mapLoader = new MapLoader();
+        mapLoader.loadMaps();
 
         skin = (Skin) Assets.get("pixthulhuSkin");
 
@@ -50,7 +52,8 @@ public class LaneMania extends Game {
         stage = new Stage(new ScreenViewport(hudCamera));
 
         screens = new Stack<GameScreen>();
-        screens.push(new PlayScreen(this, worlds.get(0).get(1)));
+        screens.push(new MapSelectionScreen(this, mapLoader.worlds));
+        //screens.push(new PlayScreen(this, mapLoader.getMap(0,1)));
 
         setScreen(screens.peek());
 	}
