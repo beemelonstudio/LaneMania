@@ -32,7 +32,7 @@ public class RectangleObstacle extends Entity {
     @Override
     public void draw(SpriteBatch batch) {
 
-        batch.draw(textureRegion, x - width / 2, y - height / 2, width, height);
+        batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, rotation);
     }
 
     /**
@@ -51,6 +51,9 @@ public class RectangleObstacle extends Entity {
 
         width = Math.abs(vertices[0].x) + Math.abs(vertices[1].x);
         height = Math.abs(vertices[1].y) + Math.abs(vertices[2].y);
+
+        Gdx.app.log("width", width + "");
+        Gdx.app.log("height", height + "");
 
         rotation = body.getAngle() * RADTODEG;
     }

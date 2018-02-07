@@ -8,7 +8,9 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
@@ -72,20 +74,18 @@ public class MapAnalyser {
         for(MapObject object : obstaclesLayer.getObjects()) {
 
             Body body = null;
+            float rotation = 0f;
 
             if (object instanceof RectangleMapObject) {
 
                 RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
                 Rectangle rectangle = rectangleMapObject.getRectangle();
 
-                float rotation = 0f;
                 if (rectangleMapObject.getProperties().get("rotation", Float.class) != null)
                     rotation = rectangleMapObject.getProperties().get("rotation", Float.class);
 
-                Gdx.app.log("Rotation", rectangleMapObject.getProperties().get("rotation", Float.class) + "");
-
                 body = BodyFactory.createRectangle(
-                        rectangle.x * unitScale,
+                        rectangle.x* unitScale,
                         rectangle.y * unitScale,
                         rectangle.width * unitScale,
                         rectangle.height * unitScale,

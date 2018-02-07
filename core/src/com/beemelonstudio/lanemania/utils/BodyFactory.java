@@ -1,5 +1,6 @@
 package com.beemelonstudio.lanemania.utils;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -76,15 +77,31 @@ public class BodyFactory {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
-        bodyDef.position.x = x + (width / 2);
-        bodyDef.position.y = y + (height / 2);
         bodyDef.fixedRotation = false;
 
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2, height / 2);
 
         Body body = world.createBody(bodyDef);
-        body.setTransform(body.getPosition(), rotation * DEGTORAD);
+
+        // Adjusts positions from Tiled to Box2D positions
+        body.setTransform(x + width / 2, y + height / 2, 0);
+
+        // Setup and save current values
+        float angle = -rotation * DEGTORAD;
+        Vector2 localPosition = new Vector2(width / 2, height / 2);
+        Vector2 positionBefore = body.getWorldPoint(localPosition).cpy();
+
+        // Transform / Rotate
+        body.setTransform(body.getPosition(), angle);
+
+        // Save new position after rotation
+        Vector2 positionAfter = body.getWorldPoint(localPosition).cpy();
+
+        // Calculate new position (before - after) and rotate
+        Vector2 newPosition = body.getPosition().add(positionBefore).sub(positionAfter);
+        body.setTransform(newPosition, angle);
+
         body.createFixture(createFixture(obstacleType, shape));
 
         shape.dispose();

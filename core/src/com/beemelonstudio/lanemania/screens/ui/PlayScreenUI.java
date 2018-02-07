@@ -149,9 +149,10 @@ public class PlayScreenUI extends GameScreenUI {
     }
 
     private EntityType asEntityType(String str) {
-        for (EntityType me : EntityType.values()) {
-            if (me.name().equalsIgnoreCase(str))
-                return me;
+
+        for (EntityType entityType : EntityType.values()) {
+            if (entityType.name().equalsIgnoreCase(str))
+                return entityType;
         }
         return null;
     }

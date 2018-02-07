@@ -23,6 +23,7 @@ public abstract class Entity implements Actable {
 
     public float x, y;
     public float width, height;
+    protected float ySize;
 
     public Entity() {
         loadTextureAtlas();
