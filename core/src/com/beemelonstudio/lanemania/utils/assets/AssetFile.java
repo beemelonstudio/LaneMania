@@ -1,4 +1,4 @@
-package com.beemelonstudio.lanemania.utils;
+package com.beemelonstudio.lanemania.utils.assets;
 
 /**
  * Created by Jann on 09.01.2018.

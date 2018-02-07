@@ -10,13 +10,13 @@ import com.beemelonstudio.lanemania.LaneMania;
  * Created by Jann on 13.01.18.
  */
 
-public class bmsImageButton extends ImageButton {
+public class BmsImageButton extends ImageButton {
 
-    public bmsImageButton(Skin skin) {
+    public BmsImageButton(Skin skin) {
         super(skin);
     }
 
-    public bmsImageButton(Skin skin, TextureRegion textureRegion) {
+    public BmsImageButton(Skin skin, TextureRegion textureRegion) {
         super(skin);
 
         //textureRegion.setRegionWidth((int) (textureRegion.getRegionWidth() * 0.8f));

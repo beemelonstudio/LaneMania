@@ -1,11 +1,11 @@
-package com.beemelonstudio.lanemania.utils;
+package com.beemelonstudio.lanemania.utils.listeners;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.beemelonstudio.lanemania.entities.EntityType;
+import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 
 /**

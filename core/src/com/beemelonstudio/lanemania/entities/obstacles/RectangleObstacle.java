@@ -1,10 +1,11 @@
-package com.beemelonstudio.lanemania.entities;
+package com.beemelonstudio.lanemania.entities.obstacles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.beemelonstudio.lanemania.entities.Entity;
 
 /**
  * Created by Jann on 11.01.18.

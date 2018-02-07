@@ -1,11 +1,11 @@
-package com.beemelonstudio.lanemania.utils;
+package com.beemelonstudio.lanemania.utils.listeners;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.beemelonstudio.lanemania.entities.StraightLine;
+import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 
 /**

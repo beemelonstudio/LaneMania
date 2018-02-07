@@ -1,21 +1,21 @@
-package com.beemelonstudio.lanemania.utils;
+package com.beemelonstudio.lanemania.utils.mapeditor;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Ellipse;
-import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.entities.Entity;
-import com.beemelonstudio.lanemania.entities.RectangleObstacle;
+import com.beemelonstudio.lanemania.entities.types.ObstacleType;
+import com.beemelonstudio.lanemania.entities.obstacles.RectangleObstacle;
+import com.beemelonstudio.lanemania.utils.BodyFactory;
 
 /**
  * Created by Jann and Cedric on 10.01.18.
@@ -73,7 +73,7 @@ public class MapAnalyser {
 
         for(MapObject object : obstaclesLayer.getObjects()) {
 
-            Body body = null;
+            Body body;
             float rotation = 0f;
 
             if (object instanceof RectangleMapObject) {
@@ -90,6 +90,24 @@ public class MapAnalyser {
                         rectangle.width * unitScale,
                         rectangle.height * unitScale,
                         rotation,
+                        BodyDef.BodyType.StaticBody,
+                        ObstacleType.SOLID);
+                body.setUserData(object.getProperties().get("type"));
+
+                obstacles.add(new RectangleObstacle(body));
+            }
+            else if (object instanceof CircleMapObject) {
+
+                CircleMapObject circleMapObject = (CircleMapObject) object;
+                Circle circle = circleMapObject.getCircle();
+
+                if (circleMapObject.getProperties().get("rotation", Float.class) != null)
+                    rotation = circleMapObject.getProperties().get("rotation", Float.class);
+
+                body = BodyFactory.createCircle(
+                        circle.x * unitScale,
+                        circle.y * unitScale,
+                        circle.radius * unitScale,
                         BodyDef.BodyType.StaticBody,
                         ObstacleType.SOLID);
                 body.setUserData(object.getProperties().get("type"));

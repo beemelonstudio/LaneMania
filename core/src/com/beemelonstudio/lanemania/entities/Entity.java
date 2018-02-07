@@ -3,7 +3,8 @@ package com.beemelonstudio.lanemania.entities;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.beemelonstudio.lanemania.utils.Assets;
+import com.beemelonstudio.lanemania.entities.types.EntityType;
+import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 /**
  * Created by Jann on 09.01.2018.

@@ -1,4 +1,4 @@
-package com.beemelonstudio.lanemania.entities;
+package com.beemelonstudio.lanemania.entities.types;
 
 /**
  * Created by Jann on 09.01.2018.

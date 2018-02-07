@@ -2,26 +2,22 @@ package com.beemelonstudio.lanemania.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.LaneMania;
-import com.beemelonstudio.lanemania.entities.Ball;
+import com.beemelonstudio.lanemania.entities.objects.Ball;
 import com.beemelonstudio.lanemania.entities.Entity;
-import com.beemelonstudio.lanemania.entities.EntityType;
-import com.beemelonstudio.lanemania.entities.Goal;
-import com.beemelonstudio.lanemania.entities.StraightLine;
+import com.beemelonstudio.lanemania.entities.types.EntityType;
+import com.beemelonstudio.lanemania.entities.objects.Goal;
+import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.screens.ui.PlayScreenUI;
-import com.beemelonstudio.lanemania.utils.Assets;
 import com.beemelonstudio.lanemania.utils.BodyFactory;
-import com.beemelonstudio.lanemania.utils.CustomContactListener;
-import com.beemelonstudio.lanemania.utils.CustomInputListener;
-import com.beemelonstudio.lanemania.utils.MapAnalyser;
-import com.beemelonstudio.lanemania.utils.MapBodyBuilder;
+import com.beemelonstudio.lanemania.utils.listeners.CustomContactListener;
+import com.beemelonstudio.lanemania.utils.listeners.CustomInputListener;
+import com.beemelonstudio.lanemania.utils.mapeditor.MapAnalyser;
 import com.beemelonstudio.lanemania.utils.WorldManager;
 
 /**
