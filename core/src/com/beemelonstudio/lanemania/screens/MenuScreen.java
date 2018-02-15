@@ -6,9 +6,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.beemelonstudio.lanemania.LaneMania;
 
 /**
@@ -16,49 +20,62 @@ import com.beemelonstudio.lanemania.LaneMania;
  */
 
 public class MenuScreen extends GameScreen {
+
+    public Table table;
+
     public MenuScreen(LaneMania game) {
         super(game);
 
         Stage stage = new Stage();
-        Gdx.input.setInputProcessor(stage);// Make the stage consume events
-
-        createBasicSkin();
-        TextButton newGameButton = new TextButton("New game", skin); // Use the initialized skin
-        newGameButton.setPosition(Gdx.graphics.getWidth()/2 - Gdx.graphics.getWidth()/8 , Gdx.graphics.getHeight()/2);
-        stage.addActor(newGameButton);
-
+        Gdx.input.setInputProcessor(stage);
 
     }
 
-    private void createBasicSkin(){
-        //Create a font
-        BitmapFont font = new BitmapFont();
-        skin = new Skin();
-        skin.add("default", font);
+    @Override
+    public void show() {
+        super.show();
 
-        //Create a texture
-        Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth()/4,(int)Gdx.graphics.getHeight()/10, Pixmap.Format.RGB888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        skin.add("background",new Texture(pixmap));
+        table = new Table();
+        table.setFillParent(true);
+        stage.addActor(table);
 
-        //Create a button style
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
-        textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
-        textButtonStyle.checked = skin.newDrawable("background", Color.DARK_GRAY);
-        textButtonStyle.over = skin.newDrawable("background", Color.LIGHT_GRAY);
-        textButtonStyle.font = skin.getFont("default");
-        skin.add("default", textButtonStyle);
+        // Used for debugging
+        table.setDebug(true);
 
+        createMenu();
+
+        Gdx.input.setInputProcessor(stage);
     }
 
+    @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        stage.act();
-        stage.draw();
+        super.render(delta);
     }
+
+    public void createMenu(){
+
+        //Placeholder
+        Skin skin = new Skin(Gdx.files.internal("skins/pixthulhu/pixthulhu-ui.json"));
+
+        TextButton Continue = new TextButton("Continue", skin);
+        TextButton SelectLevel = new TextButton("Select Level", skin);
+
+        table.add(Continue).fillX().uniformX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(SelectLevel).fillX().uniformX();
+
+        SelectLevel.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                screens.push(new MapSelectionScreen(game));
+                game.setScreen(screens.peek());
+            }
+        });
+
+    }
+
+
 
 }
