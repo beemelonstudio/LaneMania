@@ -26,8 +26,6 @@ public class MenuScreen extends GameScreen {
     public MenuScreen(LaneMania game) {
         super(game);
 
-        Stage stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
 
     }
 
@@ -54,9 +52,6 @@ public class MenuScreen extends GameScreen {
 
     public void createMenu(){
 
-        //Placeholder
-        Skin skin = new Skin(Gdx.files.internal("skins/pixthulhu/pixthulhu-ui.json"));
-
         TextButton Continue = new TextButton("Continue", skin);
         TextButton SelectLevel = new TextButton("Select Level", skin);
 
@@ -69,7 +64,7 @@ public class MenuScreen extends GameScreen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
-                screens.push(new MapSelectionScreen(game));
+                screens.push(new MapSelectionScreen(game, game.mapLoader.worlds));
                 game.setScreen(screens.peek());
             }
         });
