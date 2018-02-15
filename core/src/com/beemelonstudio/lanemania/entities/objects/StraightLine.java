@@ -1,6 +1,6 @@
 package com.beemelonstudio.lanemania.entities.objects;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -56,7 +56,7 @@ public class StraightLine extends Entity {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(PolygonSpriteBatch batch) {
 
         if(body != null) {
             batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, rotation);

@@ -1,18 +1,25 @@
 package com.beemelonstudio.lanemania.utils.mapeditor;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Ellipse;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.obstacles.CircleObstacle;
+import com.beemelonstudio.lanemania.entities.obstacles.TriangleObstacle;
 import com.beemelonstudio.lanemania.entities.types.ObstacleType;
 import com.beemelonstudio.lanemania.entities.obstacles.RectangleObstacle;
 import com.beemelonstudio.lanemania.utils.BodyFactory;
@@ -85,7 +92,7 @@ public class MapAnalyser {
                     rotation = rectangleMapObject.getProperties().get("rotation", Float.class);
 
                 body = BodyFactory.createRectangle(
-                        rectangle.x* unitScale,
+                        rectangle.x * unitScale,
                         rectangle.y * unitScale,
                         rectangle.width * unitScale,
                         rectangle.height * unitScale,
@@ -96,34 +103,44 @@ public class MapAnalyser {
 
                 obstacles.add(new RectangleObstacle(body));
             }
-            else if (object instanceof CircleMapObject) {
+            else if (object instanceof EllipseMapObject) {
 
-                CircleMapObject circleMapObject = (CircleMapObject) object;
-                Circle circle = circleMapObject.getCircle();
+                //This creates a circle from the ellipse
 
-                if (circleMapObject.getProperties().get("rotation", Float.class) != null)
-                    rotation = circleMapObject.getProperties().get("rotation", Float.class);
+                EllipseMapObject ellipseMapObjectMapObject = (EllipseMapObject) object;
+                Ellipse ellipse = ellipseMapObjectMapObject.getEllipse();
 
                 body = BodyFactory.createCircle(
-                        circle.x * unitScale,
-                        circle.y * unitScale,
-                        circle.radius * unitScale,
+                        (ellipse.x + (ellipse.width / 2)) * unitScale,
+                        (ellipse.y + (ellipse.height / 2)) * unitScale,
+                        ellipse.width * unitScale,
                         BodyDef.BodyType.StaticBody,
                         ObstacleType.SOLID);
                 body.setUserData(object.getProperties().get("type"));
 
-                obstacles.add(new RectangleObstacle(body));
+                obstacles.add(new CircleObstacle(body));
+            }
+            else if (object instanceof PolygonMapObject) {
+
+                PolygonMapObject polygonMapObjectMapObject = (PolygonMapObject) object;
+                Polygon polygon = polygonMapObjectMapObject.getPolygon();
+
+                // Adjust all vertices to box2d dimension
+                float[] vertices = polygon.getVertices();
+                for(int i = 0; i < vertices.length; i++)
+                    vertices[i] *= unitScale;
+
+                body = BodyFactory.createTriangle(
+                        polygon.getX() * unitScale,
+                        polygon.getY() * unitScale,
+                        polygon.getVertices(),
+                        BodyDef.BodyType.StaticBody,
+                        ObstacleType.SOLID);
+                body.setUserData(object.getProperties().get("type"));
+
+                obstacles.add(new TriangleObstacle(body));
             }
             /*
-            else if (object instanceof PolygonMapObject) {
-                shape = getPolygon((PolygonMapObject)object);
-                position.set(
-                        ((PolygonMapObject)object).getPolygon().getX() * unitScale,
-                        ((PolygonMapObject)object).getPolygon().getY() * unitScale
-                );
-
-                Gdx.app.log("Polygon", position.y * unitScale + " - " + position.x * unitScale);
-            }
             else if (object instanceof PolylineMapObject) {
                 shape = getPolyline((PolylineMapObject)object);
                 position.set(

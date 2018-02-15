@@ -1,6 +1,6 @@
 package com.beemelonstudio.lanemania.entities.objects;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -45,7 +45,7 @@ public class Ball extends Entity {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(PolygonSpriteBatch batch) {
 
         batch.draw(textureRegion, x - radius, y - radius, width, height);
     }

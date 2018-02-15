@@ -108,8 +108,8 @@ public class MapSelectionScreen extends GameScreen {
             }
         }
 
+        setAllMapsVisibility(false);
         worldButtons.get(0).setMapButtonVisibility(true);
-        setAllMapsVisibility(true);
     }
 
     public void setAllMapsVisibility(boolean visibility) {

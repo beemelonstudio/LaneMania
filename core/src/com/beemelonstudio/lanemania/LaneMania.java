@@ -3,6 +3,7 @@ package com.beemelonstudio.lanemania;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,7 +22,7 @@ public class LaneMania extends Game {
     public static final float VIRTUAL_WIDTH = 1f;
     public static final float VIRTUAL_HEIGHT = 2f;
 
-    public SpriteBatch batch;
+    public PolygonSpriteBatch batch;
     public OrthographicCamera camera, hudCamera;
     public Viewport viewport, backgroundViewport;
 
@@ -43,7 +44,7 @@ public class LaneMania extends Game {
         hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
         backgroundViewport = new ScreenViewport();
-        batch = new SpriteBatch();
+        batch = new PolygonSpriteBatch();
         stage = new Stage(new ScreenViewport(hudCamera));
 
         screens = new Stack<GameScreen>();

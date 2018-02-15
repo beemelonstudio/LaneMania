@@ -1,5 +1,6 @@
 package com.beemelonstudio.lanemania.utils;
 
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -109,16 +110,34 @@ public class BodyFactory {
         return body;
     }
 
-    public static Body createCircle(float x, float y, float radius, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+    public static Body createCircle(float x, float y, float diameter, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = bodyType;
         bodyDef.position.set(x, y);
 
         Body body = world.createBody(bodyDef);
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(radius);
+        shape.setRadius(diameter / 2);
+
+        body.createFixture(createFixture(obstacleType, shape));
+
+        shape.dispose();
+
+        return body;
+    }
+
+    public static Body createTriangle(float x, float y, float[] vertices, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = bodyType;
+        bodyDef.position.set(x, y);
+
+        Body body = world.createBody(bodyDef);
+
+        PolygonShape shape = new PolygonShape();
+        shape.set(vertices);
 
         body.createFixture(createFixture(obstacleType, shape));
 

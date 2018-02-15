@@ -6,7 +6,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -27,7 +27,7 @@ public class GameScreen implements Screen, InputProcessor {
     public LaneMania game;
     protected Stack<GameScreen> screens;
 
-    protected SpriteBatch batch;
+    protected PolygonSpriteBatch batch;
     public OrthographicCamera camera;
     protected Viewport viewport, backgroundViewport;
 

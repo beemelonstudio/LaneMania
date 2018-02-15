@@ -1,7 +1,7 @@
 package com.beemelonstudio.lanemania.screens.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -55,7 +55,7 @@ public class PlayScreenUI extends GameScreenUI {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(PolygonSpriteBatch batch) {
         super.draw(batch);
     }
 

@@ -96,11 +96,11 @@ public class PlayScreen extends GameScreen {
         ball.act(delta);
         goal.act(delta);
 
-        for(StraightLine straightLine : straightLines)
-            straightLine.act(delta);
-
         for(Entity entity : mapAnalyser.obstacles)
             entity.act(delta);
+
+        for(StraightLine straightLine : straightLines)
+            straightLine.act(delta);
 
         // Drawing
         renderer.setView(camera);
@@ -116,11 +116,11 @@ public class PlayScreen extends GameScreen {
         ball.draw(batch);
         goal.draw(batch);
 
-        for(StraightLine straightLine : straightLines)
-            straightLine.draw(batch);
-
         for(Entity entity : mapAnalyser.obstacles)
             entity.draw(batch);
+
+        for(StraightLine straightLine : straightLines)
+            straightLine.draw(batch);
 
         batch.end();
 

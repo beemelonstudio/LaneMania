@@ -1,6 +1,6 @@
 package com.beemelonstudio.lanemania.entities.objects;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -43,7 +43,7 @@ public class Goal extends Entity {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(PolygonSpriteBatch batch) {
 
         batch.draw(frontTexture, x - width / 2, y - height / 2, width, height);
     }

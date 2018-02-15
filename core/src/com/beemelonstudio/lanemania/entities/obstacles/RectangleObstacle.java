@@ -1,7 +1,6 @@
 package com.beemelonstudio.lanemania.entities.obstacles;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -31,7 +30,7 @@ public class RectangleObstacle extends Entity {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(PolygonSpriteBatch batch) {
 
         batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, rotation);
     }
@@ -52,9 +51,6 @@ public class RectangleObstacle extends Entity {
 
         width = Math.abs(vertices[0].x) + Math.abs(vertices[1].x);
         height = Math.abs(vertices[1].y) + Math.abs(vertices[2].y);
-
-        Gdx.app.log("width", width + "");
-        Gdx.app.log("height", height + "");
 
         rotation = body.getAngle() * RADTODEG;
     }

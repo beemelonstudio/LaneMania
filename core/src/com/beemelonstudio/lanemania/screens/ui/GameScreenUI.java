@@ -1,6 +1,6 @@
 package com.beemelonstudio.lanemania.screens.ui;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -35,7 +35,7 @@ public class GameScreenUI {
 
     }
 
-    protected void draw(SpriteBatch batch) {
+    protected void draw(PolygonSpriteBatch batch) {
 
     }
 }
