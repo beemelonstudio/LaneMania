@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -54,7 +55,10 @@ public class MenuScreen extends GameScreen {
 
         TextButton Continue = new TextButton("Continue", skin);
         TextButton SelectLevel = new TextButton("Select Level", skin);
+        ImageButton Mute = new ImageButton(skin);
 
+        table.add(Mute).right().top();
+        table.row().pad(20, 0, 20, 0);
         table.add(Continue).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(SelectLevel).fillX().uniformX();
