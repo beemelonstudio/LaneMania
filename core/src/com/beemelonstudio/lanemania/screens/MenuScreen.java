@@ -1,6 +1,7 @@
 package com.beemelonstudio.lanemania.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -23,6 +24,7 @@ import com.beemelonstudio.lanemania.LaneMania;
 public class MenuScreen extends GameScreen {
 
     public Table table;
+    Sound backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("sounds/backgroundExample.mp3"));
 
     public MenuScreen(LaneMania game) {
         super(game);
@@ -42,6 +44,8 @@ public class MenuScreen extends GameScreen {
         table.setDebug(true);
 
         createMenu();
+
+        backgroundMusic.loop();
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -70,6 +74,15 @@ public class MenuScreen extends GameScreen {
 
                 screens.push(new MapSelectionScreen(game, game.mapLoader.worlds));
                 game.setScreen(screens.peek());
+            }
+        });
+
+        Mute.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                backgroundMusic.pause();
             }
         });
 
