@@ -1,16 +1,12 @@
 package com.beemelonstudio.lanemania.utils.mapeditor;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.PolygonSprite;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,8 +16,8 @@ import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.obstacles.CircleObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.TriangleObstacle;
-import com.beemelonstudio.lanemania.entities.types.ObstacleType;
 import com.beemelonstudio.lanemania.entities.obstacles.RectangleObstacle;
+import com.beemelonstudio.lanemania.entities.types.ObstacleType;
 import com.beemelonstudio.lanemania.utils.BodyFactory;
 
 /**

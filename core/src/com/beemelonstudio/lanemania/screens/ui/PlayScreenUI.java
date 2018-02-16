@@ -1,7 +1,7 @@
 package com.beemelonstudio.lanemania.screens.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -9,13 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.beemelonstudio.lanemania.entities.Entity;
-import com.beemelonstudio.lanemania.entities.EntityType;
-import com.beemelonstudio.lanemania.entities.StraightLine;
+import com.beemelonstudio.lanemania.entities.objects.StraightLine;
+import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.GameScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
-import com.beemelonstudio.lanemania.screens.custombuttons.bmsImageButton;
-import com.beemelonstudio.lanemania.utils.Assets;
+import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
+import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 
 /**
@@ -31,7 +30,7 @@ public class PlayScreenUI extends GameScreenUI {
 
     private TextButton playButton;
     private TextButton resetButton;
-    private bmsImageButton[] lineButtons;
+    private BmsImageButton[] lineButtons;
 
     public PlayScreenUI(GameScreen screen) {
         super(screen);
@@ -47,7 +46,7 @@ public class PlayScreenUI extends GameScreenUI {
 
         createPlayButton();
         createResetButton();
-        createbmsImageButtons();
+        createBmsImageButtons();
     }
 
     @Override
@@ -56,7 +55,7 @@ public class PlayScreenUI extends GameScreenUI {
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
+    public void draw(PolygonSpriteBatch batch) {
         super.draw(batch);
     }
 
@@ -113,23 +112,23 @@ public class PlayScreenUI extends GameScreenUI {
         });
     }
 
-    private void createbmsImageButtons() {
+    private void createBmsImageButtons() {
 
         // Retrieve images for buttons
         TextureRegion arrow = textureAtlas.findRegion("small_arrow");
         TextureRegion straightLine = textureAtlas.findRegion("rectangle_long");
         TextureRegion curvyLine = textureAtlas.findRegion("swiperadius");
 
-        // Setup bmsImageButton Array and set left and right button for switching
-        lineButtons = new bmsImageButton[4];
-        lineButtons[3] = new bmsImageButton(skin, arrow);
+        // Setup BmsImageButton Array and set left and right button for switching
+        lineButtons = new BmsImageButton[4];
+        lineButtons[3] = new BmsImageButton(skin, arrow);
         arrow = new TextureRegion(arrow);
         arrow.flip(true, false);
-        lineButtons[0] = new bmsImageButton(skin, arrow);
+        lineButtons[0] = new BmsImageButton(skin, arrow);
 
         // Insert actual line buttons
-        lineButtons[1] = new bmsImageButton(skin, straightLine);
-        lineButtons[2] = new bmsImageButton(skin, curvyLine);
+        lineButtons[1] = new BmsImageButton(skin, straightLine);
+        lineButtons[2] = new BmsImageButton(skin, curvyLine);
 
         // Add to table
         for(int i = 0; i < lineButtons.length; i++)

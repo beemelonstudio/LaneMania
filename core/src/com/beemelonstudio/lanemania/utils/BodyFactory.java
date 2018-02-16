@@ -8,7 +8,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.beemelonstudio.lanemania.entities.LineType;
+import com.beemelonstudio.lanemania.entities.types.LineType;
+import com.beemelonstudio.lanemania.entities.types.ObstacleType;
 
 /**
  * Created by Jann on 09.01.2018.
@@ -53,12 +54,12 @@ public class BodyFactory {
         return fixtureDef;
     }
 
-    private static FixtureDef createFixture(ObstacleType lineType, Shape shape) {
+    private static FixtureDef createFixture(ObstacleType obstacleType, Shape shape) {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
 
-        switch (lineType) {
+        switch (obstacleType) {
 
             case SOLID:
                 fixtureDef.density = 1f;
@@ -70,6 +71,44 @@ public class BodyFactory {
         }
 
         return fixtureDef;
+    }
+
+    public static Body createTriangle(float x, float y, float[] vertices, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = bodyType;
+        bodyDef.position.x = x;
+        bodyDef.position.y = y;
+        bodyDef.fixedRotation = false;
+
+        PolygonShape shape = new PolygonShape();
+        shape.set(vertices);
+
+        Body body = world.createBody(bodyDef);
+        body.createFixture(createFixture(obstacleType, shape));
+
+        shape.dispose();
+
+        return body;
+    }
+
+    public static Body createCircle(float x, float y, float diameter, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = bodyType;
+        bodyDef.position.x = x + (diameter / 2);
+        bodyDef.position.y = y + (diameter / 2);
+        bodyDef.fixedRotation = false;
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(diameter / 2f);
+
+        Body body = world.createBody(bodyDef);
+        body.createFixture(createFixture(obstacleType, shape));
+
+        shape.dispose();
+
+        return body;
     }
 
     public static Body createRectangle(float x, float y, float width, float height, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {

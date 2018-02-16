@@ -3,22 +3,17 @@ package com.beemelonstudio.lanemania;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.screens.GameScreen;
-import com.beemelonstudio.lanemania.screens.MapSelectionScreen;
 import com.beemelonstudio.lanemania.screens.MenuScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
-import com.beemelonstudio.lanemania.utils.Assets;
-import com.beemelonstudio.lanemania.utils.MapLoader;
+import com.beemelonstudio.lanemania.utils.assets.Assets;
+import com.beemelonstudio.lanemania.utils.mapeditor.MapLoader;
 
 import java.util.Stack;
 
@@ -27,7 +22,7 @@ public class LaneMania extends Game {
     public static final float VIRTUAL_WIDTH = 1f;
     public static final float VIRTUAL_HEIGHT = 2f;
 
-    public SpriteBatch batch;
+    public PolygonSpriteBatch batch;
     public OrthographicCamera camera, hudCamera;
     public Viewport viewport, backgroundViewport;
 
@@ -49,13 +44,12 @@ public class LaneMania extends Game {
         hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
         backgroundViewport = new ScreenViewport();
-        batch = new SpriteBatch();
+        batch = new PolygonSpriteBatch();
         stage = new Stage(new ScreenViewport(hudCamera));
 
         screens = new Stack<GameScreen>();
-        screens.push(new MenuScreen(this));
         //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        //screens.push(new PlayScreen(this, mapLoader.getMap(0,1)));
+        screens.push(new PlayScreen(this, mapLoader.getMap(0,2)));
 
         setScreen(screens.peek());
 	}
