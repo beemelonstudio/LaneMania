@@ -45,6 +45,8 @@ public class GameScreen implements Screen, InputProcessor {
     private boolean backButtonLocked = false;
     protected boolean isBackgroundDrawing = false;
 
+    public static float Volume = 1.0f;
+
     public GameScreen(LaneMania game) {
         this.game = game;
         this.screens = game.screens;

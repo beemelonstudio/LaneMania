@@ -25,6 +25,7 @@ public class MenuScreen extends GameScreen {
 
     public Table table;
     Sound backgroundMusic = Gdx.audio.newSound(Gdx.files.internal("sounds/backgroundExample.mp3"));
+    Boolean isMuted = false;
 
     public MenuScreen(LaneMania game) {
         super(game);
@@ -60,9 +61,9 @@ public class MenuScreen extends GameScreen {
         TextButton Continue = new TextButton("Continue", skin);
         TextButton SelectLevel = new TextButton("Select Level", skin);
         ImageButton Mute = new ImageButton(skin);
+        Mute.setPosition(100,100);
+        stage.addActor(Mute);
 
-        table.add(Mute).right().top();
-        table.row().pad(20, 0, 20, 0);
         table.add(Continue).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(SelectLevel).fillX().uniformX();
@@ -82,7 +83,14 @@ public class MenuScreen extends GameScreen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
-                backgroundMusic.pause();
+                if (isMuted == false){
+                    backgroundMusic.pause();
+                    isMuted = true;
+                } else {
+                    backgroundMusic.play();
+                    isMuted = false;
+                }
+
             }
         });
 
