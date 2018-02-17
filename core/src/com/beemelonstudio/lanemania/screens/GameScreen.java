@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -45,7 +46,7 @@ public class GameScreen implements Screen, InputProcessor {
     private boolean backButtonLocked = false;
     protected boolean isBackgroundDrawing = false;
 
-    public static float Volume = 1.0f;
+    protected float volume = 1.0f;
 
     public GameScreen(LaneMania game) {
         this.game = game;
@@ -56,6 +57,7 @@ public class GameScreen implements Screen, InputProcessor {
         this.backgroundViewport = game.backgroundViewport;
         this.stage = game.stage;
         this.skin = game.skin;
+        this.volume = game.volume;
 
         textureAtlas = (TextureAtlas) Assets.get("orange-theme");
         backgroundTexture = textureAtlas.findRegion("background");

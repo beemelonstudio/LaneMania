@@ -37,6 +37,8 @@ public class LaneMania extends Game {
     public Stack<GameScreen> screens;
     public MapLoader mapLoader;
 
+    public float volume = 1.0f;
+
     @Override
 	public void create () {
         Assets.load();
