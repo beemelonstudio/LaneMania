@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.beemelonstudio.lanemania.LaneMania;
+import com.beemelonstudio.lanemania.utils.Assets;
 
 /**
  * Created by Cedric on 30.01.2018.
@@ -25,9 +26,10 @@ import com.beemelonstudio.lanemania.LaneMania;
 public class MenuScreen extends GameScreen {
 
     public Table table;
-    Sound backgroundMenuMusic = Gdx.audio.newSound(Gdx.files.internal("sounds/backgroundExample.mp3"));
 
-    Boolean isMuted = false;
+    Sound backgroundMusic;
+
+    Boolean muted = false;
 
     public MenuScreen(LaneMania game) {
         super(game);
@@ -48,7 +50,8 @@ public class MenuScreen extends GameScreen {
 
         createMenu();
 
-        backgroundMenuMusic.loop(volume);
+        backgroundMusic = (Sound)Assets.get("backgroundMenuMusic");
+        backgroundMusic.loop(volume);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -60,17 +63,17 @@ public class MenuScreen extends GameScreen {
 
     public void createMenu(){
 
-        TextButton Continue = new TextButton("Continue", skin);
-        TextButton SelectLevel = new TextButton("Select Level", skin);
-        ImageButton Mute = new ImageButton(skin);
-        Mute.setPosition(100,100);
-        stage.addActor(Mute);
+        TextButton continueButton = new TextButton("Continue", skin);
+        TextButton selectLevelButton = new TextButton("Select Level", skin);
+        ImageButton muteButton = new ImageButton(skin);
+        muteButton.setPosition(Gdx.graphics.getWidth()-muteButton.getWidth(), Gdx.graphics.getHeight()-muteButton.getHeight());
+        stage.addActor(muteButton);
 
-        table.add(Continue).fillX().uniformX();
+        table.add(continueButton).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
-        table.add(SelectLevel).fillX().uniformX();
+        table.add(selectLevelButton).fillX().uniformX();
 
-        SelectLevel.addListener(new ClickListener(){
+        selectLevelButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -80,17 +83,20 @@ public class MenuScreen extends GameScreen {
             }
         });
 
-        Mute.addListener(new ClickListener(){
+        muteButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
-                if (isMuted == false){
+                //TODO: Sound and music difference
+                if (muted == false){
                     volume = 0.0f;
-                    isMuted = true;
+                    backgroundMusic.setVolume(0, volume);
+                    muted = true;
                 } else {
                     volume = 1.0f;
-                    isMuted = false;
+                    backgroundMusic.setVolume(0, volume);
+                    muted = false;
                 }
 
             }
