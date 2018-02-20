@@ -100,7 +100,7 @@ public class PlayScreenUI extends GameScreenUI {
 
                 for ( Array.ArrayIterator<Body> iter = new Array.ArrayIterator<Body>(bodies, true); iter.hasNext();) {
                     Body body = iter.next();
-                    if (body != null) {
+                    if (body != null && body.getUserData() != null) {
                         EntityType type = asEntityType(body.getUserData().toString());
                         if(type == EntityType.STRAIGHTLINE) {
                             screen.worldManager.world.destroyBody(body);

@@ -10,7 +10,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.screens.GameScreen;
-import com.beemelonstudio.lanemania.screens.MenuScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
 import com.beemelonstudio.lanemania.utils.mapeditor.MapLoader;
@@ -49,7 +48,7 @@ public class LaneMania extends Game {
 
         screens = new Stack<GameScreen>();
         //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        screens.push(new PlayScreen(this, mapLoader.getMap(0,2)));
+        screens.push(new PlayScreen(this, mapLoader.getMap(0,3)));
 
         setScreen(screens.peek());
 	}

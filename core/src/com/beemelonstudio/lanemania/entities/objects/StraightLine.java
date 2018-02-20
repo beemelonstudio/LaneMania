@@ -43,7 +43,8 @@ public class StraightLine extends Entity {
 
         calculateSizes();
 
-        body.getFixtureList().get(0).setUserData(type);
+        //body.getFixtureList().get(0).setUserData(type);
+        body.setUserData(type);
     }
 
     @Override

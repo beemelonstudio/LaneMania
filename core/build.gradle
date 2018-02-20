@@ -9,3 +9,7 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 eclipse.project {
     name = appName + "-core"
 }
+
+dependencies {
+    compile 'net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.4'
+}
