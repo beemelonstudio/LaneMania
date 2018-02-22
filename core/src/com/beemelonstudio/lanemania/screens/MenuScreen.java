@@ -2,6 +2,7 @@ package com.beemelonstudio.lanemania.screens;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -27,7 +28,7 @@ public class MenuScreen extends GameScreen {
 
     public Table table;
 
-    Sound backgroundMusic;
+    Music backgroundMusic;
 
     Boolean muted = false;
 
@@ -50,8 +51,10 @@ public class MenuScreen extends GameScreen {
 
         createMenu();
 
-        backgroundMusic = (Sound)Assets.get("backgroundMenuMusic");
-        backgroundMusic.loop(volume);
+        backgroundMusic = (Music)Assets.get("backgroundMenuMusic");
+        backgroundMusic.play();
+        backgroundMusic.setVolume(volume);
+        backgroundMusic.setLooping(true);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -91,11 +94,11 @@ public class MenuScreen extends GameScreen {
                 //TODO: Sound and music difference
                 if (muted == false){
                     volume = 0.0f;
-                    backgroundMusic.setVolume(0, volume);
+                    backgroundMusic.setVolume(volume);
                     muted = true;
                 } else {
                     volume = 1.0f;
-                    backgroundMusic.setVolume(0, volume);
+                    backgroundMusic.setVolume(volume);
                     muted = false;
                 }
 

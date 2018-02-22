@@ -2,6 +2,7 @@ package com.beemelonstudio.lanemania.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -36,7 +37,7 @@ public class Assets {
         files.put("comicSkin",      new AssetFile("skins/comic/comic-ui.json",          Skin.class));
 
         //Sounds
-        files.put("backgroundMenuMusic",    new AssetFile("sounds/backgroundExample.mp3",   Sound.class));
+        files.put("backgroundMenuMusic",    new AssetFile("sounds/backgroundExample.mp3",   Music.class));
 
         //I18Ns
         //files.put("defaultI18N",     new AssetFile("i18N/prototype",  I18NBundle.class));
