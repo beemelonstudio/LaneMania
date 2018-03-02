@@ -71,27 +71,6 @@ public class GameScreen implements Screen, InputProcessor {
         backgroundTexture = textureAtlas.findRegion("background");
         backgroundTile = new TiledDrawable(backgroundTexture);
 
-        ImageButton muteButton = new ImageButton(skin);
-        muteButton.setPosition(Gdx.graphics.getWidth()-muteButton.getWidth(), Gdx.graphics.getHeight()-muteButton.getHeight());
-        stage.addActor(muteButton);
-        muteButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-
-                if (muted == false){
-                    volume = 0.0f;
-                    backgroundMusic.setVolume(volume);
-                    muted = true;
-                } else {
-                    volume = 1.0f;
-                    backgroundMusic.setVolume(volume);
-                    muted = false;
-                }
-
-            }
-        });
-
         Gdx.input.setInputProcessor(this);
     }
 
