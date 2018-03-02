@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
@@ -47,6 +49,10 @@ public class GameScreen implements Screen, InputProcessor {
     protected boolean isBackgroundDrawing = false;
 
     protected float volume = 1.0f;
+    protected Boolean muted;
+    protected Music backgroundMusic;
+
+
 
     public GameScreen(LaneMania game) {
         this.game = game;
@@ -58,10 +64,33 @@ public class GameScreen implements Screen, InputProcessor {
         this.stage = game.stage;
         this.skin = game.skin;
         this.volume = game.volume;
+        this.muted = game.muted;
+        this.backgroundMusic = game.backgroundMusic;
 
         textureAtlas = (TextureAtlas) Assets.get("orange-theme");
         backgroundTexture = textureAtlas.findRegion("background");
         backgroundTile = new TiledDrawable(backgroundTexture);
+
+        ImageButton muteButton = new ImageButton(skin);
+        muteButton.setPosition(Gdx.graphics.getWidth()-muteButton.getWidth(), Gdx.graphics.getHeight()-muteButton.getHeight());
+        stage.addActor(muteButton);
+        muteButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                if (muted == false){
+                    volume = 0.0f;
+                    backgroundMusic.setVolume(volume);
+                    muted = true;
+                } else {
+                    volume = 1.0f;
+                    backgroundMusic.setVolume(volume);
+                    muted = false;
+                }
+
+            }
+        });
 
         Gdx.input.setInputProcessor(this);
     }

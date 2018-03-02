@@ -2,12 +2,16 @@ package com.beemelonstudio.lanemania;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -38,6 +42,8 @@ public class LaneMania extends Game {
     public MapLoader mapLoader;
 
     public float volume = 1.0f;
+    public Boolean muted = false;
+    public Music backgroundMusic;
 
     @Override
 	public void create () {
@@ -46,6 +52,13 @@ public class LaneMania extends Game {
         mapLoader.loadMaps();
 
         skin = (Skin) Assets.get("pixthulhuSkin");
+
+        backgroundMusic = (Music)Assets.get("backgroundMenuMusic");
+        backgroundMusic.play();
+        backgroundMusic.setVolume(volume);
+        backgroundMusic.setLooping(true);
+
+
 
         camera = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

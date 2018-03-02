@@ -28,9 +28,7 @@ public class MenuScreen extends GameScreen {
 
     public Table table;
 
-    Music backgroundMusic;
 
-    Boolean muted = false;
 
     public MenuScreen(LaneMania game) {
         super(game);
@@ -51,11 +49,6 @@ public class MenuScreen extends GameScreen {
 
         createMenu();
 
-        backgroundMusic = (Music)Assets.get("backgroundMenuMusic");
-        backgroundMusic.play();
-        backgroundMusic.setVolume(volume);
-        backgroundMusic.setLooping(true);
-
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -68,9 +61,6 @@ public class MenuScreen extends GameScreen {
 
         TextButton continueButton = new TextButton("Continue", skin);
         TextButton selectLevelButton = new TextButton("Select Level", skin);
-        ImageButton muteButton = new ImageButton(skin);
-        muteButton.setPosition(Gdx.graphics.getWidth()-muteButton.getWidth(), Gdx.graphics.getHeight()-muteButton.getHeight());
-        stage.addActor(muteButton);
 
         table.add(continueButton).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
@@ -83,25 +73,6 @@ public class MenuScreen extends GameScreen {
 
                 screens.push(new MapSelectionScreen(game, game.mapLoader.worlds));
                 game.setScreen(screens.peek());
-            }
-        });
-
-        muteButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-
-                //TODO: Sound and music difference
-                if (muted == false){
-                    volume = 0.0f;
-                    backgroundMusic.setVolume(volume);
-                    muted = true;
-                } else {
-                    volume = 1.0f;
-                    backgroundMusic.setVolume(volume);
-                    muted = false;
-                }
-
             }
         });
 
