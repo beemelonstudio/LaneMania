@@ -99,7 +99,7 @@ public class MapSelectionScreen extends GameScreen {
                 });
 
                 worldButton.addMapButton(mapButton);
-                mapsTable.add(mapButton).pad(10f).fillX().expandX();
+                mapsTable.add(mapButton).pad(1f).fillX().expandX();
 
                 if(j % 3 == 0)
                     mapsTable.row();
