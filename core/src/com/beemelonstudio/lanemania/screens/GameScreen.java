@@ -51,8 +51,6 @@ public class GameScreen implements Screen, InputProcessor {
     protected Boolean muted;
     protected Music backgroundMusic;
 
-
-
     public GameScreen(LaneMania game) {
         this.game = game;
         this.screens = game.screens;
@@ -67,8 +65,6 @@ public class GameScreen implements Screen, InputProcessor {
         this.backgroundMusic = game.backgroundMusic;
 
         textureAtlas = (TextureAtlas) Assets.get("orange-theme");
-        backgroundTexture = textureAtlas.findRegion("background");
-        backgroundTile = new TiledDrawable(backgroundTexture);
 
         Gdx.input.setInputProcessor(this);
     }

@@ -1,5 +1,6 @@
 package com.beemelonstudio.lanemania.entities.obstacles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.beemelonstudio.lanemania.entities.Entity;

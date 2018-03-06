@@ -34,6 +34,10 @@ public class LaneMania extends Game {
     public Stage stage;
     public Skin skin;
 
+    public float volume = 1.0f;
+    public Boolean muted = false;
+    public Music backgroundMusic;
+
     public Stack<GameScreen> screens;
     public MapLoader mapLoader;
 
@@ -50,8 +54,6 @@ public class LaneMania extends Game {
         backgroundMusic.setVolume(volume);
         backgroundMusic.setLooping(true);
 
-
-
         camera = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
         hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
@@ -62,7 +64,7 @@ public class LaneMania extends Game {
         screens = new Stack<GameScreen>();
         screens.push(new MenuScreen(this));
         //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        screens.push(new PlayScreen(this, mapLoader.getMap(0,4)));
+        //screens.push(new PlayScreen(this, mapLoader.getMap(0,4)));
 
         setScreen(screens.peek());
 	}
