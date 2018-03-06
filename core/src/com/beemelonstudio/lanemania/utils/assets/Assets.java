@@ -1,10 +1,13 @@
 package com.beemelonstudio.lanemania.utils.assets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.beemelonstudio.lanemania.utils.assets.AssetFile;
 
+import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -31,6 +34,9 @@ public class Assets {
         files.put("defaultSkin",    new AssetFile("skins/default/uiskin.json",          Skin.class));
         files.put("pixthulhuSkin",  new AssetFile("skins/pixthulhu/pixthulhu-ui.json",  Skin.class));
         files.put("comicSkin",      new AssetFile("skins/comic/comic-ui.json",          Skin.class));
+
+        //Sounds
+        files.put("backgroundMenuMusic",    new AssetFile("sounds/backgroundExample.mp3",   Music.class));
 
         //I18Ns
         //files.put("defaultI18N",     new AssetFile("i18N/prototype",  I18NBundle.class));

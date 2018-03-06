@@ -4,13 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.LaneMania;
@@ -42,6 +47,12 @@ public class GameScreen implements Screen, InputProcessor {
     private boolean backButtonLocked = false;
     protected boolean isBackgroundDrawing = false;
 
+    protected float volume = 1.0f;
+    protected Boolean muted;
+    protected Music backgroundMusic;
+
+
+
     public GameScreen(LaneMania game) {
         this.game = game;
         this.screens = game.screens;
@@ -51,8 +62,11 @@ public class GameScreen implements Screen, InputProcessor {
         this.backgroundViewport = game.backgroundViewport;
         this.stage = game.stage;
         this.skin = game.skin;
+        this.volume = game.volume;
+        this.muted = game.muted;
+        this.backgroundMusic = game.backgroundMusic;
 
-        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        textureAtlas = (TextureAtlas) Assets.get("orange-theme");
         backgroundTexture = textureAtlas.findRegion("background");
         backgroundTile = new TiledDrawable(backgroundTexture);
 
@@ -71,7 +85,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(255, 255, 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(isBackgroundDrawing) {
