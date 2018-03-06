@@ -61,30 +61,14 @@ public class MenuScreen extends GameScreen {
 
         TextButton continueButton = new TextButton("Continue", skin);
         TextButton selectLevelButton = new TextButton("Select Level", skin);
-        ImageButton muteButton = new ImageButton(skin);
-        muteButton.setPosition(Gdx.graphics.getWidth()-muteButton.getWidth(), Gdx.graphics.getHeight()-muteButton.getHeight());
-        stage.addActor(muteButton);
-        muteButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-
-                if (muted == false){
-                    volume = 0.0f;
-                    backgroundMusic.setVolume(volume);
-                    muted = true;
-                } else {
-                    volume = 1.0f;
-                    backgroundMusic.setVolume(volume);
-                    muted = false;
-                }
-
-            }
-        });
+        TextButton settingsButton = new TextButton("Settings", skin);
 
         table.add(continueButton).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(selectLevelButton).fillX().uniformX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(settingsButton).fillX().uniformX();
+
 
         selectLevelButton.addListener(new ClickListener(){
             @Override
@@ -92,6 +76,16 @@ public class MenuScreen extends GameScreen {
                 super.clicked(event, x, y);
 
                 screens.push(new MapSelectionScreen(game, game.mapLoader.worlds));
+                game.setScreen(screens.peek());
+            }
+        });
+
+        settingsButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                screens.push(new SettingsScreen(game));
                 game.setScreen(screens.peek());
             }
         });
