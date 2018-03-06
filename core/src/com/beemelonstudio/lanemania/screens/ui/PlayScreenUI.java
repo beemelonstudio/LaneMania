@@ -37,7 +37,7 @@ public class PlayScreenUI extends GameScreenUI {
 
         this.screen = (PlayScreen) screen;
 
-        textureAtlas = (TextureAtlas) Assets.get("orange-theme");
+        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
 
         height = (Gdx.graphics.getHeight() / 2f) / 5f;
         width = Gdx.graphics.getWidth() / numberOfButtons;
@@ -115,9 +115,9 @@ public class PlayScreenUI extends GameScreenUI {
     private void createBmsImageButtons() {
 
         // Retrieve images for buttons
-        TextureRegion arrow = textureAtlas.findRegion("small_arrow");
-        TextureRegion straightLine = textureAtlas.findRegion("rectangle_long");
-        TextureRegion curvyLine = textureAtlas.findRegion("swiperadius");
+        TextureRegion arrow = textureAtlas.findRegion("pickaxe");
+        TextureRegion straightLine = textureAtlas.findRegion("straightline");
+        TextureRegion curvyLine = textureAtlas.findRegion("circle");
 
         // Setup BmsImageButton Array and set left and right button for switching
         lineButtons = new BmsImageButton[4];

@@ -1,23 +1,22 @@
 package com.beemelonstudio.lanemania.entities.obstacles;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.beemelonstudio.lanemania.entities.Entity;
 
 /**
- * Created by Jann on 07.02.18.
+ * Created by Jann on 06.03.18.
  */
 
-public class CircleObstacle extends Entity {
+public class StoneObstacle extends Entity {
 
-    float radius;
+    public float rotation;
 
-    public CircleObstacle(Body body) {
+    public StoneObstacle(Body body, float width) {
         super(body);
+        this.width = width;
 
-        textureRegion = textureAtlas.findRegion("circle");
+        textureRegion = textureAtlas.findRegion("stone");
 
         calculateSizes();
     }
@@ -32,7 +31,7 @@ public class CircleObstacle extends Entity {
     @Override
     public void draw(PolygonSpriteBatch batch) {
 
-        batch.draw(textureRegion, x - radius, y - radius, width, height);
+        batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, rotation);
     }
 
     /**
@@ -40,12 +39,9 @@ public class CircleObstacle extends Entity {
      */
     private void calculateSizes(){
 
-        CircleShape shape = (CircleShape) body.getFixtureList().get(0).getShape();
+        float ratio = (float) textureRegion.getRegionHeight() / (float) textureRegion.getRegionWidth();
+        height = width * ratio;
 
-        radius = shape.getRadius();
-        width = radius * 2;
-        height = radius * 2;
-
-        Gdx.app.log("Calculate", "Circle");
+        rotation = body.getAngle() * RADTODEG;
     }
 }

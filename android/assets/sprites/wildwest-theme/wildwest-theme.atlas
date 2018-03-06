@@ -1,0 +1,89 @@
+
+wildwest-theme.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+background
+  rotate: false
+  xy: 1018, 2
+  size: 500, 1000
+  orig: 500, 1000
+  offset: 0, 0
+  index: -1
+ball
+  rotate: false
+  xy: 822, 144
+  size: 174, 174
+  orig: 174, 174
+  offset: 0, 0
+  index: -1
+circle
+  rotate: false
+  xy: 2, 363
+  size: 1014, 1007
+  orig: 1014, 1007
+  offset: 0, 0
+  index: -1
+goal_back
+  rotate: false
+  xy: 2, 183
+  size: 818, 135
+  orig: 818, 135
+  offset: 0, 0
+  index: -1
+goal_front
+  rotate: false
+  xy: 1158, 1004
+  size: 805, 946
+  orig: 805, 946
+  offset: 0, 0
+  index: -1
+rectangle
+  rotate: false
+  xy: 2, 1372
+  size: 1154, 578
+  orig: 1154, 578
+  offset: 0, 0
+  index: -1
+stone
+  rotate: false
+  xy: 1520, 417
+  size: 492, 585
+  orig: 492, 585
+  offset: 0, 0
+  index: -1
+straightline
+  rotate: false
+  xy: 2, 320
+  size: 851, 41
+  orig: 851, 41
+  offset: 0, 0
+  index: -1
+straightline_short
+  rotate: false
+  xy: 2, 141
+  size: 529, 40
+  orig: 529, 40
+  offset: 0, 0
+  index: -1
+
+wildwest-theme2.png
+size: 2048,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+pickaxe
+  rotate: false
+  xy: 2, 2
+  size: 721, 665
+  orig: 721, 665
+  offset: 0, 0
+  index: -1
+square
+  rotate: false
+  xy: 725, 90
+  size: 577, 577
+  orig: 577, 577
+  offset: 0, 0
+  index: -1

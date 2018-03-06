@@ -1,5 +1,6 @@
-package com.beemelonstudio.lanemania.utils;
+package com.beemelonstudio.lanemania.utils.factories;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -29,7 +30,7 @@ public class BodyFactory {
         BodyFactory.world = world;
     }
 
-    private static FixtureDef createFixture(LineType lineType, Shape shape) {
+    public static FixtureDef createFixture(LineType lineType, Shape shape) {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -54,7 +55,7 @@ public class BodyFactory {
         return fixtureDef;
     }
 
-    private static FixtureDef createFixture(ObstacleType obstacleType, Shape shape) {
+    public static FixtureDef createFixture(ObstacleType obstacleType, Shape shape) {
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -96,8 +97,8 @@ public class BodyFactory {
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
-        bodyDef.position.x = x + (diameter / 2);
-        bodyDef.position.y = y + (diameter / 2);
+        bodyDef.position.x = x;
+        bodyDef.position.y = y;
         bodyDef.fixedRotation = false;
 
         CircleShape shape = new CircleShape();
@@ -123,7 +124,7 @@ public class BodyFactory {
         shape.setAsBox(width / 2, height / 2);
 
         Body body = world.createBody(bodyDef);
-        body.setTransform(body.getPosition(), rotation * DEGTORAD);
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
         body.createFixture(createFixture(obstacleType, shape));
 
         shape.dispose();
@@ -183,52 +184,98 @@ public class BodyFactory {
         Body body = world.createBody(bodyDef);
 
         // Define and create fixture
-        PolygonShape polygonShape = new PolygonShape();
+        PolygonShape shape = new PolygonShape();
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape = polygonShape;
+        fixtureDef.shape = shape;
 
         // Left wall
-        polygonShape.set(new Vector2[]{
-                new Vector2(-0.04f, 0.07f),
+        shape.set(new Vector2[]{
+                new Vector2(-0.04f, 0.05f),
                 new Vector2(-0.04f, -0.1f),
                 new Vector2(-0.05f, -0.1f),
-                new Vector2(-0.05f, 0.1f)
+                new Vector2(-0.05f, 0.05f)
         });
+        body.createFixture(fixtureDef);
 
+        // Left corner
+        shape.set(new Vector2[]{
+                new Vector2(-0.07f, 0.07f),
+                new Vector2(-0.07f, 0.05f),
+                new Vector2(-0.05f, 0.05f)
+        });
         body.createFixture(fixtureDef);
 
         // Right wall
-        polygonShape.set(new Vector2[]{
-                new Vector2(0.04f, 0.07f),
+        shape.set(new Vector2[]{
+                new Vector2(0.04f, 0.05f),
                 new Vector2(0.04f, -0.1f),
                 new Vector2(0.05f, -0.1f),
-                new Vector2(0.05f, 0.1f)
+                new Vector2(0.05f, 0.05f)
         });
+        body.createFixture(fixtureDef);
 
+        // Right corner
+        shape.set(new Vector2[]{
+                new Vector2(0.07f, 0.07f),
+                new Vector2(0.07f, 0.05f),
+                new Vector2(0.05f, 0.05f)
+        });
         body.createFixture(fixtureDef);
 
         // Floor
-        polygonShape.set(new Vector2[]{
+        shape.set(new Vector2[]{
                 new Vector2(-0.04f, -0.08f),
                 new Vector2(-0.04f, -0.1f),
                 new Vector2(0.04f, -0.1f),
                 new Vector2(0.04f, -0.08f)
         });
-
         body.createFixture(fixtureDef);
 
-        // Floor
-        polygonShape.set(new Vector2[]{
+        // Sensor
+        shape.set(new Vector2[]{
                 new Vector2(-0.04f, -0.04f),
                 new Vector2(-0.04f, -0.05f),
                 new Vector2(0.04f, -0.05f),
                 new Vector2(0.04f, -0.04f)
         });
-
         fixtureDef.isSensor = true;
         body.createFixture(fixtureDef);
 
-        polygonShape.dispose();
+        shape.dispose();
+
+        return body;
+    }
+
+    public static Body createStone(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/stone.json"));
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x, y);
+        bodyDef.type = bodyType;
+        bodyDef.fixedRotation = false;
+
+        Body body = world.createBody(bodyDef);
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+
+        loader.attachFixture(body, "stone", createFixture(obstacleType, new PolygonShape()), width);
+
+        return body;
+    }
+
+    public static Body createPickaxe(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/stone.json"));
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x, y);
+        bodyDef.type = bodyType;
+        bodyDef.fixedRotation = false;
+
+        Body body = world.createBody(bodyDef);
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+
+        loader.attachFixture(body, "pickaxe", createFixture(obstacleType, new PolygonShape()), width);
 
         return body;
     }

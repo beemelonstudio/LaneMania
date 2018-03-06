@@ -36,6 +36,6 @@ public abstract class Entity implements Actable {
     }
 
     protected void loadTextureAtlas() {
-        textureAtlas = (TextureAtlas) Assets.get("orange-theme");
+        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
     }
 }

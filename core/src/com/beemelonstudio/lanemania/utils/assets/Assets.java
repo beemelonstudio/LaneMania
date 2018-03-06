@@ -25,6 +25,7 @@ public class Assets {
 
         //TextureAtlases
         files.put("orange-theme",   new AssetFile("sprites/orange-theme/orange-theme.atlas",    TextureAtlas.class));
+        files.put("wildwest-theme", new AssetFile("sprites/wildwest-theme/wildwest-theme.atlas",TextureAtlas.class));
 
         //Skins
         files.put("defaultSkin",    new AssetFile("skins/default/uiskin.json",          Skin.class));

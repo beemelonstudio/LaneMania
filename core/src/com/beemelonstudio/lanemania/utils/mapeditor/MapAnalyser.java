@@ -10,15 +10,18 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.obstacles.CircleObstacle;
+import com.beemelonstudio.lanemania.entities.obstacles.PickaxeObstacle;
+import com.beemelonstudio.lanemania.entities.obstacles.StoneObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.TriangleObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.RectangleObstacle;
 import com.beemelonstudio.lanemania.entities.types.ObstacleType;
-import com.beemelonstudio.lanemania.utils.BodyFactory;
+import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
 
 /**
  * Created by Jann and Cedric on 10.01.18.
@@ -87,17 +90,48 @@ public class MapAnalyser {
                 if (rectangleMapObject.getProperties().get("rotation", Float.class) != null)
                     rotation = rectangleMapObject.getProperties().get("rotation", Float.class);
 
-                body = BodyFactory.createRectangle(
-                        rectangle.x * unitScale,
-                        rectangle.y * unitScale,
-                        rectangle.width * unitScale,
-                        rectangle.height * unitScale,
-                        rotation,
-                        BodyDef.BodyType.StaticBody,
-                        ObstacleType.SOLID);
-                body.setUserData(object.getProperties().get("type"));
+                String type = (String) object.getProperties().get("type");
 
-                obstacles.add(new RectangleObstacle(body));
+                if(type.equals("rectangle")) {
+
+                    body = BodyFactory.createRectangle(
+                            rectangle.x * unitScale,
+                            rectangle.y * unitScale,
+                            rectangle.width * unitScale,
+                            rectangle.height * unitScale,
+                            rotation,
+                            BodyDef.BodyType.StaticBody,
+                            ObstacleType.SOLID);
+                    body.setUserData(type);
+
+                    obstacles.add(new RectangleObstacle(body));
+                }
+                else if (type.equals("stone")) {
+
+                    body = BodyFactory.createStone(
+                            rectangle.x * unitScale,
+                            rectangle.y * unitScale,
+                            rectangle.width * unitScale,
+                            rotation,
+                            BodyDef.BodyType.StaticBody,
+                            ObstacleType.SOLID);
+                    body.setUserData(type);
+
+                    obstacles.add(new StoneObstacle(body, rectangle.width * unitScale));
+                }
+                else if (type.equals("pickaxe")) {
+
+                    body = BodyFactory.createPickaxe(
+                            rectangle.x * unitScale,
+                            rectangle.y * unitScale,
+                            rectangle.width * unitScale,
+                            rotation,
+                            BodyDef.BodyType.StaticBody,
+                            ObstacleType.SOLID);
+                    body.setUserData(type);
+
+                    obstacles.add(new PickaxeObstacle(body, rectangle.width * unitScale));
+                }
             }
             else if (object instanceof EllipseMapObject) {
 

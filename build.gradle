@@ -70,7 +70,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-x86_64"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
-        
+        //compile fileTree(dir: '../libs', include: '*.jar')
     }
 }
 
@@ -101,6 +101,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.2-SNAPSHOT"
+        //compile fileTree(dir: '../libs', include: '*.jar')
     }
 }
 

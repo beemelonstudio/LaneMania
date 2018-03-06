@@ -1,5 +1,6 @@
 package com.beemelonstudio.lanemania.entities.obstacles;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -25,8 +26,8 @@ public class RectangleObstacle extends Entity {
     @Override
     public void act(float delta) {
 
-        x = body.getPosition().x;
-        y = body.getPosition().y;
+        //x = body.getPosition().x;
+        //y = body.getPosition().y;
     }
 
     @Override
@@ -53,5 +54,8 @@ public class RectangleObstacle extends Entity {
         height = Math.abs(vertices[1].y) + Math.abs(vertices[2].y);
 
         rotation = body.getAngle() * RADTODEG;
+
+        x = body.getPosition().x;
+        y = body.getPosition().y;
     }
 }

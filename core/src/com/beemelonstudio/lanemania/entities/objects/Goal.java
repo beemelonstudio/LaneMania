@@ -1,5 +1,6 @@
 package com.beemelonstudio.lanemania.entities.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -7,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
+
+import java.util.ArrayList;
 
 /**
  * Created by Jann on 09.01.2018.
@@ -27,8 +30,8 @@ public class Goal extends Entity {
 
         type = EntityType.GOAL;
 
-        frontTexture = textureAtlas.findRegion("goal_3d_front");
-        backTexture = textureAtlas.findRegion("goal_3d_back");
+        frontTexture = textureAtlas.findRegion("goal_front");
+        backTexture = textureAtlas.findRegion("goal_back");
 
         calculateSizes();
 
@@ -49,25 +52,47 @@ public class Goal extends Entity {
     }
 
     /**
+     * This is called as the first object to be drawn to create the depth of the goal
+     */
+    public void drawBackground(PolygonSpriteBatch batch) {
+
+        // The height multiplier is neared by trial and error
+        batch.draw(backTexture, x - width / 2, y + height / 2.5f, width, height * 0.25f);
+    }
+
+    /**
      * Retrieve PolygonShape vertices and calculate width and height
      */
     private void calculateSizes(){
 
-        Vector2[] leftBody = new Vector2[4];
-        Vector2[] rightBody = new Vector2[4];
+        /* List of shapes
+        -- Left Wall
+        -- Left Corner
+        -- Right Wall
+        -- Right Corner */
+        ArrayList<Vector2[]> shapes = new ArrayList<Vector2[]>();
+        shapes.add(new Vector2[4]);
+        shapes.add(new Vector2[3]);
+        shapes.add(new Vector2[4]);
+        shapes.add(new Vector2[3]);
 
-        PolygonShape leftShape = (PolygonShape) body.getFixtureList().get(0).getShape();
-        PolygonShape rightShape = (PolygonShape) body.getFixtureList().get(1).getShape();
+        // For every shape add each vertex to the array
+        for(int i = 0; i < shapes.size(); i++) {
 
-        for(int i = 0; i < leftShape.getVertexCount(); i++) {
-            leftBody[i] = new Vector2();
-            leftShape.getVertex(i, leftBody[i]);
+            PolygonShape shape = (PolygonShape) body.getFixtureList().get(i).getShape();
 
-            rightBody[i] = new Vector2();
-            rightShape.getVertex(i, rightBody[i]);
+            for(int j = 0; j < shape.getVertexCount(); j++) {
+
+                shapes.get(i)[j] = new Vector2();
+                shape.getVertex(j, shapes.get(i)[j]);
+            }
         }
 
-        width = Math.abs(leftBody[3].x) + Math.abs(rightBody[0].x);
-        height = Math.abs(leftBody[2].y) + Math.abs(leftBody[3].y);
+        // Width is the distance between leftCorner[0] and rightCorner[0]
+        width = Math.abs(shapes.get(1)[1].x) + Math.abs(shapes.get(3)[0].x);
+        Gdx.app.log("width", width+": "+Math.abs(shapes.get(1)[1].x) +" - "+ Math.abs(shapes.get(3)[0].x));
+
+        // Height is the distance between leftCorner[0] and leftWall[1]
+        height = Math.abs(shapes.get(1)[0].y) + Math.abs(shapes.get(0)[0].y);
     }
 }

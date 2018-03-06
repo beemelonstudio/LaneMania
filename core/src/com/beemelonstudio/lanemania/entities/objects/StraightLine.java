@@ -1,6 +1,7 @@
 package com.beemelonstudio.lanemania.entities.objects;
 
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -8,13 +9,15 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.entities.types.LineType;
-import com.beemelonstudio.lanemania.utils.BodyFactory;
+import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
 
 /**
  * Created by Jann on 09.01.2018.
  */
 
 public class StraightLine extends Entity {
+
+    private TextureRegion textureRegionShort;
 
     public float interval = 1f;
 
@@ -27,8 +30,7 @@ public class StraightLine extends Entity {
 
         type = EntityType.STRAIGHTLINE;
 
-        loadTextureAtlas();
-        textureRegion = textureAtlas.findRegion("rectangle_long");
+        setupTextures();
 
         start = new Vector2(x, y);
         end = new Vector2(x, y);
@@ -39,12 +41,19 @@ public class StraightLine extends Entity {
 
         type = EntityType.STRAIGHTLINE;
 
-        textureRegion = textureAtlas.findRegion("rectangle_long");
+        setupTextures();
 
         calculateSizes();
 
         //body.getFixtureList().get(0).setUserData(type);
         body.setUserData(type);
+    }
+
+    private void setupTextures() {
+
+        loadTextureAtlas();
+        textureRegion = textureAtlas.findRegion("straightline");
+        textureRegionShort = textureAtlas.findRegion("straightline_short");
     }
 
     @Override
@@ -60,10 +69,16 @@ public class StraightLine extends Entity {
     public void draw(PolygonSpriteBatch batch) {
 
         if(body != null) {
-            batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, rotation);
+            if(width > 0.4f)
+                batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, rotation);
+            else
+                batch.draw(textureRegionShort, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1, 1, rotation);
         }
         else {
-            batch.draw(textureRegion, end.x, end.y, 0, height / 2, width, height, 1, 1, rotation);
+            if(width > 0.4f)
+                batch.draw(textureRegion, end.x, end.y, 0, height / 2, width, height, 1, 1, rotation);
+            else
+                batch.draw(textureRegionShort, end.x, end.y, 0, height / 2, width, height, 1, 1, rotation);
         }
     }
 

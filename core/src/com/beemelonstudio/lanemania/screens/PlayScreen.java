@@ -14,7 +14,7 @@ import com.beemelonstudio.lanemania.entities.objects.Goal;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.ui.PlayScreenUI;
-import com.beemelonstudio.lanemania.utils.BodyFactory;
+import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
 import com.beemelonstudio.lanemania.utils.WorldManager;
 import com.beemelonstudio.lanemania.utils.listeners.CustomContactListener;
 import com.beemelonstudio.lanemania.utils.listeners.CustomInputListener;
@@ -109,7 +109,7 @@ public class PlayScreen extends GameScreen {
         batch.begin();
 
         // Goal background texture
-        batch.draw(goal.backTexture, goal.x - goal.width / 2, goal.y + goal.height / 3.3f, goal.width, goal.height * 0.4f);
+        goal.drawBackground(batch);
 
         ball.draw(batch);
         goal.draw(batch);

@@ -52,7 +52,7 @@ public class GameScreen implements Screen, InputProcessor {
         this.stage = game.stage;
         this.skin = game.skin;
 
-        textureAtlas = (TextureAtlas) Assets.get("orange-theme");
+        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
         backgroundTexture = textureAtlas.findRegion("background");
         backgroundTile = new TiledDrawable(backgroundTexture);
 
@@ -78,7 +78,7 @@ public class GameScreen implements Screen, InputProcessor {
             backgroundViewport.apply();
             batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
             batch.begin();
-            backgroundTile.draw(batch, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
+            batch.draw(backgroundTexture, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
             batch.end();
         }
 

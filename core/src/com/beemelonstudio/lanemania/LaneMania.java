@@ -48,7 +48,7 @@ public class LaneMania extends Game {
 
         screens = new Stack<GameScreen>();
         //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        screens.push(new PlayScreen(this, mapLoader.getMap(0,3)));
+        screens.push(new PlayScreen(this, mapLoader.getMap(0,4)));
 
         setScreen(screens.peek());
 	}
