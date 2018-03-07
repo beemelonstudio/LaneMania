@@ -10,16 +10,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.obstacles.CircleObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.PickaxeObstacle;
+import com.beemelonstudio.lanemania.entities.obstacles.RectangleObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.StoneObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.TriangleObstacle;
-import com.beemelonstudio.lanemania.entities.obstacles.RectangleObstacle;
 import com.beemelonstudio.lanemania.entities.types.ObstacleType;
 import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
 

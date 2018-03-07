@@ -2,10 +2,12 @@ package com.beemelonstudio.lanemania.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.entities.Entity;
@@ -14,8 +16,9 @@ import com.beemelonstudio.lanemania.entities.objects.Goal;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.ui.PlayScreenUI;
-import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
 import com.beemelonstudio.lanemania.utils.WorldManager;
+import com.beemelonstudio.lanemania.utils.assets.Assets;
+import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
 import com.beemelonstudio.lanemania.utils.listeners.CustomContactListener;
 import com.beemelonstudio.lanemania.utils.listeners.CustomInputListener;
 import com.beemelonstudio.lanemania.utils.mapeditor.MapAnalyser;
@@ -77,7 +80,7 @@ public class PlayScreen extends GameScreen {
 
         loadLevel();
 
-        isBackgroundDrawing = true;
+        setupBackground();
         playScreenUI = new PlayScreenUI(this);
     }
 
@@ -144,6 +147,18 @@ public class PlayScreen extends GameScreen {
 
         ball = new Ball(mapAnalyser.ball);
         goal = new Goal(mapAnalyser.goal);
+    }
+
+    private void setupBackground() {
+
+        TextureAtlas backgroundTextureAtlas;
+        if(mapName.contains("world1")) backgroundTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        else backgroundTextureAtlas = (TextureAtlas) Assets.get("orange-theme");
+
+        backgroundTexture = backgroundTextureAtlas.findRegion("background");
+        backgroundTile = new TiledDrawable(backgroundTexture);
+
+        isBackgroundDrawing = true;
     }
 
     public void endLevel() {

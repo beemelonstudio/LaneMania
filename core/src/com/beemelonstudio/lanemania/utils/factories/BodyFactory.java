@@ -248,7 +248,7 @@ public class BodyFactory {
 
     public static Body createStone(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
 
-        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/stone.json"));
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/wildwest.json"));
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x, y);
@@ -265,7 +265,7 @@ public class BodyFactory {
 
     public static Body createPickaxe(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
 
-        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/stone.json"));
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/wildwest.json"));
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(x, y);
@@ -276,6 +276,8 @@ public class BodyFactory {
         body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
 
         loader.attachFixture(body, "pickaxe", createFixture(obstacleType, new PolygonShape()), width);
+
+        Gdx.app.log("Pickaxe", "after create");
 
         return body;
     }

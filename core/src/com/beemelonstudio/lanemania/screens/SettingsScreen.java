@@ -24,7 +24,6 @@ public class SettingsScreen extends GameScreen {
     private float height, width;
     private float numberOfButtons = 4f;
 
-
     public SettingsScreen(LaneMania game) {
         super(game);
 
@@ -99,7 +98,5 @@ public class SettingsScreen extends GameScreen {
                 game.setScreen(screens.peek());
             }
         });
-
     }
-
 }
