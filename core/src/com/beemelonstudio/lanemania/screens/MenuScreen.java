@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.beemelonstudio.lanemania.LaneMania;
-import com.beemelonstudio.lanemania.utils.Assets;
+import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 /**
  * Created by Cedric on 30.01.2018.

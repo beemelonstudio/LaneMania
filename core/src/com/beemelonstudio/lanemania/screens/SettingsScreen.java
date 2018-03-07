@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.beemelonstudio.lanemania.LaneMania;
-import com.beemelonstudio.lanemania.screens.custombuttons.bmsImageButton;
+import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
 
 /**
  * Created by Cedric on 06.03.2018.
@@ -59,9 +59,9 @@ public class SettingsScreen extends GameScreen {
 
     public void createMenu(){
 
-        bmsImageButton muteButton = new bmsImageButton(skin, muteIcon);
-        bmsImageButton leftArrowButton = new bmsImageButton(skin, leftArrowIcon);
-        bmsImageButton rightArrowButton = new bmsImageButton(skin, rightArrowIcon);
+        BmsImageButton muteButton = new BmsImageButton(skin, muteIcon);
+        BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon);
+        BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon);
         TextButton returnButton = new TextButton("Return", skin);
         Label english = new Label("English", skin);
 

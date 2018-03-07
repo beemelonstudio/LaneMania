@@ -37,6 +37,10 @@ public class LaneMania extends Game {
     public Stack<GameScreen> screens;
     public MapLoader mapLoader;
 
+    public float volume = 1.0f;
+    public Boolean muted;
+    public Music backgroundMusic;
+
     @Override
 	public void create () {
         Assets.load();
@@ -62,7 +66,7 @@ public class LaneMania extends Game {
         screens = new Stack<GameScreen>();
         screens.push(new MenuScreen(this));
         //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        screens.push(new PlayScreen(this, mapLoader.getMap(0,4)));
+        //screens.push(new PlayScreen(this, mapLoader.getMap(0,4)));
 
         setScreen(screens.peek());
 	}
