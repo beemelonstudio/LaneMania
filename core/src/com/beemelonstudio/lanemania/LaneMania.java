@@ -38,7 +38,7 @@ public class LaneMania extends Game {
     public MapLoader mapLoader;
 
     public float volume = 1.0f;
-    public Boolean muted;
+    public Boolean muted = false;
     public Music backgroundMusic;
 
     @Override

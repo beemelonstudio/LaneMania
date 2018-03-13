@@ -48,7 +48,7 @@ public class GameScreen implements Screen, InputProcessor {
     protected boolean isBackgroundDrawing = false;
 
     protected float volume = 1.0f;
-    protected Boolean muted;
+    protected Boolean muted = false;
     protected Music backgroundMusic;
 
     public GameScreen(LaneMania game) {
