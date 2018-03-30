@@ -35,9 +35,11 @@ public class SettingsScreen extends GameScreen {
     public void show() {
         super.show();
 
-        muteIcon = textureAtlas.findRegion("triangle");
-        leftArrowIcon = textureAtlas.findRegion("triangle");
-        rightArrowIcon = textureAtlas.findRegion("triangle");
+        isBackgroundDrawing = true;
+        
+        muteIcon = textureAtlas.findRegion("circle");
+        leftArrowIcon = textureAtlas.findRegion("ball");
+        rightArrowIcon = textureAtlas.findRegion("ball");
 
         table = new Table();
         table.setFillParent(true);

@@ -64,7 +64,8 @@ public class GameScreen implements Screen, InputProcessor {
         this.muted = game.muted;
         this.backgroundMusic = game.backgroundMusic;
 
-        textureAtlas = (TextureAtlas) Assets.get("orange-theme");
+        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        backgroundTexture = textureAtlas.findRegion("background");
 
         Gdx.input.setInputProcessor(this);
     }

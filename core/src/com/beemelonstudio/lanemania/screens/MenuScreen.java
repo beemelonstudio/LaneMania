@@ -1,5 +1,6 @@
 package com.beemelonstudio.lanemania.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -21,7 +22,6 @@ import com.beemelonstudio.lanemania.utils.assets.Assets;
 public class MenuScreen extends GameScreen {
 
     public Table table;
-    public TextureRegion backgroundRegion;
 
     public MenuScreen(LaneMania game) {
         super(game);
@@ -35,8 +35,7 @@ public class MenuScreen extends GameScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
-        TextureRegion backgroundRegion = textureAtlas.findRegion("ball");
+        isBackgroundDrawing = true;
 
         // Used for debugging
         table.setDebug(true);
@@ -49,14 +48,6 @@ public class MenuScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-
-        batch.begin();
-        batch.draw(backgroundRegion,
-                0,
-                0,
-                Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight());
-        batch.end();
     }
 
     public void createMenu(){
