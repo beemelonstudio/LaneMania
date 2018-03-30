@@ -51,7 +51,7 @@ public class Assets {
         //while(!assetManager.update()){} TODO: Decide for one method
     }
 
-    public static Texture get(String hashmapKey){
+    public static Object get(String hashmapKey){
         return assetManager.get(files.get(hashmapKey).path, files.get(hashmapKey).type);
     }
 
