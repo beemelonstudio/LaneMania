@@ -40,6 +40,8 @@ public class MapSelectionScreen extends GameScreen {
         table.setFillParent(true);
         stage.addActor(table);
 
+        isBackgroundDrawing = true;
+
         // Used for debugging
         table.setDebug(true);
 

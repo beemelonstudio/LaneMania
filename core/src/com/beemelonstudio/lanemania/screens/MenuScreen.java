@@ -83,8 +83,5 @@ public class MenuScreen extends GameScreen {
         });
     }
 
-    //public void drawBackground(){
-
-    //}
 
 }

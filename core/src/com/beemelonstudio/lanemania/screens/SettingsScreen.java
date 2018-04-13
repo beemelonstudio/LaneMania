@@ -36,7 +36,7 @@ public class SettingsScreen extends GameScreen {
         super.show();
 
         isBackgroundDrawing = true;
-        
+
         muteIcon = textureAtlas.findRegion("circle");
         leftArrowIcon = textureAtlas.findRegion("ball");
         rightArrowIcon = textureAtlas.findRegion("ball");
