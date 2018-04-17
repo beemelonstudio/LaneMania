@@ -1,11 +1,13 @@
 package com.beemelonstudio.lanemania.entities.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.utils.Pool;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.entities.types.LineType;
@@ -15,25 +17,23 @@ import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
  * Created by Jann on 09.01.2018.
  */
 
-public class StraightLine extends Entity {
+public class StraightLine extends Entity implements Pool.Poolable {
 
     private TextureRegion textureRegionShort;
-
-    public float interval = 1f;
 
     public float rotation;
     private float height = 0.025f;
 
     public Vector2 start, end;
 
-    public StraightLine(float x, float y) {
+    public StraightLine() {
 
         type = EntityType.STRAIGHTLINE;
 
         setupTextures();
 
-        start = new Vector2(x, y);
-        end = new Vector2(x, y);
+        start = new Vector2();
+        end = new Vector2();
     }
 
     public StraightLine(Body body) {
@@ -41,12 +41,16 @@ public class StraightLine extends Entity {
 
         type = EntityType.STRAIGHTLINE;
 
-        setupTextures();
-
         calculateSizes();
 
         //body.getFixtureList().get(0).setUserData(type);
         body.setUserData(type);
+    }
+
+    public void init(float x, float y) {
+
+        start.set(x, y);
+        end.set(x, y);
     }
 
     private void setupTextures() {
@@ -118,5 +122,19 @@ public class StraightLine extends Entity {
         // TODO: LineType dependent on selected type in menu
         body = BodyFactory.createLine((start.x + end.x) / 2, (start.y + end.y) / 2, width, height, rotation, BodyDef.BodyType.StaticBody, LineType.SOLID);
         body.setUserData(type);
+    }
+
+    @Override
+    public void reset() {
+        x = 0;
+        y = 0;
+        width = 0;
+
+        start.set(0, 0);
+        end.set(0, 0);
+        rotation = 0;
+
+        body.getWorld().destroyBody(body);
+        body = null;
     }
 }

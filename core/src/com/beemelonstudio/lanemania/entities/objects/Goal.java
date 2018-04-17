@@ -90,7 +90,6 @@ public class Goal extends Entity {
 
         // Width is the distance between leftCorner[0] and rightCorner[0]
         width = Math.abs(shapes.get(1)[1].x) + Math.abs(shapes.get(3)[0].x);
-        Gdx.app.log("width", width+": "+Math.abs(shapes.get(1)[1].x) +" - "+ Math.abs(shapes.get(3)[0].x));
 
         // Height is the distance between leftCorner[0] and leftWall[1]
         height = Math.abs(shapes.get(1)[0].y) + Math.abs(shapes.get(0)[0].y);

@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.types.EntityType;
 
 /**
  * Created by Jann on 11.01.18.
@@ -18,9 +19,11 @@ public class RectangleObstacle extends Entity {
     public RectangleObstacle(Body body) {
         super(body);
 
+        type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("rectangle");
 
         calculateSizes();
+        body.setUserData(type);
     }
 
     @Override

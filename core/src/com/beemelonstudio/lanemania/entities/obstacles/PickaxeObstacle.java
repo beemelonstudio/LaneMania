@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.types.EntityType;
 
 /**
  * Created by Jann on 06.03.18.
@@ -17,9 +18,11 @@ public class PickaxeObstacle extends Entity {
         super(body);
         this.width = width;
 
+        type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("pickaxe");
 
         calculateSizes();
+        body.setUserData(type);
     }
 
     @Override

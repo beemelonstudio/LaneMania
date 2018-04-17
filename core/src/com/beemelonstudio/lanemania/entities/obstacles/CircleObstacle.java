@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.types.EntityType;
 
 /**
  * Created by Jann on 07.02.18.
@@ -17,9 +18,11 @@ public class CircleObstacle extends Entity {
     public CircleObstacle(Body body) {
         super(body);
 
+        type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("circle");
 
         calculateSizes();
+        body.setUserData(type);
     }
 
     @Override
@@ -45,7 +48,5 @@ public class CircleObstacle extends Entity {
         radius = shape.getRadius();
         width = radius * 2;
         height = radius * 2;
-
-        Gdx.app.log("Calculate", "Circle");
     }
 }

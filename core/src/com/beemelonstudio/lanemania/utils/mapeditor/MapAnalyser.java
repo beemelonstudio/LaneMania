@@ -101,7 +101,7 @@ public class MapAnalyser {
                             rotation,
                             BodyDef.BodyType.StaticBody,
                             ObstacleType.SOLID);
-                    body.setUserData(type);
+                    //body.setUserData(type);
 
                     obstacles.add(new RectangleObstacle(body));
                 }
@@ -114,7 +114,7 @@ public class MapAnalyser {
                             rotation,
                             BodyDef.BodyType.StaticBody,
                             ObstacleType.SOLID);
-                    body.setUserData(type);
+                    //body.setUserData(type);
 
                     obstacles.add(new StoneObstacle(body, rectangle.width * unitScale));
                 }
@@ -127,7 +127,7 @@ public class MapAnalyser {
                             rotation,
                             BodyDef.BodyType.StaticBody,
                             ObstacleType.SOLID);
-                    body.setUserData(type);
+                    //body.setUserData(type);
 
                     obstacles.add(new PickaxeObstacle(body, rectangle.width * unitScale));
                 }
@@ -145,7 +145,7 @@ public class MapAnalyser {
                         ellipse.width * unitScale,
                         BodyDef.BodyType.StaticBody,
                         ObstacleType.SOLID);
-                body.setUserData(object.getProperties().get("type"));
+                //body.setUserData(object.getProperties().get("type"));
 
                 obstacles.add(new CircleObstacle(body));
             }
@@ -165,7 +165,7 @@ public class MapAnalyser {
                         polygon.getVertices(),
                         BodyDef.BodyType.StaticBody,
                         ObstacleType.SOLID);
-                body.setUserData(object.getProperties().get("type"));
+                //body.setUserData(object.getProperties().get("type"));
 
                 obstacles.add(new TriangleObstacle(body));
             }

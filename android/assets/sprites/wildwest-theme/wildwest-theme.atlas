@@ -11,13 +11,6 @@ background
   orig: 500, 1000
   offset: 0, 0
   index: -1
-ball
-  rotate: false
-  xy: 822, 144
-  size: 174, 174
-  orig: 174, 174
-  offset: 0, 0
-  index: -1
 circle
   rotate: false
   xy: 2, 363

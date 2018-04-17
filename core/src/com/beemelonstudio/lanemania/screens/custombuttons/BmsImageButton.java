@@ -17,15 +17,20 @@ public class BmsImageButton extends ImageButton {
     }
 
     public BmsImageButton(Skin skin, TextureRegion textureRegion) {
+        this(skin, textureRegion, "default");
+    }
+
+    public BmsImageButton(Skin skin, TextureRegion textureRegion, String style) {
         super(skin);
 
         //textureRegion.setRegionWidth((int) (textureRegion.getRegionWidth() * 0.8f));
         //textureRegion.setRegionHeight((int) (textureRegion.getRegionHeight() * 0.8f));
 
-        ImageButtonStyle style = new ImageButtonStyle(skin.get("default", ImageButtonStyle.class));
-        style.imageUp = new TextureRegionDrawable(textureRegion);
+        ImageButtonStyle imageButtonStyle = new ImageButtonStyle(skin.get(style, ImageButtonStyle.class));
+        imageButtonStyle.imageUp = new TextureRegionDrawable(textureRegion);
+        imageButtonStyle.imageDown = imageButtonStyle.imageUp;
 
-        this.setStyle(style);
+        this.setStyle(imageButtonStyle);
         this.updateImage();
     }
 }

@@ -277,8 +277,6 @@ public class BodyFactory {
 
         loader.attachFixture(body, "pickaxe", createFixture(obstacleType, new PolygonShape()), width);
 
-        Gdx.app.log("Pickaxe", "after create");
-
         return body;
     }
 }
