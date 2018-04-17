@@ -21,6 +21,8 @@ public class Assets {
 
     private static HashMap<String, AssetFile> files;
 
+    public static TextureAtlas currentWorldTextureAtlas;
+
     public static void load(){
 
         //Enter all files from the assets folder in here
@@ -30,11 +32,13 @@ public class Assets {
         //TextureAtlases
         files.put("orange-theme",   new AssetFile("sprites/orange-theme/orange-theme.atlas",    TextureAtlas.class));
         files.put("wildwest-theme", new AssetFile("sprites/wildwest-theme/wildwest-theme.atlas",TextureAtlas.class));
+        files.put("general-theme",  new AssetFile("sprites/general-theme/general-theme.atlas",  TextureAtlas.class));
 
         //Skins
         files.put("defaultSkin",    new AssetFile("skins/default/uiskin.json",          Skin.class));
         files.put("pixthulhuSkin",  new AssetFile("skins/pixthulhu/pixthulhu-ui.json",  Skin.class));
         files.put("comicSkin",      new AssetFile("skins/comic/comic-ui.json",          Skin.class));
+        files.put("beemelonSkin",   new AssetFile("skins/beemelon/skin.json",           Skin.class));
 
         //Sounds
         files.put("backgroundMenuMusic",    new AssetFile("sounds/backgroundExample.mp3",   Music.class));

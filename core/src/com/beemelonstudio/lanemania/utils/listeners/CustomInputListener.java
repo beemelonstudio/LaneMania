@@ -5,8 +5,18 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.QueryCallback;
+import com.badlogic.gdx.utils.Array;
+import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
+import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
+
+import java.util.ArrayList;
+
+import static com.badlogic.gdx.graphics.g2d.ParticleEmitter.SpawnShape.point;
 
 /**
  * Created by Jann on 09.01.2018.
@@ -17,13 +27,14 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
 
     private Vector3 coordinates;
     private StraightLine straightStraightLine;
+    private boolean ballWasHit;
 
     public CustomInputListener(PlayScreen screen) {
 
         this.screen = screen;
     }
 
-    public InputProcessor createInputProcesser() {
+    public InputProcessor createInputProcessor() {
         return this;
     }
 
@@ -95,19 +106,36 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         coordinates = new Vector3(screenX, screenY, 0);
         screen.camera.unproject(coordinates);
 
-        switch (screen.currentType) {
+        // Testing if ball was touched
+        screen.worldManager.world.QueryAABB(
+                callback,
+                coordinates.x - screen.ball.width,
+                coordinates.y - screen.ball.height,
+                coordinates.x + screen.ball.width,
+                coordinates.y + screen.ball.height);
 
-            case STRAIGHTLINE:
-                straightStraightLine = new StraightLine(coordinates.x, coordinates.y);
-                screen.straightLines.add(straightStraightLine);
-                break;
+        if(ballWasHit) {
 
-            default: break;
+            screen.startLevel();
+        }
+        else {
+
+            switch (screen.currentType) {
+
+                case STRAIGHTLINE:
+                    if (screen.straightLines.size <= screen.maxStraightLines) {
+                        straightStraightLine = screen.straightLinePool.obtain();
+                        straightStraightLine.init(coordinates.x, coordinates.y);
+                        screen.straightLines.add(straightStraightLine);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
-        Gdx.app.log("Touch down at", coordinates.x + " - " + coordinates.y);
-
-        return false;
+        return true;
     }
 
     @Override
@@ -119,14 +147,14 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         switch (screen.currentType) {
 
             case STRAIGHTLINE:
-                straightStraightLine.setEnd(coordinates.x, coordinates.y);
-                straightStraightLine.build();
+                if(screen.straightLines.size <= screen.maxStraightLines) {
+                    straightStraightLine.setEnd(coordinates.x, coordinates.y);
+                    straightStraightLine.build();
+                }
                 break;
 
             default: break;
         }
-
-        Gdx.app.log("Touch up at", coordinates.x + " - " + coordinates.y);
 
         return false;
     }
@@ -140,7 +168,9 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         switch (screen.currentType) {
 
             case STRAIGHTLINE:
-                straightStraightLine.setEnd(coordinates.x, coordinates.y);
+                if(screen.straightLines.size <= screen.maxStraightLines) {
+                    straightStraightLine.setEnd(coordinates.x, coordinates.y);
+                }
                 break;
 
             default: break;
@@ -158,4 +188,26 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
     public boolean scrolled(int amount) {
         return false;
     }
+
+    /*
+    Callback function for getting a touched body.
+    Source: https://stackoverflow.com/questions/31764270/libgdx-check-if-body-is-touch
+     */
+    QueryCallback callback = new QueryCallback() {
+        @Override
+        public boolean reportFixture (Fixture fixture) {
+            if (fixture.testPoint(coordinates.x, coordinates.y)) {
+
+                if(fixture.getBody().getUserData() != null) {
+                    EntityType type = (EntityType) fixture.getBody().getUserData();
+
+                    if (type == EntityType.BALL)
+                        ballWasHit = true;
+                }
+
+                return false;
+            } else
+                return true;
+        }
+    };
 }

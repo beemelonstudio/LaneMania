@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ShortArray;
 import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.types.EntityType;
 
 /**
  * Created by Jann on 12.02.18.
@@ -34,9 +35,12 @@ public class TriangleObstacle extends Entity {
         EarClippingTriangulator triangulator = new EarClippingTriangulator();
         triangles = triangulator.computeTriangles(vertices);
 
+        type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("rectangle");
         polygonRegion = new PolygonRegion(textureRegion, vertices, triangles.toArray());
         polygonSprite = new PolygonSprite(polygonRegion);
+
+        body.setUserData(type);
     }
 
     @Override

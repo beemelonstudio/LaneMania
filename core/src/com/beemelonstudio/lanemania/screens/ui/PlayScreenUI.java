@@ -4,18 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.GameScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
-
 
 /**
  * Created by Stampler on 09.01.2018.
@@ -26,10 +23,11 @@ public class PlayScreenUI extends GameScreenUI {
     private PlayScreen screen;
 
     private float height, width;
-    private float numberOfButtons = 6f;
+    private float numberOfButtons = 7f;
 
-    private TextButton playButton;
-    private TextButton resetButton;
+    private BmsImageButton playButton;
+    private BmsImageButton menuButton;
+    private BmsImageButton undoButton;
     private BmsImageButton[] lineButtons;
 
     public PlayScreenUI(GameScreen screen) {
@@ -37,16 +35,16 @@ public class PlayScreenUI extends GameScreenUI {
 
         this.screen = (PlayScreen) screen;
 
-        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        textureAtlas = (TextureAtlas) Assets.get("general-theme");
 
-        height = (Gdx.graphics.getHeight() / 2f) / 5f;
+        height = (Gdx.graphics.getHeight() / 2f) / 6f;
         width = Gdx.graphics.getWidth() / numberOfButtons;
 
         table.row();
 
-        createPlayButton();
-        createResetButton();
-        createBmsImageButtons();
+        createButtonRow();
+        //createPlayButton();
+        //createBmsImageButtons();
     }
 
     @Override
@@ -59,12 +57,78 @@ public class PlayScreenUI extends GameScreenUI {
         super.draw(batch);
     }
 
+    private void createButtonRow() {
+
+        // Create and position
+        undoButton = new BmsImageButton(skin, textureAtlas.findRegion("line_back"), "transparent");
+        undoButton.setHeight(height);
+        undoButton.setWidth(width);
+        undoButton.setPosition(0, 0);
+        stage.addActor(undoButton);
+
+        // Listener
+        undoButton.addListener(new ClickListener() {
+
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                if(!screen.gravity) {
+                    // When in creative mode
+                    /*
+                    for (Array.ArrayIterator<Body> iter = new Array.ArrayIterator<Body>(bodies, true); iter.hasNext(); ) {
+                        Body body = iter.next();
+                        if (body != null && body.getUserData() != null) {
+                            EntityType type = asEntityType(body.getUserData().toString());
+                            if (type == EntityType.STRAIGHTLINE) {
+                                straightLines.add(body);
+                            }
+                        }
+                    }
+                    */
+                    if (screen.straightLines.size > 0) {
+                        int index = screen.straightLines.size-1;
+
+                        if(screen.straightLines.get(index).body != null) {
+                            StraightLine line = screen.straightLines.get(index);
+                            screen.straightLines.removeIndex(index);
+                            screen.straightLinePool.free(line);
+                        }
+                    }
+                }
+                else {
+                    // When the game is playing
+                    screen.gravity = false;
+                    screen.ball.reset();
+                }
+            }
+        });
+
+        // Create and position
+        menuButton = new BmsImageButton(skin, textureAtlas.findRegion("menu_button"), "transparent");
+        menuButton.setHeight(height);
+        menuButton.setWidth(width);
+        menuButton.setPosition(Gdx.graphics.getWidth() - width, 0);
+        stage.addActor(menuButton);
+
+        // Listener
+        menuButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                screen.game.screens.pop();
+                screen.game.setScreen(screen.game.screens.peek());
+            }
+        });
+    }
+
     private void createPlayButton() {
 
         // Create and position
-        playButton = new TextButton("Play", skin);
+        playButton = new BmsImageButton(skin, textureAtlas.findRegion("play_button"), "transparent");
         table.add(playButton).height(height).width(width);
-        table.top().right();
+        table.top().left();
 
         // Listener
         playButton.addListener(new ClickListener() {
@@ -73,41 +137,7 @@ public class PlayScreenUI extends GameScreenUI {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
-                screen.gravity = true;
-            }
-        });
-    }
-
-    private void createResetButton() {
-
-        // Create and position
-        resetButton = new TextButton("Reset", skin);
-        table.add(resetButton).height(height).width(width);
-        table.top().right();
-
-        // Listener
-        resetButton.addListener(new ClickListener() {
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-
-                screen.gravity = false;
-                screen.ball.reset();
-
-                Array<Body> bodies = new Array<Body>();
-                screen.worldManager.world.getBodies(bodies);
-
-                for ( Array.ArrayIterator<Body> iter = new Array.ArrayIterator<Body>(bodies, true); iter.hasNext();) {
-                    Body body = iter.next();
-                    if (body != null && body.getUserData() != null) {
-                        EntityType type = asEntityType(body.getUserData().toString());
-                        if(type == EntityType.STRAIGHTLINE) {
-                            screen.worldManager.world.destroyBody(body);
-                            screen.straightLines = new Array<StraightLine>();
-                        }
-                    }
-                }
+                screen.startLevel();
             }
         });
     }

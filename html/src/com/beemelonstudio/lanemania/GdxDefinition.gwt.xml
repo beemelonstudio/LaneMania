@@ -9,4 +9,5 @@
 	<entry-point class='com.beemelonstudio.lanemania.client.HtmlLauncher' />
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>
 	<set-configuration-property name="gdx.assetpath" value="../android/assets" />
+	<inherits name='com.kotcrab.vis.vis-ui' />
 </module>

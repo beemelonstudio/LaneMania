@@ -20,7 +20,7 @@ public abstract class Entity implements Actable {
     protected TextureAtlas textureAtlas;
     protected TextureRegion textureRegion;
 
-    protected Body body;
+    public Body body;
 
     public float x, y;
     public float width, height;
@@ -32,10 +32,12 @@ public abstract class Entity implements Actable {
     public Entity(Body body) {
         this.body = body;
 
+        type = EntityType.NONE;
+
         loadTextureAtlas();
     }
 
     protected void loadTextureAtlas() {
-        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        textureAtlas = Assets.currentWorldTextureAtlas;
     }
 }

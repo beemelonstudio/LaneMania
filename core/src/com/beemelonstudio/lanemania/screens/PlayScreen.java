@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.objects.Ball;
@@ -23,6 +26,8 @@ import com.beemelonstudio.lanemania.utils.listeners.CustomContactListener;
 import com.beemelonstudio.lanemania.utils.listeners.CustomInputListener;
 import com.beemelonstudio.lanemania.utils.mapeditor.MapAnalyser;
 
+import java.util.Iterator;
+
 /**
  * Created by Jann on 09.01.2018.
  */
@@ -32,9 +37,7 @@ public class PlayScreen extends GameScreen {
     private Box2DDebugRenderer debugRenderer;
 
     private PlayScreenUI playScreenUI;
-
     public WorldManager worldManager;
-
     private MapAnalyser mapAnalyser;
 
     public boolean gravity = false;
@@ -50,6 +53,10 @@ public class PlayScreen extends GameScreen {
     public Ball ball;
     public Goal goal;
     public Array<StraightLine> straightLines;
+    public Pool<StraightLine> straightLinePool = Pools.get(StraightLine.class);
+    public Array<Body> toBeDeleted;
+
+    public int maxStraightLines;
 
     public PlayScreen(LaneMania game) {
         super(game);
@@ -64,6 +71,7 @@ public class PlayScreen extends GameScreen {
     public void show() {
         super.show();
 
+        toBeDeleted = new Array<Body>();
         debugRenderer = new Box2DDebugRenderer(true,true,false,true,true,true);
 
         worldManager = new WorldManager();
@@ -74,13 +82,12 @@ public class PlayScreen extends GameScreen {
         CustomInputListener customInputListener = new CustomInputListener(this);
         Gdx.input.setInputProcessor(new InputMultiplexer(
                 stage,
-                customInputListener.createInputProcesser(),
+                customInputListener.createInputProcessor(),
                 customInputListener.createGestureListener()
         ));
 
+        setupTextures();
         loadLevel();
-
-        setupBackground();
         playScreenUI = new PlayScreenUI(this);
     }
 
@@ -131,6 +138,7 @@ public class PlayScreen extends GameScreen {
     private void loadLevel() {
 
         currentType = EntityType.STRAIGHTLINE;
+        maxStraightLines = 3; //TODO: Extract this info from level file
         straightLines = new Array<StraightLine>();
 
         map = new TmxMapLoader().load(mapName);
@@ -149,16 +157,20 @@ public class PlayScreen extends GameScreen {
         goal = new Goal(mapAnalyser.goal);
     }
 
-    private void setupBackground() {
+    private void setupTextures() {
 
-        TextureAtlas backgroundTextureAtlas;
-        if(mapName.contains("world1")) backgroundTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
-        else backgroundTextureAtlas = (TextureAtlas) Assets.get("orange-theme");
+        if(mapName.contains("world1")) Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        else Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("orange-theme");
 
-        backgroundTexture = backgroundTextureAtlas.findRegion("background");
+        backgroundTexture = Assets.currentWorldTextureAtlas.findRegion("background");
         backgroundTile = new TiledDrawable(backgroundTexture);
 
         isBackgroundDrawing = true;
+    }
+
+    public void startLevel() {
+
+        gravity = true;
     }
 
     public void endLevel() {

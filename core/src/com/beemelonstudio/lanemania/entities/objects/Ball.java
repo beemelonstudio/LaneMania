@@ -1,11 +1,13 @@
 package com.beemelonstudio.lanemania.entities.objects;
 
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
+import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 /**
  * Created by Jann on 09.01.2018.
@@ -25,6 +27,7 @@ public class Ball extends Entity {
 
         type = EntityType.BALL;
 
+        textureAtlas = (TextureAtlas) Assets.get("general-theme");
         textureRegion = textureAtlas.findRegion("ball");
 
         origin = new Vector2(body.getPosition());
@@ -52,8 +55,10 @@ public class Ball extends Entity {
 
     public void reset() {
 
-        body.setTransform(origin, 0);
-        body.setActive(true);
-        body.setLinearVelocity(0f,0f);
+        if(body.getPosition().x != origin.x || body.getPosition().y != origin.y) {
+            body.setTransform(origin, 0);
+            body.setActive(true);
+            body.setLinearVelocity(0f, 0f);
+        }
     }
 }

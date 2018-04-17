@@ -19,6 +19,7 @@ import com.beemelonstudio.lanemania.screens.MenuScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
 import com.beemelonstudio.lanemania.utils.mapeditor.MapLoader;
+import com.kotcrab.vis.ui.VisUI;
 
 import java.util.Stack;
 
@@ -47,7 +48,8 @@ public class LaneMania extends Game {
         mapLoader = new MapLoader();
         mapLoader.loadMaps();
 
-        skin = (Skin) Assets.get("pixthulhuSkin");
+        skin = (Skin) Assets.get("beemelonSkin");
+        VisUI.load(skin);
 
         backgroundMusic = (Music)Assets.get("backgroundMenuMusic");
         backgroundMusic.play();
@@ -64,7 +66,7 @@ public class LaneMania extends Game {
         screens = new Stack<GameScreen>();
         screens.push(new MenuScreen(this));
         //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        //screens.push(new PlayScreen(this, mapLoader.getMap(0,4)));
+        //screens.push(new PlayScreen(this, mapLoader.getMap(0,0)));
 
         setScreen(screens.peek());
 	}
@@ -72,6 +74,7 @@ public class LaneMania extends Game {
     @Override
     public void dispose() {
         super.dispose();
+        VisUI.dispose();
     }
 
     @Override
