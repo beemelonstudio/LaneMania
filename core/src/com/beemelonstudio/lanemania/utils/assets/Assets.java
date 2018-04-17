@@ -1,14 +1,11 @@
 package com.beemelonstudio.lanemania.utils.assets;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.beemelonstudio.lanemania.utils.assets.AssetFile;
 
-import java.io.File;
 import java.util.HashMap;
 
 /**
@@ -42,6 +39,9 @@ public class Assets {
 
         //Sounds
         files.put("backgroundMenuMusic",    new AssetFile("sounds/backgroundExample.mp3",   Music.class));
+
+        //Images
+        files.put("backgroundW1",   new AssetFile("images/background_w1.jpg",   Texture.class));
 
         //I18Ns
         //files.put("defaultI18N",     new AssetFile("i18N/prototype",  I18NBundle.class));

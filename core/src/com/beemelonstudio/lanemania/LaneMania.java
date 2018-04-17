@@ -35,15 +35,11 @@ public class LaneMania extends Game {
     public Stage stage;
     public Skin skin;
 
-    public float volume = 1.0f;
-    public Boolean muted = false;
-    public Music backgroundMusic;
-
     public Stack<GameScreen> screens;
     public MapLoader mapLoader;
 
     public float volume = 1.0f;
-    public Boolean muted;
+    public Boolean muted = false;
     public Music backgroundMusic;
 
     @Override
