@@ -36,6 +36,7 @@ public class MenuScreen extends GameScreen {
         stage.addActor(table);
 
         isBackgroundDrawing = true;
+        textureAtlas = (TextureAtlas) Assets.get("general-theme");
 
         // Used for debugging
         table.setDebug(true);

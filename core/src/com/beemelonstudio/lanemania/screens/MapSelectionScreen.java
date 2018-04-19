@@ -1,13 +1,17 @@
 package com.beemelonstudio.lanemania.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.LaneMania;
+import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
 import com.beemelonstudio.lanemania.screens.custombuttons.WorldTextButton;
+import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 /**
  * Created by Jann on 27.01.18.
@@ -22,6 +26,9 @@ public class MapSelectionScreen extends GameScreen {
     public Table mapsTable;
 
     public Array<WorldTextButton> worldButtons;
+
+    private TextureRegion leftArrowIcon;
+    private TextureRegion rightArrowIcon;
 
     public MapSelectionScreen(LaneMania game) {
         super(game);
@@ -41,6 +48,10 @@ public class MapSelectionScreen extends GameScreen {
         stage.addActor(table);
 
         isBackgroundDrawing = true;
+        textureAtlas = (TextureAtlas) Assets.get("general-theme");
+
+        leftArrowIcon = textureAtlas.findRegion("arrow_left");
+        rightArrowIcon = textureAtlas.findRegion("arrow_right");
 
         // Used for debugging
         table.setDebug(true);
@@ -67,6 +78,11 @@ public class MapSelectionScreen extends GameScreen {
         table.row();
         table.add(mapsTable);
 
+        BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon);
+        BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon);
+        BmsImageButton leftArrowButton2 = new BmsImageButton(skin, leftArrowIcon);
+        BmsImageButton rightArrowButton2 = new BmsImageButton(skin, rightArrowIcon);
+
         worldButtons = new Array<WorldTextButton>();
 
         for(int i = 0; i < worlds.size; i++) {
@@ -83,7 +99,9 @@ public class MapSelectionScreen extends GameScreen {
             });
 
             worldButtons.add(worldButton);
+            worldsTable.add(leftArrowButton);
             worldsTable.add(worldButton).pad(10f);
+            worldsTable.add(rightArrowButton);
 
             for(int j = 0; j < worlds.get(i).size; j++) {
 
@@ -101,7 +119,9 @@ public class MapSelectionScreen extends GameScreen {
                 });
 
                 worldButton.addMapButton(mapButton);
-                mapsTable.add(mapButton).pad(1f).fillX().expandX();
+                mapsTable.add(leftArrowButton2);
+                mapsTable.add(mapButton).pad(10f).fillX().expandX();
+                mapsTable.add(rightArrowButton2);
 
                 if(j % 3 == 0)
                     mapsTable.row();
