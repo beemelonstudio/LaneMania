@@ -18,6 +18,34 @@ circle
   orig: 1014, 1007
   offset: 0, 0
   index: -1
+cloud
+  rotate: false
+  xy: 1520, 235
+  size: 413, 180
+  orig: 413, 180
+  offset: 0, 0
+  index: 1
+cloud
+  rotate: false
+  xy: 1520, 103
+  size: 361, 130
+  orig: 361, 130
+  offset: 0, 0
+  index: 2
+crane_closed
+  rotate: false
+  xy: 1018, 1090
+  size: 72, 139
+  orig: 72, 139
+  offset: 0, 0
+  index: -1
+crane_opened
+  rotate: false
+  xy: 1018, 1231
+  size: 76, 139
+  orig: 76, 139
+  offset: 0, 0
+  index: -1
 goal_back
   rotate: false
   xy: 2, 183
@@ -58,6 +86,13 @@ straightline_short
   xy: 2, 141
   size: 529, 40
   orig: 529, 40
+  offset: 0, 0
+  index: -1
+tumbleweed
+  rotate: false
+  xy: 1018, 1047
+  size: 40, 41
+  orig: 40, 41
   offset: 0, 0
   index: -1
 
