@@ -28,6 +28,7 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
     private Vector3 coordinates;
     private StraightLine straightStraightLine;
     private boolean ballWasHit;
+    private boolean drawing;
 
     public CustomInputListener(PlayScreen screen) {
 
@@ -107,15 +108,13 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         screen.camera.unproject(coordinates);
 
         // Testing if ball was touched
-        screen.worldManager.world.QueryAABB(
-                callback,
-                coordinates.x - screen.ball.width,
-                coordinates.y - screen.ball.height,
-                coordinates.x + screen.ball.width,
-                coordinates.y + screen.ball.height);
+        if(coordinates.x > screen.ball.x - screen.ball.width &&
+           coordinates.x < screen.ball.x + screen.ball.width &&
+           coordinates.y > screen.ball.y - screen.ball.height &&
+           coordinates.y < screen.ball.y + screen.ball.height)
+            ballWasHit = true;
 
         if(ballWasHit) {
-
             screen.startLevel();
         }
         else {
@@ -123,10 +122,11 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
             switch (screen.currentType) {
 
                 case STRAIGHTLINE:
-                    if (screen.straightLines.size <= screen.maxStraightLines) {
+                    if (screen.straightLines.size < screen.maxStraightLines) {
                         straightStraightLine = screen.straightLinePool.obtain();
                         straightStraightLine.init(coordinates.x, coordinates.y);
                         screen.straightLines.add(straightStraightLine);
+                        drawing = true;
                     }
                     break;
 
@@ -147,9 +147,10 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         switch (screen.currentType) {
 
             case STRAIGHTLINE:
-                if(screen.straightLines.size <= screen.maxStraightLines) {
+                if(drawing) {
                     straightStraightLine.setEnd(coordinates.x, coordinates.y);
                     straightStraightLine.build();
+                    drawing = false;
                 }
                 break;
 
@@ -168,7 +169,7 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         switch (screen.currentType) {
 
             case STRAIGHTLINE:
-                if(screen.straightLines.size <= screen.maxStraightLines) {
+                if(drawing) {
                     straightStraightLine.setEnd(coordinates.x, coordinates.y);
                 }
                 break;
