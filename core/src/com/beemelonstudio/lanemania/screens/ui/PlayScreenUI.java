@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.GameScreen;
@@ -125,10 +127,23 @@ public class PlayScreenUI extends GameScreenUI {
 
     private void createPlayButton() {
 
+        // Translate ball bounds to screen coordinates for play button
+        Vector3 position = new Vector3(screen.ball.x, screen.ball.y, 0);
+        screen.camera.project(position);
+        Vector3 sizes = new Vector3(screen.ball.width, screen.ball.height, 0);
+        screen.camera.project(sizes);
+
         // Create and position
-        playButton = new BmsImageButton(skin, textureAtlas.findRegion("play_button"), "transparent");
-        table.add(playButton).height(height).width(width);
-        table.top().left();
+        playButton = new BmsImageButton(skin, textureAtlas.findRegion("play_button"), "default");
+        playButton.setPosition(
+                position.x - playButton.getWidth(),
+                position.y - playButton.getHeight());
+        stage.addActor(playButton);
+
+        Gdx.app.log("pos - size", position.x + "/"+position.y + " - " +sizes.x+"/"+sizes.y);
+        Gdx.app.log("Playbutton", playButton.getX() + "/" + playButton.getY());
+        //table.add(playButton).height(height).width(width);
+        //table.top().left();
 
         // Listener
         playButton.addListener(new ClickListener() {
