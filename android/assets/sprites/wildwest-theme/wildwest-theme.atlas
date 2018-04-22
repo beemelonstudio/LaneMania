@@ -18,14 +18,14 @@ circle
   orig: 1014, 1007
   offset: 0, 0
   index: -1
-cloud
+cloud1
   rotate: false
   xy: 1520, 235
   size: 413, 180
   orig: 413, 180
   offset: 0, 0
   index: 1
-cloud
+cloud2
   rotate: false
   xy: 1520, 103
   size: 361, 130

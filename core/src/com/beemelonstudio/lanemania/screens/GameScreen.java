@@ -42,6 +42,12 @@ public class GameScreen implements Screen, InputProcessor {
     protected TextureAtlas textureAtlas;
     protected TextureRegion backgroundTexture;
     protected TiledDrawable backgroundTile;
+    protected TextureRegion cloud1;
+    protected float cloud1x;
+    protected float cloud1y;
+    protected TextureRegion cloud2;
+    protected float cloud2x;
+    protected float cloud2y;
 
     private boolean shown = false;
     private boolean backButtonLocked = false;
@@ -66,6 +72,12 @@ public class GameScreen implements Screen, InputProcessor {
 
         textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
         backgroundTexture = textureAtlas.findRegion("background");
+        cloud1 = textureAtlas.findRegion("cloud1");
+        cloud2 = textureAtlas.findRegion("cloud2");
+        cloud1x = 0f;
+        cloud2x = 300f;
+        cloud1y = backgroundViewport.getTopGutterHeight() - 160;
+        cloud2y = backgroundViewport.getTopGutterHeight() - 320;
 
         Gdx.input.setInputProcessor(this);
     }
@@ -86,10 +98,20 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(isBackgroundDrawing) {
+            cloud1x += 10*delta;
+            cloud2x += 10*delta;
             backgroundViewport.apply();
             batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
             batch.begin();
             batch.draw(backgroundTexture, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
+            batch.draw(cloud1, cloud1x, cloud1y, backgroundViewport.getScreenWidth()/2, backgroundViewport.getScreenHeight()/8);
+            batch.draw(cloud2, cloud2x, cloud2y, backgroundViewport.getScreenWidth()/2, backgroundViewport.getScreenHeight()/8);
+            if (cloud1x > backgroundViewport.getScreenWidth()) {
+                cloud1x = -200f;
+            }
+            if (cloud2x > backgroundViewport.getScreenWidth()) {
+                cloud2x = -200f;
+            }
             batch.end();
         }
 
