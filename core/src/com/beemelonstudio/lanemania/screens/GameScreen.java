@@ -50,6 +50,10 @@ public class GameScreen implements Screen, InputProcessor {
     protected float cloud2x;
     protected float cloud2y;
     protected CloudAnimation animation1;
+    protected CloudAnimation animation2;
+    protected TextureRegion thumbleweed;
+    protected float weedx;
+    protected float weedy;
 
     private boolean shown = false;
     private boolean backButtonLocked = false;
@@ -80,8 +84,8 @@ public class GameScreen implements Screen, InputProcessor {
         cloud2x = 300f;
         cloud1y = backgroundViewport.getTopGutterHeight() - 160;
         cloud2y = backgroundViewport.getTopGutterHeight() - 320;
-        animation1 = new CloudAnimation(cloud1, cloud1x, cloud1y, delta, batch, backgroundViewport);
-
+        animation1 = new CloudAnimation(cloud1, cloud1x, cloud1y, batch, backgroundViewport);
+        animation2 = new CloudAnimation(cloud2, cloud2x, cloud2y, batch, backgroundViewport);
 
         Gdx.input.setInputProcessor(this);
     }
@@ -102,21 +106,14 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(isBackgroundDrawing) {
-            //cloud1x += 10*delta;
-            //cloud2x += 10*delta;
+            animation1.update(delta);
+            animation2.update(delta);
             backgroundViewport.apply();
             batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
             batch.begin();
             batch.draw(backgroundTexture, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
-            animation1
-            //batch.draw(cloud1, cloud1x, cloud1y, backgroundViewport.getScreenWidth()/2, backgroundViewport.getScreenHeight()/8);
-            //batch.draw(cloud2, cloud2x, cloud2y, backgroundViewport.getScreenWidth()/2, backgroundViewport.getScreenHeight()/8);
-            //if (cloud1x > backgroundViewport.getScreenWidth()) {
-           //     cloud1x = -200f;
-            //}
-            //if (cloud2x > backgroundViewport.getScreenWidth()) {
-            //    cloud2x = -200f;
-            //}
+            animation1.render();
+            animation2.render();
             batch.end();
         }
 
