@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.LaneMania;
+import com.beemelonstudio.lanemania.animations.background.CloudAnimation;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 import java.util.Stack;
@@ -48,6 +49,7 @@ public class GameScreen implements Screen, InputProcessor {
     protected TextureRegion cloud2;
     protected float cloud2x;
     protected float cloud2y;
+    protected CloudAnimation animation1;
 
     private boolean shown = false;
     private boolean backButtonLocked = false;
@@ -78,6 +80,8 @@ public class GameScreen implements Screen, InputProcessor {
         cloud2x = 300f;
         cloud1y = backgroundViewport.getTopGutterHeight() - 160;
         cloud2y = backgroundViewport.getTopGutterHeight() - 320;
+        animation1 = new CloudAnimation(cloud1, cloud1x, cloud1y, delta, batch, backgroundViewport);
+
 
         Gdx.input.setInputProcessor(this);
     }
@@ -98,20 +102,21 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(isBackgroundDrawing) {
-            cloud1x += 10*delta;
-            cloud2x += 10*delta;
+            //cloud1x += 10*delta;
+            //cloud2x += 10*delta;
             backgroundViewport.apply();
             batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
             batch.begin();
             batch.draw(backgroundTexture, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
-            batch.draw(cloud1, cloud1x, cloud1y, backgroundViewport.getScreenWidth()/2, backgroundViewport.getScreenHeight()/8);
-            batch.draw(cloud2, cloud2x, cloud2y, backgroundViewport.getScreenWidth()/2, backgroundViewport.getScreenHeight()/8);
-            if (cloud1x > backgroundViewport.getScreenWidth()) {
-                cloud1x = -200f;
-            }
-            if (cloud2x > backgroundViewport.getScreenWidth()) {
-                cloud2x = -200f;
-            }
+            animation1
+            //batch.draw(cloud1, cloud1x, cloud1y, backgroundViewport.getScreenWidth()/2, backgroundViewport.getScreenHeight()/8);
+            //batch.draw(cloud2, cloud2x, cloud2y, backgroundViewport.getScreenWidth()/2, backgroundViewport.getScreenHeight()/8);
+            //if (cloud1x > backgroundViewport.getScreenWidth()) {
+           //     cloud1x = -200f;
+            //}
+            //if (cloud2x > backgroundViewport.getScreenWidth()) {
+            //    cloud2x = -200f;
+            //}
             batch.end();
         }
 
