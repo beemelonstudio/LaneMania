@@ -25,9 +25,8 @@ public class TumbleweedAnimation {
     public void update(float delta){
         weedX += 40*delta;
         rotation += 10f;
-        if (rotation >= 360f){
-            rotation = 0f;
-        }
+
+
     }
 
     public void render(){
