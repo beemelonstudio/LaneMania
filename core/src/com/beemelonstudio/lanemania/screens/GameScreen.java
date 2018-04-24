@@ -90,7 +90,7 @@ public class GameScreen implements Screen, InputProcessor {
         animation2 = new CloudAnimation(cloud2, cloud2x, cloud2y, batch, backgroundViewport);
         tumbleweed = textureAtlas.findRegion("tumbleweed");
         weedX = 0f;
-        weedY = backgroundViewport.getWorldHeight()/4;
+        weedY = backgroundViewport.getBottomGutterHeight() + 110;
         animation3 = new TumbleweedAnimation(tumbleweed, weedX, weedY, batch, backgroundViewport);
 
         Gdx.input.setInputProcessor(this);
