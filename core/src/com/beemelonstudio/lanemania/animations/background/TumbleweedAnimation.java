@@ -11,6 +11,8 @@ public class TumbleweedAnimation {
     protected float weedY;
     protected PolygonSpriteBatch batch;
     protected Viewport backgroundViewport;
+    protected float width;
+    protected float height;
     protected float rotation;
 
 
@@ -20,6 +22,8 @@ public class TumbleweedAnimation {
         this.weedY = weedY;
         this.batch = batch;
         this.backgroundViewport = backgroundViewport;
+        width = backgroundViewport.getScreenWidth()/8;
+        height = backgroundViewport.getScreenHeight()/12;
     }
 
     public void update(float delta){
@@ -30,7 +34,7 @@ public class TumbleweedAnimation {
     }
 
     public void render(){
-        batch.draw(tumbleweed, weedX, weedY, tumbleweed.getRegionWidth()/2, tumbleweed.getRegionHeight()/2, backgroundViewport.getScreenWidth()/8, backgroundViewport.getScreenHeight()/12, 1f, 1f, rotation);
+        batch.draw(tumbleweed, weedX, weedY, width/2, height/2, backgroundViewport.getScreenWidth()/8, backgroundViewport.getScreenHeight()/12, 1f, 1f, rotation);
         if (weedX > backgroundViewport.getScreenWidth()) {
             weedX = -250f;
         }
