@@ -57,11 +57,11 @@ public class MenuScreen extends GameScreen {
         TextButton selectLevelButton = new TextButton("Select Level", skin);
         TextButton settingsButton = new TextButton("Settings", skin);
 
-        table.add(continueButton).fillX().uniformX();
+        table.add(continueButton).width(continueButton.getWidth()*2).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
-        table.add(selectLevelButton).fillX().uniformX();
+        table.add(selectLevelButton).width(selectLevelButton.getWidth()*2).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
-        table.add(settingsButton).fillX().uniformX();
+        table.add(settingsButton).width(settingsButton.getWidth()*2).fillX().uniformX();
 
         selectLevelButton.addListener(new ClickListener(){
             @Override
