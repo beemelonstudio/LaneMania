@@ -78,10 +78,10 @@ public class MapSelectionScreen extends GameScreen {
         table.row();
         table.add(mapsTable);
 
-        BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon);
-        BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon);
-        BmsImageButton leftArrowButton2 = new BmsImageButton(skin, leftArrowIcon);
-        BmsImageButton rightArrowButton2 = new BmsImageButton(skin, rightArrowIcon);
+        BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon, "transparent");
+        BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon, "transparent");
+        BmsImageButton leftArrowButton2 = new BmsImageButton(skin, leftArrowIcon, "transparent");
+        BmsImageButton rightArrowButton2 = new BmsImageButton(skin, rightArrowIcon, "transparent");
 
         worldButtons = new Array<WorldTextButton>();
 
