@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
@@ -79,9 +80,13 @@ public class MapSelectionScreen extends GameScreen {
         table.add(mapsTable);
 
         BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon, "transparent");
+        leftArrowButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_left_light"));
         BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon, "transparent");
+        rightArrowButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_right_light"));
         BmsImageButton leftArrowButton2 = new BmsImageButton(skin, leftArrowIcon, "transparent");
+        leftArrowButton2.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_left_light"));
         BmsImageButton rightArrowButton2 = new BmsImageButton(skin, rightArrowIcon, "transparent");
+        rightArrowButton2.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_right_light"));
 
         worldButtons = new Array<WorldTextButton>();
 

@@ -63,6 +63,7 @@ public class PlayScreenUI extends GameScreenUI {
 
         // Create and position
         undoButton = new BmsImageButton(skin, textureAtlas.findRegion("line_back"), "transparent");
+        undoButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("line_back_light"));
         undoButton.setHeight(height);
         undoButton.setWidth(width);
         undoButton.setPosition(0, 0);
@@ -108,6 +109,7 @@ public class PlayScreenUI extends GameScreenUI {
 
         // Create and position
         menuButton = new BmsImageButton(skin, textureAtlas.findRegion("menu_button"), "transparent");
+        menuButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("menu_button_light"));
         menuButton.setHeight(height);
         menuButton.setWidth(width);
         menuButton.setPosition(Gdx.graphics.getWidth() - width, 0);
@@ -135,6 +137,7 @@ public class PlayScreenUI extends GameScreenUI {
 
         // Create and position
         playButton = new BmsImageButton(skin, textureAtlas.findRegion("play_button"), "default");
+        playButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("play_button_light"));
         playButton.setPosition(
                 position.x - playButton.getWidth(),
                 position.y - playButton.getHeight());
