@@ -84,13 +84,13 @@ public class GameScreen implements Screen, InputProcessor {
         cloud2 = textureAtlas.findRegion("cloud2");
         cloud1x = 0f;
         cloud2x = 300f;
-        cloud1y = backgroundViewport.getTopGutterHeight() - 160;
-        cloud2y = backgroundViewport.getTopGutterHeight() - 320;
+        cloud1y = backgroundViewport.getScreenHeight() - 160;
+        cloud2y = backgroundViewport.getScreenHeight() - 320;
         animation1 = new CloudAnimation(cloud1, cloud1x, cloud1y, batch, backgroundViewport);
         animation2 = new CloudAnimation(cloud2, cloud2x, cloud2y, batch, backgroundViewport);
         tumbleweed = textureAtlas.findRegion("tumbleweed");
         weedX = 0f;
-        weedY = backgroundViewport.getBottomGutterHeight() + 110;
+        weedY = 110f;
         animation3 = new TumbleweedAnimation(tumbleweed, weedX, weedY, batch, backgroundViewport);
 
         Gdx.input.setInputProcessor(this);

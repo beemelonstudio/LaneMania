@@ -60,6 +60,7 @@ public class LaneMania extends Game {
         hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
         backgroundViewport = new ScreenViewport();
+        backgroundViewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         batch = new PolygonSpriteBatch();
         stage = new Stage(new ScreenViewport(hudCamera));
 

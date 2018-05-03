@@ -78,6 +78,7 @@ public class MapSelectionScreen extends GameScreen {
         table.add(worldsTable);
         table.row();
         table.add(mapsTable);
+        table.row();
 
         BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon, "transparent");
         leftArrowButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_left_light"));
@@ -87,6 +88,7 @@ public class MapSelectionScreen extends GameScreen {
         leftArrowButton2.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_left_light"));
         BmsImageButton rightArrowButton2 = new BmsImageButton(skin, rightArrowIcon, "transparent");
         rightArrowButton2.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_right_light"));
+        TextButton returnButton = new TextButton("Return", skin);
 
         worldButtons = new Array<WorldTextButton>();
 
@@ -135,6 +137,17 @@ public class MapSelectionScreen extends GameScreen {
 
         worldButtons.get(0).setMapButtonVisibility(true);
         setAllMapsVisibility(true);
+
+        table.add(returnButton);
+        returnButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                screens.pop();
+                game.setScreen(screens.peek());
+            }
+        });
     }
 
     public void setAllMapsVisibility(boolean visibility) {
