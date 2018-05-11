@@ -36,7 +36,7 @@ public class TumbleweedAnimation {
     public void render(){
         batch.draw(tumbleweed, weedX, weedY, width/2, height/2, backgroundViewport.getScreenWidth()/8, backgroundViewport.getScreenHeight()/12, 1f, 1f, rotation);
         if (weedX > backgroundViewport.getScreenWidth()) {
-            weedX = -250f;
+            weedX = -800f;
         }
     }
 }

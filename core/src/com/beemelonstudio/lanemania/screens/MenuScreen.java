@@ -53,15 +53,19 @@ public class MenuScreen extends GameScreen {
 
     public void createMenu(){
 
+        table.padBottom(100);
+        Image logo = new Image(textureAtlas.findRegion("logo"));
         TextButton continueButton = new TextButton("Continue", skin);
         TextButton selectLevelButton = new TextButton("Select Level", skin);
         TextButton settingsButton = new TextButton("Settings", skin);
 
-        table.add(continueButton).width(continueButton.getWidth()*2).fillX().uniformX();
+        table.add(logo).width(logo.getWidth()/2).height((logo.getHeight()/logo.getWidth())*logo.getWidth()/2);
+        table.row().pad(80, 0, 10, 0);
+        table.add(continueButton).width(continueButton.getWidth()).height(continueButton.getHeight()/2);
         table.row().pad(10, 0, 10, 0);
-        table.add(selectLevelButton).width(selectLevelButton.getWidth()*2).fillX().uniformX();
+        table.add(selectLevelButton).width(selectLevelButton.getWidth()).height(selectLevelButton.getHeight()/2);
         table.row().pad(10, 0, 10, 0);
-        table.add(settingsButton).width(settingsButton.getWidth()*2).fillX().uniformX();
+        table.add(settingsButton).width(settingsButton.getWidth()).height(settingsButton.getHeight()/2);
 
         selectLevelButton.addListener(new ClickListener(){
             @Override
