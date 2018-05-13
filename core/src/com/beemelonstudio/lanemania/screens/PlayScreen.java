@@ -2,6 +2,7 @@ package com.beemelonstudio.lanemania.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -26,8 +27,6 @@ import com.beemelonstudio.lanemania.utils.listeners.CustomContactListener;
 import com.beemelonstudio.lanemania.utils.listeners.CustomInputListener;
 import com.beemelonstudio.lanemania.utils.mapeditor.MapAnalyser;
 
-import java.util.Iterator;
-
 /**
  * Created by Jann on 09.01.2018.
  */
@@ -41,6 +40,7 @@ public class PlayScreen extends GameScreen {
     private MapAnalyser mapAnalyser;
 
     public boolean gravity = false;
+    public CustomInputListener customInputListener;
 
     public String mapName;
     private TiledMap map;
@@ -55,6 +55,8 @@ public class PlayScreen extends GameScreen {
     public Array<StraightLine> straightLines;
     public Pool<StraightLine> straightLinePool = Pools.get(StraightLine.class);
     public Array<Body> toBeDeleted;
+
+    private Array<ParticleEffect> particleEffects;
 
     public int maxStraightLines;
 
@@ -79,7 +81,7 @@ public class PlayScreen extends GameScreen {
 
         BodyFactory.initialize(worldManager.world);
 
-        CustomInputListener customInputListener = new CustomInputListener(this);
+        customInputListener = new CustomInputListener(this);
         Gdx.input.setInputProcessor(new InputMultiplexer(
                 stage,
                 customInputListener.createInputProcessor(),
@@ -89,6 +91,30 @@ public class PlayScreen extends GameScreen {
         setupTextures();
         loadLevel();
         playScreenUI = new PlayScreenUI(this);
+
+        particleEffects = new Array<ParticleEffect>();
+        TextureAtlas atlas = (TextureAtlas) Assets.get("general-theme");
+
+        ParticleEffect effect1 = new ParticleEffect();
+        effect1.load(Gdx.files.internal("particles/dust1.p"), atlas);
+        effect1.setPosition(0.5f, 1f);
+        effect1.scaleEffect(0.005f);
+        effect1.start();
+        particleEffects.add(effect1);
+
+        ParticleEffect effect2 = new ParticleEffect();
+        effect2.load(Gdx.files.internal("particles/finish1.p"), atlas);
+        effect2.setPosition(0.5f, 1.5f);
+        effect2.scaleEffect(0.005f);
+        effect2.start();
+        particleEffects.add(effect2);
+
+        ParticleEffect effect3 = new ParticleEffect();
+        effect3.load(Gdx.files.internal("particles/finish2.p"), atlas);
+        effect3.setPosition(0.5f, 1.2f);
+        effect3.scaleEffect(0.005f);
+        effect3.start();
+        particleEffects.add(effect3);
     }
 
     @Override
@@ -129,6 +155,9 @@ public class PlayScreen extends GameScreen {
 
         for(Entity entity : mapAnalyser.obstacles)
             entity.draw(batch);
+
+        for (ParticleEffect effect : particleEffects)
+            effect.draw(batch, delta);
 
         batch.end();
 

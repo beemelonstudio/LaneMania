@@ -190,6 +190,10 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
         return false;
     }
 
+    public void reset() {
+        ballWasHit = false;
+    }
+
     /*
     Callback function for getting a touched body.
     Source: https://stackoverflow.com/questions/31764270/libgdx-check-if-body-is-touch

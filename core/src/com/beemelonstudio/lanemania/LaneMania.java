@@ -60,13 +60,14 @@ public class LaneMania extends Game {
         hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
         backgroundViewport = new ScreenViewport();
+        backgroundViewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         batch = new PolygonSpriteBatch();
         stage = new Stage(new ScreenViewport(hudCamera));
 
         screens = new Stack<GameScreen>();
         //screens.push(new MenuScreen(this));
         //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        screens.push(new PlayScreen(this, mapLoader.getMap(0,0)));
+        screens.push(new PlayScreen(this, mapLoader.getMap(0,1)));
 
         setScreen(screens.peek());
 	}

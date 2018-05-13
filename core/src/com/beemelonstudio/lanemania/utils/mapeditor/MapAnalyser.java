@@ -1,5 +1,6 @@
 package com.beemelonstudio.lanemania.utils.mapeditor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.EllipseMapObject;
@@ -14,9 +15,11 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.obstacles.Circle18Obstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.CircleObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.PickaxeObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.RectangleObstacle;
+import com.beemelonstudio.lanemania.entities.obstacles.SquareObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.StoneObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.TriangleObstacle;
 import com.beemelonstudio.lanemania.entities.types.ObstacleType;
@@ -97,13 +100,25 @@ public class MapAnalyser {
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
-                            rectangle.height * unitScale,
                             rotation,
                             BodyDef.BodyType.StaticBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
 
                     obstacles.add(new RectangleObstacle(body));
+                }
+                else if (type.equals("square")) {
+
+                    body = BodyFactory.createSquare(
+                            rectangle.x * unitScale,
+                            rectangle.y * unitScale,
+                            rectangle.width * unitScale,
+                            rotation,
+                            BodyDef.BodyType.StaticBody,
+                            ObstacleType.SOLID);
+                    //body.setUserData(type);
+
+                    obstacles.add(new SquareObstacle(body));
                 }
                 else if (type.equals("stone")) {
 
@@ -136,18 +151,47 @@ public class MapAnalyser {
 
                 //This creates a circle from the ellipse
 
-                EllipseMapObject ellipseMapObjectMapObject = (EllipseMapObject) object;
-                Ellipse ellipse = ellipseMapObjectMapObject.getEllipse();
+                EllipseMapObject ellipseMapObject = (EllipseMapObject) object;
+                Ellipse ellipse = ellipseMapObject.getEllipse();
 
-                body = BodyFactory.createCircle(
-                        (ellipse.x + (ellipse.width / 2)) * unitScale,
-                        (ellipse.y + (ellipse.height / 2)) * unitScale,
-                        ellipse.width * unitScale,
-                        BodyDef.BodyType.StaticBody,
-                        ObstacleType.SOLID);
-                //body.setUserData(object.getProperties().get("type"));
+                String type = (String) object.getProperties().get("type");
 
-                obstacles.add(new CircleObstacle(body));
+                if (type.equals("circle18")) {
+
+                    if (ellipseMapObject.getProperties().get("rotation", Float.class) != null)
+                        rotation = ellipseMapObject.getProperties().get("rotation", Float.class);
+
+                    boolean right = false;
+                    if (ellipseMapObject.getProperties().get("right", Boolean.class) != null)
+                        right = ellipseMapObject.getProperties().get("right", Boolean.class);
+
+                    float speed = 0f;
+                    if (ellipseMapObject.getProperties().get("speed", Integer.class) != null)
+                        speed = ellipseMapObject.getProperties().get("speed", Integer.class);
+
+                    body = BodyFactory.createCircle18(
+                            (ellipse.x + (ellipse.width / 2)) * unitScale,
+                            (ellipse.y + (ellipse.height / 2)) * unitScale,
+                            ellipse.width * unitScale,
+                            rotation,
+                            BodyDef.BodyType.StaticBody,
+                            ObstacleType.SOLID);
+                    //body.setUserData(object.getProperties().get("type"));
+
+                    obstacles.add(new Circle18Obstacle(body, ellipse.width * unitScale, right, speed));
+                }
+                else if (type.equals("circle")) {
+
+                    body = BodyFactory.createCircle(
+                            (ellipse.x + (ellipse.width / 2)) * unitScale,
+                            (ellipse.y + (ellipse.height / 2)) * unitScale,
+                            ellipse.width * unitScale,
+                            BodyDef.BodyType.StaticBody,
+                            ObstacleType.SOLID);
+                    //body.setUserData(object.getProperties().get("type"));
+
+                    obstacles.add(new CircleObstacle(body));
+                }
             }
             else if (object instanceof PolygonMapObject) {
 
