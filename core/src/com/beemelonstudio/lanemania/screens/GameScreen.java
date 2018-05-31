@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -44,6 +45,7 @@ public class GameScreen implements Screen, InputProcessor {
     protected TextureAtlas textureAtlas;
     protected TextureRegion backgroundTexture;
     protected TiledDrawable backgroundTile;
+
     protected TextureRegion cloud1;
     protected float cloud1x;
     protected float cloud1y;
@@ -80,6 +82,7 @@ public class GameScreen implements Screen, InputProcessor {
 
         textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
         backgroundTexture = textureAtlas.findRegion("background");
+
         cloud1 = textureAtlas.findRegion("cloud1");
         cloud2 = textureAtlas.findRegion("cloud2");
         cloud1x = 0f;

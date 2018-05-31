@@ -60,7 +60,7 @@ button_background_pressed
   orig: 141, 141
   offset: 0, 0
   index: -1
-kein_star
+star_empty
   rotate: false
   xy: 1258, 176
   size: 64, 61

@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
@@ -32,6 +36,12 @@ public class PlayScreenUI extends GameScreenUI {
     private BmsImageButton undoButton;
     private BmsImageButton[] lineButtons;
 
+    private Table endTable;
+    private TextButton selectLevelButton;
+    private TextButton restartButton;
+    private TextureRegionDrawable star;
+    private TextureRegionDrawable emptyStar;
+
     public PlayScreenUI(GameScreen screen) {
         super(screen);
 
@@ -44,9 +54,12 @@ public class PlayScreenUI extends GameScreenUI {
 
         table.row();
 
+        stage.addActor(endTable);
+
         createButtonRow();
         //createPlayButton();
         //createBmsImageButtons();
+        createEndTable();
     }
 
     @Override
@@ -57,6 +70,36 @@ public class PlayScreenUI extends GameScreenUI {
     @Override
     public void draw(PolygonSpriteBatch batch) {
         super.draw(batch);
+    }
+
+    private void createEndTable() {
+
+        selectLevelButton = new TextButton("Select Level", skin);
+        restartButton = new TextButton("Restart", skin);
+        emptyStar = new TextureRegionDrawable(textureAtlas.findRegion("star_empty"));
+        Image star1 = new Image(emptyStar);
+        Image star2 = new Image(emptyStar);
+        Image star3 = new Image(emptyStar);
+        Label win = new Label("Congratulations!", skin);
+
+        endTable.add(star1);
+        endTable.add(star2);
+        endTable.add(star3);
+        endTable.row().pad(10, 0, 10, 0);
+        endTable.add(win);
+        endTable.row().pad(10, 0, 10, 0);
+        endTable.add(selectLevelButton);
+        endTable.add(restartButton);
+
+        selectLevelButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                screens.pop();
+                game.setScreen(screens.peek());
+            }
+        });
     }
 
     private void createButtonRow() {
