@@ -31,7 +31,7 @@ public class MapSelectionScreen extends GameScreen {
     private TextureRegion leftArrowIcon;
     private TextureRegion rightArrowIcon;
 
-    public MapSelectionScreen(LaneMania game) {
+    public MapSelectionScreen(ClickListener game) {
         super(game);
     }
 

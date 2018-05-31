@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.GameScreen;
+import com.beemelonstudio.lanemania.screens.MapSelectionScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
@@ -96,8 +97,9 @@ public class PlayScreenUI extends GameScreenUI {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
-                screens.pop();
-                game.setScreen(screens.peek());
+                screen.game.screens.pop();
+                screen.game.screens.push(new MapSelectionScreen(this));
+                screen.game.setScreen(screen.game.screens.peek());
             }
         });
     }
