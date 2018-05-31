@@ -92,13 +92,16 @@ public class PlayScreenUI extends GameScreenUI {
         endTable.add(selectLevelButton);
         endTable.add(restartButton);
 
+        endTable.setVisible(false);
+        endTable.setX(-200f);
+
         selectLevelButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
                 screen.game.screens.pop();
-                screen.game.screens.push(new MapSelectionScreen(this));
+                screen.game.screens.push(new MapSelectionScreen(screen.game));
                 screen.game.setScreen(screen.game.screens.peek());
             }
         });
