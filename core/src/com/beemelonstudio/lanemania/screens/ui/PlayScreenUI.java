@@ -37,7 +37,7 @@ public class PlayScreenUI extends GameScreenUI {
     private BmsImageButton undoButton;
     private BmsImageButton[] lineButtons;
 
-    private Table endTable;
+    public Table endTable;
     private TextButton selectLevelButton;
     private TextButton restartButton;
     private TextureRegionDrawable star;
@@ -55,12 +55,9 @@ public class PlayScreenUI extends GameScreenUI {
 
         table.row();
 
-        stage.addActor(endTable);
-
         createButtonRow();
         //createPlayButton();
         //createBmsImageButtons();
-        createEndTable();
     }
 
     @Override
@@ -73,8 +70,9 @@ public class PlayScreenUI extends GameScreenUI {
         super.draw(batch);
     }
 
-    private void createEndTable() {
+    public void createEndTable() {
 
+        endTable = new Table();
         selectLevelButton = new TextButton("Select Level", skin);
         restartButton = new TextButton("Restart", skin);
         emptyStar = new TextureRegionDrawable(textureAtlas.findRegion("star_empty"));
@@ -84,7 +82,7 @@ public class PlayScreenUI extends GameScreenUI {
         Label win = new Label("Congratulations!", skin);
 
         endTable.add(star1);
-        endTable.add(star2);
+        endTable.add(star2).center();
         endTable.add(star3);
         endTable.row().pad(10, 0, 10, 0);
         endTable.add(win);
@@ -92,8 +90,8 @@ public class PlayScreenUI extends GameScreenUI {
         endTable.add(selectLevelButton);
         endTable.add(restartButton);
 
-        endTable.setVisible(false);
-        endTable.setX(-200f);
+        endTable.setX(Gdx.graphics.getWidth()/2);
+        endTable.setY(Gdx.graphics.getHeight()/2);
 
         selectLevelButton.addListener(new ClickListener(){
             @Override
@@ -101,7 +99,7 @@ public class PlayScreenUI extends GameScreenUI {
                 super.clicked(event, x, y);
 
                 screen.game.screens.pop();
-                screen.game.screens.push(new MapSelectionScreen(screen.game));
+                screen.game.screens.push(new MapSelectionScreen(screen.game, screen.game.mapLoader.worlds));
                 screen.game.setScreen(screen.game.screens.peek());
             }
         });
