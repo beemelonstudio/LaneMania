@@ -27,8 +27,14 @@ public class TriangleObstacle extends Entity {
     private float[] vertices;
     private ShortArray triangles;
 
-    public TriangleObstacle(Body body) {
+    public TriangleObstacle(Body body, String name, float speed, float rotationSpeed, boolean circle, float timer) {
         super(body);
+
+        this.name = name;
+        this.speed = speed;
+        this.rotationSpeed = rotationSpeed;
+        this.circle = circle;
+        this.timer = timer;
 
         calculateSizes();
 
@@ -45,9 +51,12 @@ public class TriangleObstacle extends Entity {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
 
-        x = body.getPosition().x;
-        y = body.getPosition().y;
+        if(rotationSpeed != 0) {
+            rotation += rotationSpeed * delta;
+            body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+        }
     }
 
     @Override

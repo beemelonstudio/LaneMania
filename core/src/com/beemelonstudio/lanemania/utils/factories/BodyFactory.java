@@ -178,7 +178,7 @@ public class BodyFactory {
     public static Body createBall(float x, float y) {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(x, y);
 
         Body body = world.createBody(bodyDef);
@@ -316,6 +316,23 @@ public class BodyFactory {
         body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
 
         loader.attachFixture(body, "circle18", createFixture(obstacleType, new PolygonShape()), width);
+
+        return body;
+    }
+
+    public static Body createCircle14(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/wildwest.json"));
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x, y);
+        bodyDef.type = bodyType;
+        bodyDef.fixedRotation = false;
+
+        Body body = world.createBody(bodyDef);
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+
+        loader.attachFixture(body, "circle14", createFixture(obstacleType, new PolygonShape()), width);
 
         return body;
     }

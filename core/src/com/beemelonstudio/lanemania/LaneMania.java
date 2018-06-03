@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -38,7 +39,7 @@ public class LaneMania extends Game {
     public Stack<GameScreen> screens;
     public MapLoader mapLoader;
 
-    public float volume = 1.0f;
+    public float volume = 0f;
     public Boolean muted = false;
     public Music backgroundMusic;
 
@@ -56,7 +57,7 @@ public class LaneMania extends Game {
         backgroundMusic.setVolume(volume);
         backgroundMusic.setLooping(true);
 
-        camera = new OrthographicCamera(VIRTUAL_WIDTH, VIRTUAL_HEIGHT);
+        camera = new OrthographicCamera();
         hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
         backgroundViewport = new ScreenViewport();
@@ -66,8 +67,8 @@ public class LaneMania extends Game {
 
         screens = new Stack<GameScreen>();
         //screens.push(new MenuScreen(this));
-        //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        screens.push(new PlayScreen(this, mapLoader.getMap(0,1)));
+        screens.push(new MapSelectionScreen(this, mapLoader.worlds));
+        //screens.push(new PlayScreen(this, mapLoader.getMap(1,0)));
 
         setScreen(screens.peek());
 	}
@@ -97,7 +98,7 @@ public class LaneMania extends Game {
     public void resize(int width, int height) {
         super.resize(width, height);
 
-        viewport.update(width, height);
+        viewport.update(width, height, true);
         backgroundViewport.update(width, height, true);
         hudCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.setProjectionMatrix(camera.combined);

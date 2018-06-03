@@ -14,10 +14,14 @@ import com.beemelonstudio.lanemania.entities.types.EntityType;
 
 public class RectangleObstacle extends Entity {
 
-    private float rotation;
-
-    public RectangleObstacle(Body body) {
+    public RectangleObstacle(Body body, String name, float speed, float rotationSpeed, boolean circle, float timer) {
         super(body);
+
+        this.name = name;
+        this.speed = speed;
+        this.rotationSpeed = rotationSpeed;
+        this.circle = circle;
+        this.timer = timer;
 
         type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("rectangle");
@@ -28,9 +32,12 @@ public class RectangleObstacle extends Entity {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
 
-        //x = body.getPosition().x;
-        //y = body.getPosition().y;
+        if(rotationSpeed != 0) {
+            rotation += rotationSpeed * delta;
+            body.setTransform(body.getPosition(), (rotation * DEGTORAD));
+        }
     }
 
     @Override

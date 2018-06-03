@@ -15,8 +15,14 @@ public class CircleObstacle extends Entity {
 
     float radius;
 
-    public CircleObstacle(Body body) {
+    public CircleObstacle(Body body, String name, float speed, float rotationSpeed, boolean circle, float timer) {
         super(body);
+
+        this.name = name;
+        this.speed = speed;
+        this.rotationSpeed = rotationSpeed;
+        this.circle = circle;
+        this.timer = timer;
 
         type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("circle");
@@ -27,9 +33,12 @@ public class CircleObstacle extends Entity {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
 
-        x = body.getPosition().x;
-        y = body.getPosition().y;
+        if(rotationSpeed != 0) {
+            rotation += rotationSpeed * delta;
+            body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+        }
     }
 
     @Override

@@ -11,10 +11,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Ellipse;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Sort;
 import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.obstacles.Circle14Obstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.Circle18Obstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.CircleObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.PickaxeObstacle;
@@ -22,8 +25,11 @@ import com.beemelonstudio.lanemania.entities.obstacles.RectangleObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.SquareObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.StoneObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.TriangleObstacle;
+import com.beemelonstudio.lanemania.entities.obstacles.Waypoint;
 import com.beemelonstudio.lanemania.entities.types.ObstacleType;
 import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
+
+import java.util.HashMap;
 
 /**
  * Created by Jann and Cedric on 10.01.18.
@@ -38,22 +44,39 @@ public class MapAnalyser {
     private MapLayer obstaclesLayer;
     private TiledMapTileLayer backgroundLayer;
 
+    public PropertiesExtractor extractor;
+    public HashMap<String, Object> mapProperties;
+
     public Body ball, goal;
     public Array<Entity> obstacles;
+    public Array<Waypoint> waypoints;
 
     public MapAnalyser(TiledMap map, float unitScale) {
         this.map = map;
         this.unitScale = unitScale;
+
+        extractor = new PropertiesExtractor();
+        mapProperties = new HashMap<String, Object>();
 
         objectsLayer = map.getLayers().get("objects");
         obstaclesLayer = map.getLayers().get("obstacles");
         backgroundLayer = (TiledMapTileLayer) map.getLayers().get("background");
 
         obstacles = new Array<Entity>();
+        waypoints = new Array<Waypoint>();
 
+        loadMapProperties();
         loadObjects();
         loadObstacles();
         loadBackground();
+        setupWaypoints();
+    }
+
+    private void loadMapProperties() {
+
+        // TODO: Check this correctly
+        int maxlines = map.getProperties().get("maxlines") != null ? (Integer) map.getProperties().get("maxlines") : 100;
+        if(maxlines != 0) mapProperties.put("maxlines", maxlines);
     }
 
     private void loadObjects() {
@@ -84,113 +107,113 @@ public class MapAnalyser {
             Body body;
             float rotation = 0f;
 
+            extractor.extract(object);
+
             if (object instanceof RectangleMapObject) {
 
                 RectangleMapObject rectangleMapObject = (RectangleMapObject) object;
                 Rectangle rectangle = rectangleMapObject.getRectangle();
 
-                if (rectangleMapObject.getProperties().get("rotation", Float.class) != null)
-                    rotation = rectangleMapObject.getProperties().get("rotation", Float.class);
-
-                String type = (String) object.getProperties().get("type");
-
-                if(type.equals("rectangle")) {
+                if(extractor.type.equals("rectangle")) {
 
                     body = BodyFactory.createRectangle(
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
                             rotation,
-                            BodyDef.BodyType.StaticBody,
+                            BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
 
-                    obstacles.add(new RectangleObstacle(body));
+                    obstacles.add(new RectangleObstacle(body, extractor.name, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
                 }
-                else if (type.equals("square")) {
+                else if (extractor.type.equals("square")) {
 
                     body = BodyFactory.createSquare(
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
                             rotation,
-                            BodyDef.BodyType.StaticBody,
+                            BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
 
-                    obstacles.add(new SquareObstacle(body));
+                    obstacles.add(new SquareObstacle(body, extractor.name, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
                 }
-                else if (type.equals("stone")) {
+                else if (extractor.type.equals("stone")) {
 
                     body = BodyFactory.createStone(
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
                             rotation,
-                            BodyDef.BodyType.StaticBody,
+                            BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
 
-                    obstacles.add(new StoneObstacle(body, rectangle.width * unitScale));
+                    obstacles.add(new StoneObstacle(body, extractor.name, rectangle.width * unitScale, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
                 }
-                else if (type.equals("pickaxe")) {
+                else if (extractor.type.equals("pickaxe")) {
 
                     body = BodyFactory.createPickaxe(
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
                             rotation,
-                            BodyDef.BodyType.StaticBody,
+                            BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
 
-                    obstacles.add(new PickaxeObstacle(body, rectangle.width * unitScale));
+                    obstacles.add(new PickaxeObstacle(body, extractor.name, rectangle.width * unitScale, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
+                }
+                else if (extractor.type.equals("waypoint")) {
+
+                    waypoints.add(new Waypoint(extractor.obstacle, new Vector2(rectangle.x * unitScale, rectangle.y * unitScale), extractor.order, extractor.timer));
                 }
             }
             else if (object instanceof EllipseMapObject) {
 
                 //This creates a circle from the ellipse
-
                 EllipseMapObject ellipseMapObject = (EllipseMapObject) object;
                 Ellipse ellipse = ellipseMapObject.getEllipse();
 
-                String type = (String) object.getProperties().get("type");
+                if (extractor.type.equals("circle14")) {
 
-                if (type.equals("circle18")) {
+                    body = BodyFactory.createCircle14(
+                            (ellipse.x + (ellipse.width / 2)) * unitScale,
+                            (ellipse.y + (ellipse.height / 2)) * unitScale,
+                            ellipse.width * unitScale,
+                            rotation,
+                            BodyDef.BodyType.KinematicBody,
+                            ObstacleType.SOLID);
+                    //body.setUserData(object.getProperties().get("type"));
 
-                    if (ellipseMapObject.getProperties().get("rotation", Float.class) != null)
-                        rotation = ellipseMapObject.getProperties().get("rotation", Float.class);
-
-                    boolean right = false;
-                    if (ellipseMapObject.getProperties().get("right", Boolean.class) != null)
-                        right = ellipseMapObject.getProperties().get("right", Boolean.class);
-
-                    float speed = 0f;
-                    if (ellipseMapObject.getProperties().get("speed", Integer.class) != null)
-                        speed = ellipseMapObject.getProperties().get("speed", Integer.class);
+                    obstacles.add(new Circle14Obstacle(body, extractor.name, ellipse.width * unitScale, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
+                }
+                else if (extractor.type.equals("circle18")) {
 
                     body = BodyFactory.createCircle18(
                             (ellipse.x + (ellipse.width / 2)) * unitScale,
                             (ellipse.y + (ellipse.height / 2)) * unitScale,
                             ellipse.width * unitScale,
                             rotation,
-                            BodyDef.BodyType.StaticBody,
+                            BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(object.getProperties().get("type"));
 
-                    obstacles.add(new Circle18Obstacle(body, ellipse.width * unitScale, right, speed));
+                    obstacles.add(new Circle18Obstacle(body, extractor.name, ellipse.width * unitScale, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
                 }
-                else if (type.equals("circle")) {
+                else if (extractor.type.equals("circle")) {
 
                     body = BodyFactory.createCircle(
                             (ellipse.x + (ellipse.width / 2)) * unitScale,
                             (ellipse.y + (ellipse.height / 2)) * unitScale,
                             ellipse.width * unitScale,
-                            BodyDef.BodyType.StaticBody,
+                            BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(object.getProperties().get("type"));
 
-                    obstacles.add(new CircleObstacle(body));
+                    obstacles.add(new CircleObstacle(body, extractor.name, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
                 }
             }
             else if (object instanceof PolygonMapObject) {
@@ -207,11 +230,11 @@ public class MapAnalyser {
                         polygon.getX() * unitScale,
                         polygon.getY() * unitScale,
                         polygon.getVertices(),
-                        BodyDef.BodyType.StaticBody,
+                        BodyDef.BodyType.KinematicBody,
                         ObstacleType.SOLID);
                 //body.setUserData(object.getProperties().get("type"));
 
-                obstacles.add(new TriangleObstacle(body));
+                obstacles.add(new TriangleObstacle(body, extractor.name, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
             }
             /*
             else if (object instanceof PolylineMapObject) {
@@ -244,6 +267,31 @@ public class MapAnalyser {
 
     private void loadBackground() {
 
+    }
+
+    /**
+     * Sets up waypoints after all other objects are created to prevent OrderExceptions
+     */
+    private void setupWaypoints() {
+
+        for(Waypoint waypoint : waypoints) {
+
+            for(Entity e : obstacles) {
+
+                // If an obstacle has a corresponding way point, add it to it
+                if (e.name != null && e.name.equals(waypoint.obstacle)) {
+
+                    // Add the obstacle's starting position as the first waypoint
+                    if(e.waypoints.size == 0)
+                        e.waypoints.add(new Waypoint(e.name, e.origin, 0, e.timer));
+
+                    e.waypoints.add(waypoint);
+                }
+            }
+        }
+        for(Entity e : obstacles) {
+            e.waypoints.sort();
+        }
     }
 
     /* TODO: Do we need this in the future?

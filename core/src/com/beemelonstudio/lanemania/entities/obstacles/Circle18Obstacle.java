@@ -14,19 +14,16 @@ import com.beemelonstudio.lanemania.entities.types.EntityType;
 public class Circle18Obstacle extends Entity {
 
     public float radius;
-    public float rotation;
-    public boolean right;
-    public float speed;
 
-    public Circle18Obstacle(Body body, float width, boolean right, float speed) {
+    public Circle18Obstacle(Body body, String name, float width, float speed, float rotationSpeed, boolean circle, float timer) {
         super(body);
 
+        this.name = name;
         this.width = width;
-        this.right = right;
         this.speed = speed;
-
-        if(!right)
-            speed *= -1f;
+        this.rotationSpeed = rotationSpeed;
+        this.circle = circle;
+        this.timer = timer;
 
         type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("circle18");
@@ -37,12 +34,12 @@ public class Circle18Obstacle extends Entity {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
 
-        x = body.getPosition().x;
-        y = body.getPosition().y;
-
-        rotation += speed * delta;
-        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+        if(rotationSpeed != 0) {
+            rotation += rotationSpeed * delta;
+            body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+        }
     }
 
     @Override

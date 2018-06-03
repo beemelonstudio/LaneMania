@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.12.07" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="41">
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="47">
+ <properties>
+  <property name="maxlines" type="int" value="3"/>
+ </properties>
  <tileset firstgid="1" name="Terrain" tilewidth="32" tileheight="32" spacing="1" margin="1" tilecount="48" columns="8">
   <image source="../tmw_desert_spacing.png" trans="ff00ff" width="265" height="199"/>
  </tileset>
  <layer name="background" width="15" height="30" visible="0">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
+5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,
@@ -37,19 +40,83 @@
 5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
 </data>
  </layer>
+ <layer name="Copy of background" width="15" height="30" visible="0">
+  <data encoding="csv">
+25,26,26,26,26,26,26,26,26,26,26,26,26,26,27,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+33,0,0,0,0,0,0,0,0,0,0,0,0,0,35,
+41,42,42,42,42,42,42,42,42,42,42,42,42,42,43
+</data>
+ </layer>
  <objectgroup name="obstacles">
-  <object id="14" x="38.241" y="354.568" width="213.333" height="200">
+  <object id="44" name="waypoint2" x="113.671" y="388.243">
    <properties>
-    <property name="right" type="bool" value="true"/>
-    <property name="speed" type="int" value="50"/>
-    <property name="type" value="circle18"/>
+    <property name="obstacle" value="square"/>
+    <property name="order" type="float" value="2"/>
+    <property name="timer" type="float" value="6"/>
+    <property name="type" value="waypoint"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="14" x="331.943" y="79.2221" width="94.7224" height="85.6255">
+   <properties>
+    <property name="rspeed" type="float" value="-50"/>
+    <property name="type" value="circle14"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="21" x="264.405" y="600.945" width="106.468" height="87.8734" rotation="-30">
+  <object id="21" name="square" x="321.551" y="557.436" width="106.468" height="87.8734">
    <properties>
+    <property name="circle" type="bool" value="false"/>
+    <property name="rspeed" type="float" value="-50"/>
+    <property name="speed" type="float" value="30"/>
+    <property name="timer" type="float" value="2"/>
     <property name="type" value="square"/>
    </properties>
+  </object>
+  <object id="41" name="waypoint" x="55.0692" y="600.113">
+   <properties>
+    <property name="obstacle" value="square"/>
+    <property name="order" type="float" value="1"/>
+    <property name="timer" type="float" value="4"/>
+    <property name="type" value="waypoint"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="45" name="waypoint2" x="362.231" y="343.993">
+   <properties>
+    <property name="obstacle" value="square"/>
+    <property name="order" type="float" value="3"/>
+    <property name="timer" type="float" value="8"/>
+    <property name="type" value="waypoint"/>
+   </properties>
+   <point/>
   </object>
  </objectgroup>
  <objectgroup name="objects">
@@ -58,7 +125,7 @@
     <property name="entity" value="goal"/>
    </properties>
   </object>
-  <object id="4" name="Ball" x="62.2267" y="99.8828" width="33.3333" height="32">
+  <object id="4" name="Ball" x="80.8934" y="35.8828" width="33.3333" height="32">
    <properties>
     <property name="entity" value="ball"/>
    </properties>

@@ -11,11 +11,15 @@ import com.beemelonstudio.lanemania.entities.types.EntityType;
 
 public class StoneObstacle extends Entity {
 
-    public float rotation;
-
-    public StoneObstacle(Body body, float width) {
+    public StoneObstacle(Body body, String name, float width, float speed, float rotationSpeed, boolean circle, float timer) {
         super(body);
+
+        this.name = name;
         this.width = width;
+        this.speed = speed;
+        this.rotationSpeed = rotationSpeed;
+        this.circle = circle;
+        this.timer = timer;
 
         type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("stone");
@@ -26,13 +30,17 @@ public class StoneObstacle extends Entity {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
 
-        x = body.getPosition().x;
-        y = body.getPosition().y;
+        if(rotationSpeed != 0) {
+            rotation += rotationSpeed * delta;
+            body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+        }
     }
 
     @Override
     public void draw(PolygonSpriteBatch batch) {
+        super.draw(batch);
 
         batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, rotation);
     }

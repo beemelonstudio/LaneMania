@@ -1,6 +1,5 @@
 package com.beemelonstudio.lanemania.entities.obstacles;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.beemelonstudio.lanemania.entities.Entity;
@@ -10,9 +9,11 @@ import com.beemelonstudio.lanemania.entities.types.EntityType;
  * Created by Jann on 06.03.18.
  */
 
-public class PickaxeObstacle extends Entity {
+public class Circle14Obstacle extends Entity {
 
-    public PickaxeObstacle(Body body, String name, float width, float speed, float rotationSpeed, boolean circle, float timer) {
+    public float radius;
+
+    public Circle14Obstacle(Body body, String name, float width, float speed, float rotationSpeed, boolean circle, float timer) {
         super(body);
 
         this.name = name;
@@ -23,7 +24,7 @@ public class PickaxeObstacle extends Entity {
         this.timer = timer;
 
         type = EntityType.OBSTACLE;
-        textureRegion = textureAtlas.findRegion("pickaxe");
+        textureRegion = textureAtlas.findRegion("circle14");
 
         calculateSizes();
         body.setUserData(type);
@@ -42,7 +43,7 @@ public class PickaxeObstacle extends Entity {
     @Override
     public void draw(PolygonSpriteBatch batch) {
 
-        batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, rotation);
+        batch.draw(textureRegion, x - radius, y - radius, width / 2, height / 2, width, height, 1f, 1f, -rotation);
     }
 
     /**
@@ -50,8 +51,9 @@ public class PickaxeObstacle extends Entity {
      */
     private void calculateSizes(){
 
-        float ratio = (float) textureRegion.getRegionHeight() / (float) textureRegion.getRegionWidth();
-        height = width * ratio;
+        radius = width / 2;
+        width = radius * 2;
+        height = radius * 2;
 
         rotation = body.getAngle() * RADTODEG;
     }

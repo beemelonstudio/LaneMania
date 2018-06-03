@@ -30,7 +30,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     protected PolygonSpriteBatch batch;
     public OrthographicCamera camera;
-    protected Viewport viewport, backgroundViewport;
+    public Viewport viewport, backgroundViewport;
 
     protected Stage stage;
     protected Skin skin;

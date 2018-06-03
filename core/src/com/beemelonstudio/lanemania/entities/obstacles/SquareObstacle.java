@@ -13,10 +13,14 @@ import com.beemelonstudio.lanemania.entities.types.EntityType;
 
 public class SquareObstacle extends Entity {
 
-    private float rotation;
-
-    public SquareObstacle(Body body) {
+    public SquareObstacle(Body body, String name, float speed, float rotationSpeed, boolean circle, float timer) {
         super(body);
+
+        this.name = name;
+        this.speed = speed / 100;
+        this.rotationSpeed = rotationSpeed;
+        this.circle = circle;
+        this.timer = timer;
 
         type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("square");
@@ -27,9 +31,12 @@ public class SquareObstacle extends Entity {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
 
-        //x = body.getPosition().x;
-        //y = body.getPosition().y;
+        if(rotationSpeed != 0) {
+            rotation += rotationSpeed * delta;
+            body.setTransform(body.getPosition(), (rotation * DEGTORAD));
+        }
     }
 
     @Override
