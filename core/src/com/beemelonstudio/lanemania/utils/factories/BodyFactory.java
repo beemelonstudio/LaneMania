@@ -112,7 +112,30 @@ public class BodyFactory {
         return body;
     }
 
-    public static Body createRectangle(float x, float y, float width, float height, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+    public static Body createSquare(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = bodyType;
+        bodyDef.position.x = x + (width / 2);
+        bodyDef.position.y = y + (width / 2);
+        bodyDef.fixedRotation = false;
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width / 2, width / 2);
+
+        Body body = world.createBody(bodyDef);
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+        body.createFixture(createFixture(obstacleType, shape));
+
+        shape.dispose();
+
+        return body;
+    }
+
+    public static Body createRectangle(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        // calculate height to match aspect ratio
+        float height = 0.5f * width;
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = bodyType;
@@ -155,7 +178,7 @@ public class BodyFactory {
     public static Body createBall(float x, float y) {
 
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(x, y);
 
         Body body = world.createBody(bodyDef);
@@ -276,6 +299,40 @@ public class BodyFactory {
         body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
 
         loader.attachFixture(body, "pickaxe", createFixture(obstacleType, new PolygonShape()), width);
+
+        return body;
+    }
+
+    public static Body createCircle18(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/wildwest.json"));
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x, y);
+        bodyDef.type = bodyType;
+        bodyDef.fixedRotation = false;
+
+        Body body = world.createBody(bodyDef);
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+
+        loader.attachFixture(body, "circle18", createFixture(obstacleType, new PolygonShape()), width);
+
+        return body;
+    }
+
+    public static Body createCircle14(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/wildwest.json"));
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x, y);
+        bodyDef.type = bodyType;
+        bodyDef.fixedRotation = false;
+
+        Body body = world.createBody(bodyDef);
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+
+        loader.attachFixture(body, "circle14", createFixture(obstacleType, new PolygonShape()), width);
 
         return body;
     }

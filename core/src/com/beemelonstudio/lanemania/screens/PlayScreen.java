@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -26,8 +27,6 @@ import com.beemelonstudio.lanemania.utils.listeners.CustomContactListener;
 import com.beemelonstudio.lanemania.utils.listeners.CustomInputListener;
 import com.beemelonstudio.lanemania.utils.mapeditor.MapAnalyser;
 
-import java.util.Iterator;
-
 /**
  * Created by Jann on 09.01.2018.
  */
@@ -41,6 +40,7 @@ public class PlayScreen extends GameScreen {
     private MapAnalyser mapAnalyser;
 
     public boolean gravity = false;
+    public CustomInputListener customInputListener;
 
     public String mapName;
     private TiledMap map;
@@ -79,7 +79,7 @@ public class PlayScreen extends GameScreen {
 
         BodyFactory.initialize(worldManager.world);
 
-        CustomInputListener customInputListener = new CustomInputListener(this);
+        customInputListener = new CustomInputListener(this);
         Gdx.input.setInputProcessor(new InputMultiplexer(
                 stage,
                 customInputListener.createInputProcessor(),
@@ -91,15 +91,14 @@ public class PlayScreen extends GameScreen {
         playScreenUI = new PlayScreenUI(this);
     }
 
-    @Override
-    public void render(float delta) {
-        super.render(delta);
-
+    private void update(float delta) {
         // Acting
         playScreenUI.act(delta);
 
         if(gravity)
-            worldManager.world.step(delta, 10, 8);
+            ball.body.setType(BodyDef.BodyType.DynamicBody);
+
+        worldManager.world.step(delta, 10, 8);
 
         ball.act(delta);
         goal.act(delta);
@@ -109,6 +108,13 @@ public class PlayScreen extends GameScreen {
 
         for(Entity entity : mapAnalyser.obstacles)
             entity.act(delta);
+    }
+
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+
+        update(delta);
 
         // Drawing
         renderer.setView(camera);
@@ -138,20 +144,23 @@ public class PlayScreen extends GameScreen {
     private void loadLevel() {
 
         currentType = EntityType.STRAIGHTLINE;
-        maxStraightLines = 3; //TODO: Extract this info from level file
         straightLines = new Array<StraightLine>();
 
         map = new TmxMapLoader().load(mapName);
         float mapWidth = (float) map.getProperties().get("width", Integer.class);
         float tileWidth = (float) map.getProperties().get("tilewidth", Integer.class);
-        unitScale = 1/(mapWidth * tileWidth);
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
 
         float mapHeight = (float) map.getProperties().get("height", Integer.class);
         float tileHeight = (float) map.getProperties().get("tileheight", Integer.class);
         mapHeightInPixel = mapHeight * tileHeight;
 
+        unitScale = 1/(mapWidth * tileWidth);
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+
         mapAnalyser = new MapAnalyser(map, unitScale);
+
+        // Retrieve values from the mapanalyser
+        maxStraightLines = (Integer) mapAnalyser.mapProperties.get("maxlines");
 
         ball = new Ball(mapAnalyser.ball);
         goal = new Goal(mapAnalyser.goal);
@@ -159,7 +168,8 @@ public class PlayScreen extends GameScreen {
 
     private void setupTextures() {
 
-        if(mapName.contains("world1")) Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        //TODO: Remove Orange Theme
+        if(mapName.contains("world1") || mapName.contains("world2")) Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
         else Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("orange-theme");
 
         backgroundTexture = Assets.currentWorldTextureAtlas.findRegion("background");

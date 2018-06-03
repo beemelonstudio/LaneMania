@@ -100,6 +100,7 @@ public class PlayScreenUI extends GameScreenUI {
                 }
                 else {
                     // When the game is playing
+                    screen.customInputListener.reset();
                     screen.gravity = false;
                     screen.ball.reset();
                 }

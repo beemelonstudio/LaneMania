@@ -12,11 +12,15 @@ import com.beemelonstudio.lanemania.entities.types.EntityType;
 
 public class PickaxeObstacle extends Entity {
 
-    public float rotation;
-
-    public PickaxeObstacle(Body body, float width) {
+    public PickaxeObstacle(Body body, String name, float width, float speed, float rotationSpeed, boolean circle, float timer) {
         super(body);
+
+        this.name = name;
         this.width = width;
+        this.speed = speed;
+        this.rotationSpeed = rotationSpeed;
+        this.circle = circle;
+        this.timer = timer;
 
         type = EntityType.OBSTACLE;
         textureRegion = textureAtlas.findRegion("pickaxe");
@@ -27,9 +31,12 @@ public class PickaxeObstacle extends Entity {
 
     @Override
     public void act(float delta) {
+        super.act(delta);
 
-        x = body.getPosition().x;
-        y = body.getPosition().y;
+        if(rotationSpeed != 0) {
+            rotation += rotationSpeed * delta;
+            body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+        }
     }
 
     @Override

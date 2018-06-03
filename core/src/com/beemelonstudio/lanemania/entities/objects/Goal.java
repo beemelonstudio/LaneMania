@@ -18,12 +18,8 @@ import java.util.ArrayList;
 public class Goal extends Entity {
 
     //TODO: Add different layers for rendering
-    TextureRegion frontTexture;
+    public TextureRegion frontTexture;
     public TextureRegion backTexture;
-
-    public Goal() {
-        super();
-    }
 
     public Goal(Body body) {
         super(body);
@@ -35,7 +31,7 @@ public class Goal extends Entity {
 
         calculateSizes();
 
-        body.setUserData(type);
+        body.getFixtureList().get(0).setUserData(type);
     }
 
     @Override
