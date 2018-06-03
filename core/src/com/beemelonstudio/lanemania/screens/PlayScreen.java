@@ -186,6 +186,9 @@ public class PlayScreen extends GameScreen {
     public void endLevel() {
 
         Gdx.app.log("The End", "You did it!");
+        playScreenUI.createEndTable();
+        stage.addActor(playScreenUI.endTable);
+        playScreenUI.endTable.toFront();
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
@@ -77,11 +78,17 @@ public class MapSelectionScreen extends GameScreen {
         table.add(worldsTable);
         table.row();
         table.add(mapsTable);
+        table.row();
 
-        BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon);
-        BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon);
-        BmsImageButton leftArrowButton2 = new BmsImageButton(skin, leftArrowIcon);
-        BmsImageButton rightArrowButton2 = new BmsImageButton(skin, rightArrowIcon);
+        BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon, "transparent");
+        leftArrowButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_left_light"));
+        BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon, "transparent");
+        rightArrowButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_right_light"));
+        BmsImageButton leftArrowButton2 = new BmsImageButton(skin, leftArrowIcon, "transparent");
+        leftArrowButton2.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_left_light"));
+        BmsImageButton rightArrowButton2 = new BmsImageButton(skin, rightArrowIcon, "transparent");
+        rightArrowButton2.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_right_light"));
+        TextButton returnButton = new TextButton("Return", skin);
 
         worldButtons = new Array<WorldTextButton>();
 
@@ -130,6 +137,17 @@ public class MapSelectionScreen extends GameScreen {
 
         worldButtons.get(0).setMapButtonVisibility(true);
         setAllMapsVisibility(true);
+
+        table.add(returnButton);
+        returnButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                screens.pop();
+                game.setScreen(screens.peek());
+            }
+        });
     }
 
     public void setAllMapsVisibility(boolean visibility) {

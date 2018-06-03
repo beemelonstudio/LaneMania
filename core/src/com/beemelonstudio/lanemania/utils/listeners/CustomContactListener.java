@@ -28,8 +28,9 @@ public class CustomContactListener implements ContactListener {
 
         determineEntities(contact);
 
-        if(ball != null && goal != null)
+        if(ball != null && goal != null) {
             playScreen.endLevel();
+        }
     }
 
     @Override

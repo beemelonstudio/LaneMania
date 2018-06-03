@@ -65,10 +65,12 @@ public class SettingsScreen extends GameScreen {
 
     public void createMenu(){
 
-        BmsImageButton muteButton = new BmsImageButton(skin, textureAtlas.findRegion("mute_button_on"));
+        BmsImageButton muteButton = new BmsImageButton(skin, textureAtlas.findRegion("mute_button_on"), "transparent");
         muteButton.getStyle().imageChecked = new TextureRegionDrawable(textureAtlas.findRegion("mute_button_off"));
-        BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon);
-        BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon);
+        BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon, "transparent");
+        leftArrowButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_left_light"));
+        BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon, "transparent");
+        rightArrowButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_right_light"));
         TextButton returnButton = new TextButton("Return", skin);
         Label english = new Label("English", skin);
 

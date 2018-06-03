@@ -7,11 +7,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.GameScreen;
+import com.beemelonstudio.lanemania.screens.MapSelectionScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
@@ -31,6 +36,12 @@ public class PlayScreenUI extends GameScreenUI {
     private BmsImageButton menuButton;
     private BmsImageButton undoButton;
     private BmsImageButton[] lineButtons;
+
+    public Table endTable;
+    private TextButton selectLevelButton;
+    private TextButton restartButton;
+    private TextureRegionDrawable star;
+    private TextureRegionDrawable emptyStar;
 
     public PlayScreenUI(GameScreen screen) {
         super(screen);
@@ -59,10 +70,46 @@ public class PlayScreenUI extends GameScreenUI {
         super.draw(batch);
     }
 
+    public void createEndTable() {
+
+        endTable = new Table();
+        selectLevelButton = new TextButton("Select Level", skin);
+        restartButton = new TextButton("Restart", skin);
+        emptyStar = new TextureRegionDrawable(textureAtlas.findRegion("star_empty"));
+        Image star1 = new Image(emptyStar);
+        Image star2 = new Image(emptyStar);
+        Image star3 = new Image(emptyStar);
+        Label win = new Label("Congratulations!", skin);
+
+        endTable.add(star1);
+        endTable.add(star2).center();
+        endTable.add(star3);
+        endTable.row().pad(10, 0, 10, 0);
+        endTable.add(win);
+        endTable.row().pad(10, 0, 10, 0);
+        endTable.add(selectLevelButton);
+        endTable.add(restartButton);
+
+        endTable.setX(Gdx.graphics.getWidth()/2);
+        endTable.setY(Gdx.graphics.getHeight()/2);
+
+        selectLevelButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                screen.game.screens.pop();
+                screen.game.screens.push(new MapSelectionScreen(screen.game, screen.game.mapLoader.worlds));
+                screen.game.setScreen(screen.game.screens.peek());
+            }
+        });
+    }
+
     private void createButtonRow() {
 
         // Create and position
         undoButton = new BmsImageButton(skin, textureAtlas.findRegion("line_back"), "transparent");
+        undoButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("line_back_light"));
         undoButton.setHeight(height);
         undoButton.setWidth(width);
         undoButton.setPosition(0, 0);
@@ -109,6 +156,7 @@ public class PlayScreenUI extends GameScreenUI {
 
         // Create and position
         menuButton = new BmsImageButton(skin, textureAtlas.findRegion("menu_button"), "transparent");
+        menuButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("menu_button_light"));
         menuButton.setHeight(height);
         menuButton.setWidth(width);
         menuButton.setPosition(Gdx.graphics.getWidth() - width, 0);
@@ -136,6 +184,7 @@ public class PlayScreenUI extends GameScreenUI {
 
         // Create and position
         playButton = new BmsImageButton(skin, textureAtlas.findRegion("play_button"), "default");
+        playButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("play_button_light"));
         playButton.setPosition(
                 position.x - playButton.getWidth(),
                 position.y - playButton.getHeight());

@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.animations.background.CloudAnimation;
+import com.beemelonstudio.lanemania.animations.background.TumbleweedAnimation;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 import java.util.Stack;
@@ -39,6 +40,7 @@ public class GameScreen implements Screen, InputProcessor {
     protected TextureAtlas textureAtlas;
     protected TextureRegion backgroundTexture;
     protected TiledDrawable backgroundTile;
+
     protected TextureRegion cloud1;
     protected float cloud1x;
     protected float cloud1y;
@@ -47,9 +49,10 @@ public class GameScreen implements Screen, InputProcessor {
     protected float cloud2y;
     protected CloudAnimation animation1;
     protected CloudAnimation animation2;
-    protected TextureRegion thumbleweed;
-    protected float weedx;
-    protected float weedy;
+    protected TextureRegion tumbleweed;
+    protected float weedX;
+    protected float weedY;
+    protected TumbleweedAnimation animation3;
 
     private boolean shown = false;
     private boolean backButtonLocked = false;
@@ -74,14 +77,19 @@ public class GameScreen implements Screen, InputProcessor {
 
         textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
         backgroundTexture = textureAtlas.findRegion("background");
+
         cloud1 = textureAtlas.findRegion("cloud1");
         cloud2 = textureAtlas.findRegion("cloud2");
         cloud1x = 0f;
         cloud2x = 300f;
-        cloud1y = backgroundViewport.getTopGutterHeight() - 160;
-        cloud2y = backgroundViewport.getTopGutterHeight() - 320;
+        cloud1y = backgroundViewport.getScreenHeight() - 160;
+        cloud2y = backgroundViewport.getScreenHeight() - 320;
         animation1 = new CloudAnimation(cloud1, cloud1x, cloud1y, batch, backgroundViewport);
         animation2 = new CloudAnimation(cloud2, cloud2x, cloud2y, batch, backgroundViewport);
+        tumbleweed = textureAtlas.findRegion("tumbleweed");
+        weedX = 0f;
+        weedY = 110f;
+        animation3 = new TumbleweedAnimation(tumbleweed, weedX, weedY, batch, backgroundViewport);
 
         Gdx.input.setInputProcessor(this);
     }
@@ -104,12 +112,14 @@ public class GameScreen implements Screen, InputProcessor {
         if(isBackgroundDrawing) {
             animation1.update(delta);
             animation2.update(delta);
+            animation3.update(delta);
             backgroundViewport.apply();
             batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
             batch.begin();
             batch.draw(backgroundTexture, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
             animation1.render();
             animation2.render();
+            animation3.render();
             batch.end();
         }
 
