@@ -25,11 +25,17 @@ public class MapSelectionScreen extends GameScreen {
     public Table table;
     public Table worldsTable;
     public Table mapsTable;
+    public BmsImageButton leftArrowButton;
+    public BmsImageButton rightArrowButton;
+    public BmsImageButton leftArrowButton2;
+    public BmsImageButton rightArrowButton2;
 
     public Array<WorldTextButton> worldButtons;
 
     private TextureRegion leftArrowIcon;
     private TextureRegion rightArrowIcon;
+    private int worldIndex = 0;
+    private int mapIndex = 0;
 
     public MapSelectionScreen(LaneMania game) {
         super(game);
@@ -80,13 +86,13 @@ public class MapSelectionScreen extends GameScreen {
         table.add(mapsTable);
         table.row();
 
-        BmsImageButton leftArrowButton = new BmsImageButton(skin, leftArrowIcon, "transparent");
+        leftArrowButton = new BmsImageButton(skin, leftArrowIcon, "transparent");
         leftArrowButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_left_light"));
-        BmsImageButton rightArrowButton = new BmsImageButton(skin, rightArrowIcon, "transparent");
+        rightArrowButton = new BmsImageButton(skin, rightArrowIcon, "transparent");
         rightArrowButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_right_light"));
-        BmsImageButton leftArrowButton2 = new BmsImageButton(skin, leftArrowIcon, "transparent");
+        leftArrowButton2 = new BmsImageButton(skin, leftArrowIcon, "transparent");
         leftArrowButton2.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_left_light"));
-        BmsImageButton rightArrowButton2 = new BmsImageButton(skin, rightArrowIcon, "transparent");
+        rightArrowButton2 = new BmsImageButton(skin, rightArrowIcon, "transparent");
         rightArrowButton2.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_right_light"));
         TextButton returnButton = new TextButton("Return", skin);
 
@@ -106,9 +112,7 @@ public class MapSelectionScreen extends GameScreen {
             });
 
             worldButtons.add(worldButton);
-            worldsTable.add(leftArrowButton);
-            worldsTable.add(worldButton).pad(10f);
-            worldsTable.add(rightArrowButton);
+
 
             for(int j = 0; j < worlds.get(i).size; j++) {
 
@@ -126,14 +130,70 @@ public class MapSelectionScreen extends GameScreen {
                 });
 
                 worldButton.addMapButton(mapButton);
-                mapsTable.add(leftArrowButton2);
-                mapsTable.add(mapButton).pad(10f).fillX().expandX();
-                mapsTable.add(rightArrowButton2);
+
 
                 if(j % 3 == 0)
                     mapsTable.row();
             }
         }
+
+        worldsTable.add(leftArrowButton);
+        worldsTable.add(worldButtons.get(worldIndex)).pad(10f);
+        worldsTable.add(rightArrowButton);
+
+        mapsTable.add(leftArrowButton2);
+        mapsTable.add(worldButtons.get(worldIndex).mapButtons.get(mapIndex)).pad(10f).fillX().expandX();
+        mapsTable.add(rightArrowButton2);
+
+        leftArrowButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                if (worldIndex > 0) {
+                    worldIndex -= 1;
+                    mapIndex = 0;
+                    updateTable();
+                }
+            }
+        });
+
+        rightArrowButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                if (worldIndex < worldButtons.size-1) {
+                    worldIndex += 1;
+                    mapIndex = 0;
+                    updateTable();
+                }
+            }
+        });
+
+        leftArrowButton2.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                if (mapIndex > 0) {
+                    mapIndex -= 1;
+                    updateTable();
+                }
+            }
+        });
+
+        rightArrowButton2.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                if (mapIndex < worldButtons.get(worldIndex).mapButtons.size-1) {
+                    mapIndex += 1;
+                    updateTable();
+                }
+            }
+        });
 
         worldButtons.get(0).setMapButtonVisibility(true);
         setAllMapsVisibility(true);
@@ -154,6 +214,20 @@ public class MapSelectionScreen extends GameScreen {
 
         for(WorldTextButton button : worldButtons)
             button.setMapButtonVisibility(visibility);
+    }
+
+    public void updateTable() {
+
+        worldsTable.clear();
+        mapsTable.clear();
+
+        worldsTable.add(leftArrowButton);
+        worldsTable.add(worldButtons.get(worldIndex)).pad(10f);
+        worldsTable.add(rightArrowButton);
+
+        mapsTable.add(leftArrowButton2);
+        mapsTable.add(worldButtons.get(worldIndex).mapButtons.get(mapIndex)).pad(10f).fillX().expandX();
+        mapsTable.add(rightArrowButton2);
     }
 
     @Override
