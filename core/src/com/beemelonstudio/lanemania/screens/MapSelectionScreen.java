@@ -131,9 +131,6 @@ public class MapSelectionScreen extends GameScreen {
 
                 worldButton.addMapButton(mapButton);
 
-
-                if(j % 3 == 0)
-                    mapsTable.row();
             }
         }
 

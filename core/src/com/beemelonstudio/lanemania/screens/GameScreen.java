@@ -37,23 +37,6 @@ public class GameScreen implements Screen, InputProcessor {
     protected Stage stage;
     protected Skin skin;
 
-    protected TextureAtlas textureAtlas;
-    protected TextureRegion backgroundTexture;
-    protected TiledDrawable backgroundTile;
-
-    protected TextureRegion cloud1;
-    protected float cloud1x;
-    protected float cloud1y;
-    protected TextureRegion cloud2;
-    protected float cloud2x;
-    protected float cloud2y;
-    protected CloudAnimation animation1;
-    protected CloudAnimation animation2;
-    protected TextureRegion tumbleweed;
-    protected float weedX;
-    protected float weedY;
-    protected TumbleweedAnimation animation3;
-
     private boolean shown = false;
     private boolean backButtonLocked = false;
     protected boolean isBackgroundDrawing = false;
@@ -75,22 +58,6 @@ public class GameScreen implements Screen, InputProcessor {
         this.muted = game.muted;
         this.backgroundMusic = game.backgroundMusic;
 
-        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
-        backgroundTexture = textureAtlas.findRegion("background");
-
-        cloud1 = textureAtlas.findRegion("cloud1");
-        cloud2 = textureAtlas.findRegion("cloud2");
-        cloud1x = 0f;
-        cloud2x = 300f;
-        cloud1y = backgroundViewport.getScreenHeight() - 160;
-        cloud2y = backgroundViewport.getScreenHeight() - 320;
-        animation1 = new CloudAnimation(cloud1, cloud1x, cloud1y, batch, backgroundViewport);
-        animation2 = new CloudAnimation(cloud2, cloud2x, cloud2y, batch, backgroundViewport);
-        tumbleweed = textureAtlas.findRegion("tumbleweed");
-        weedX = 0f;
-        weedY = 110f;
-        animation3 = new TumbleweedAnimation(tumbleweed, weedX, weedY, batch, backgroundViewport);
-
         Gdx.input.setInputProcessor(this);
     }
 
@@ -110,17 +77,7 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(isBackgroundDrawing) {
-            animation1.update(delta);
-            animation2.update(delta);
-            animation3.update(delta);
-            backgroundViewport.apply();
-            batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
-            batch.begin();
-            batch.draw(backgroundTexture, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
-            animation1.render();
-            animation2.render();
-            animation3.render();
-            batch.end();
+
         }
 
         stage.act(delta);

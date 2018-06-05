@@ -61,11 +61,11 @@ public class MenuScreen extends GameScreen {
 
         table.add(logo).width(logo.getWidth()/2).height((logo.getHeight()/logo.getWidth())*logo.getWidth()/2);
         table.row().pad(80, 0, 10, 0);
-        table.add(continueButton).width(continueButton.getWidth()).height(continueButton.getHeight()/2);
+        table.add(continueButton).width(continueButton.getWidth()*2).height(continueButton.getHeight()/2);
         table.row().pad(10, 0, 10, 0);
-        table.add(selectLevelButton).width(selectLevelButton.getWidth()).height(selectLevelButton.getHeight()/2);
+        table.add(selectLevelButton).width(selectLevelButton.getWidth()*2).height(selectLevelButton.getHeight()/2);
         table.row().pad(10, 0, 10, 0);
-        table.add(settingsButton).width(settingsButton.getWidth()).height(settingsButton.getHeight()/2);
+        table.add(settingsButton).width(settingsButton.getWidth()*2).height(settingsButton.getHeight()/2);
 
         selectLevelButton.addListener(new ClickListener(){
             @Override
