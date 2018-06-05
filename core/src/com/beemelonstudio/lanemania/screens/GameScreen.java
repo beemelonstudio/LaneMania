@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.animations.background.CloudAnimation;
 import com.beemelonstudio.lanemania.animations.background.TumbleweedAnimation;
+import com.beemelonstudio.lanemania.screens.backgrounds.W1Background;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 import java.util.Stack;
@@ -33,6 +34,11 @@ public class GameScreen implements Screen, InputProcessor {
     protected PolygonSpriteBatch batch;
     public OrthographicCamera camera;
     public Viewport viewport, backgroundViewport;
+
+    protected TextureAtlas textureAtlas;
+    protected TextureRegion backgroundTexture;
+    protected TiledDrawable backgroundTile;
+    protected W1Background background;
 
     protected Stage stage;
     protected Skin skin;
@@ -58,6 +64,11 @@ public class GameScreen implements Screen, InputProcessor {
         this.muted = game.muted;
         this.backgroundMusic = game.backgroundMusic;
 
+        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        backgroundTexture = textureAtlas.findRegion("background");
+        textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        background = new W1Background(batch, backgroundViewport);
+
         Gdx.input.setInputProcessor(this);
     }
 
@@ -77,7 +88,7 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         if(isBackgroundDrawing) {
-
+            background.update(delta, batch, backgroundViewport);
         }
 
         stage.act(delta);

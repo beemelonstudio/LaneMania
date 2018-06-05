@@ -1,8 +1,10 @@
 package com.beemelonstudio.lanemania.screens.backgrounds;
 
+import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.animations.background.CloudAnimation;
 import com.beemelonstudio.lanemania.animations.background.TumbleweedAnimation;
 import com.beemelonstudio.lanemania.screens.GameScreen;
@@ -27,7 +29,7 @@ public class W1Background {
     protected float weedY;
     protected TumbleweedAnimation animation3;
 
-    public W1Background() {
+    public W1Background(PolygonSpriteBatch batch, Viewport backgroundViewport) {
 
         textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
         backgroundTexture = textureAtlas.findRegion("background");
@@ -46,7 +48,7 @@ public class W1Background {
         animation3 = new TumbleweedAnimation(tumbleweed, weedX, weedY, batch, backgroundViewport);
     }
 
-    public void update() {
+    public void update(float delta, PolygonSpriteBatch batch, Viewport backgroundViewport) {
         animation1.update(delta);
         animation2.update(delta);
         animation3.update(delta);
