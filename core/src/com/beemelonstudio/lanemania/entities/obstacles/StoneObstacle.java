@@ -16,7 +16,7 @@ public class StoneObstacle extends Entity {
 
         this.name = name;
         this.width = width;
-        this.speed = speed;
+        this.speed = speed / 100;
         this.rotationSpeed = rotationSpeed;
         this.circle = circle;
         this.timer = timer;
@@ -54,5 +54,6 @@ public class StoneObstacle extends Entity {
         height = width * ratio;
 
         rotation = body.getAngle() * RADTODEG;
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
     }
 }

@@ -79,7 +79,7 @@
    <properties>
     <property name="obstacle" value="square"/>
     <property name="order" type="float" value="2"/>
-    <property name="timer" type="float" value="6"/>
+    <property name="timer" type="float" value="2"/>
     <property name="type" value="waypoint"/>
    </properties>
    <point/>
@@ -91,7 +91,7 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="21" name="square" x="321.551" y="557.436" width="106.468" height="87.8734">
+  <object id="21" name="square" x="309.551" y="560" width="106.468" height="80">
    <properties>
     <property name="circle" type="bool" value="false"/>
     <property name="rspeed" type="float" value="-50"/>
@@ -100,20 +100,11 @@
     <property name="type" value="square"/>
    </properties>
   </object>
-  <object id="41" name="waypoint" x="55.0692" y="600.113">
+  <object id="41" name="waypoint" x="55.0692" y="600">
    <properties>
     <property name="obstacle" value="square"/>
     <property name="order" type="float" value="1"/>
-    <property name="timer" type="float" value="4"/>
-    <property name="type" value="waypoint"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="45" name="waypoint2" x="362.231" y="343.993">
-   <properties>
-    <property name="obstacle" value="square"/>
-    <property name="order" type="float" value="3"/>
-    <property name="timer" type="float" value="8"/>
+    <property name="timer" type="float" value="2"/>
     <property name="type" value="waypoint"/>
    </properties>
    <point/>

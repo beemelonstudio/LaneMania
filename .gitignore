@@ -4,6 +4,7 @@
 *.war
 *.ear
 hs_err_pid*
+MapTester*
 
 ## Robovm
 /ios/robovm-build/
@@ -30,6 +31,7 @@ www-test/
 *.iml
 /android/out/
 com_crashlytics_export_strings.xml
+*.apk
 
 ## Eclipse
 

@@ -90,15 +90,21 @@ public abstract class Entity implements Actable {
                 }
             }
 
-            if (waypoints.size > 1) {
+            if (waypoints.size > 0) {
 
                 float distance = waypoints.get(waypointCounter).position.dst(body.getPosition());
-                if (distance <= 1 / 12f) {
+                if (distance <= 1 / 48f) {
 
                     if (waypointCounter + 1 >= waypoints.size) {
 
                         if (circle) {
                             waypointCounter = 0;
+
+                            body.setLinearVelocity(0, 0);
+                            body.setAngularVelocity(0);
+
+                            waitingLocked = false;
+                            waiting = true;
                             return;
                         } else {
                             back = true;

@@ -18,7 +18,7 @@ public class RectangleObstacle extends Entity {
         super(body);
 
         this.name = name;
-        this.speed = speed;
+        this.speed = speed / 100;
         this.rotationSpeed = rotationSpeed;
         this.circle = circle;
         this.timer = timer;
@@ -64,6 +64,7 @@ public class RectangleObstacle extends Entity {
         height = Math.abs(vertices[1].y) + Math.abs(vertices[2].y);
 
         rotation = body.getAngle() * RADTODEG;
+        body.setTransform(body.getPosition(), (rotation * DEGTORAD));
 
         x = body.getPosition().x;
         y = body.getPosition().y;

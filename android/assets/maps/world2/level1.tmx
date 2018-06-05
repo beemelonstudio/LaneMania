@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="8">
+<map version="1.0" tiledversion="2018.01.23" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="8">
  <properties>
-  <property name="maxlines" type="int" value="1"/>
+  <property name="star2" type="float" value="2"/>
+  <property name="star3" type="float" value="1"/>
  </properties>
  <layer name="background" width="15" height="30">
   <data encoding="csv">
@@ -39,13 +40,13 @@
  </layer>
  <objectgroup name="obstacles"/>
  <objectgroup name="objects">
-  <object id="1" x="31.3333" y="31.3333" width="32" height="32">
+  <object id="1" name="ball" x="31.3333" y="31.3333" width="32" height="32">
    <properties>
     <property name="entity" value="ball"/>
    </properties>
    <ellipse/>
   </object>
-  <object id="5" x="353.333" y="864" width="60" height="94.6667">
+  <object id="5" name="goal" x="353.333" y="864" width="60" height="94.6667">
    <properties>
     <property name="entity" value="goal"/>
    </properties>

@@ -63,6 +63,7 @@ public class SquareObstacle extends Entity {
         height = Math.abs(vertices[1].y) + Math.abs(vertices[2].y);
 
         rotation = body.getAngle() * RADTODEG;
+        body.setTransform(body.getPosition(), (rotation * DEGTORAD));
 
         x = body.getPosition().x;
         y = body.getPosition().y;

@@ -122,12 +122,12 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
             switch (screen.currentType) {
 
                 case STRAIGHTLINE:
-                    if (screen.straightLines.size < screen.maxStraightLines) {
+                    //if (screen.straightLines.size < screen.maxStraightLines) {
                         straightStraightLine = screen.straightLinePool.obtain();
                         straightStraightLine.init(coordinates.x, coordinates.y);
                         screen.straightLines.add(straightStraightLine);
                         drawing = true;
-                    }
+                    //}
                     break;
 
                 default:

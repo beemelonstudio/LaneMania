@@ -17,7 +17,7 @@ public class PickaxeObstacle extends Entity {
 
         this.name = name;
         this.width = width;
-        this.speed = speed;
+        this.speed = speed / 100;
         this.rotationSpeed = rotationSpeed;
         this.circle = circle;
         this.timer = timer;
@@ -53,6 +53,7 @@ public class PickaxeObstacle extends Entity {
         float ratio = (float) textureRegion.getRegionHeight() / (float) textureRegion.getRegionWidth();
         height = width * ratio;
 
+        rotation = body.getAngle() * RADTODEG;
         rotation = body.getAngle() * RADTODEG;
     }
 }

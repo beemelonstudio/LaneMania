@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
@@ -59,6 +60,7 @@ public class Ball extends Entity {
             body.setTransform(origin, 0);
             body.setActive(true);
             body.setLinearVelocity(0f, 0f);
+            body.setType(BodyDef.BodyType.StaticBody);
         }
     }
 }

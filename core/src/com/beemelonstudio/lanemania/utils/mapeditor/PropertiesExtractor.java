@@ -15,6 +15,8 @@ public class PropertiesExtractor {
 
     public void extract(MapObject object) {
 
+        reset();
+
         if (object.getProperties().get("rotation", Float.class) != null)
             rotation = object.getProperties().get("rotation", Float.class);
 
@@ -41,5 +43,21 @@ public class PropertiesExtractor {
 
         if(object.getName() != null)
             name = object.getName();
+    }
+
+    private void reset() {
+
+        type = "";
+        obstacle = "";
+        entity = "";
+        name = "";
+
+        rotation = 0;
+        speed = 0;
+        rotationSpeed = 0;
+        order = 0;
+        timer = 0;
+
+        circle = false;
     }
 }

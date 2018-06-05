@@ -19,7 +19,7 @@ public class CircleObstacle extends Entity {
         super(body);
 
         this.name = name;
-        this.speed = speed;
+        this.speed = speed / 100;
         this.rotationSpeed = rotationSpeed;
         this.circle = circle;
         this.timer = timer;
@@ -57,5 +57,8 @@ public class CircleObstacle extends Entity {
         radius = shape.getRadius();
         width = radius * 2;
         height = radius * 2;
+
+        rotation = body.getAngle() * RADTODEG;
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
     }
 }

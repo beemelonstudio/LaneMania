@@ -130,11 +130,11 @@ public class PlayScreen extends GameScreen {
         ball.draw(batch);
         goal.draw(batch);
 
-        for(StraightLine straightLine : straightLines)
-            straightLine.draw(batch);
-
         for(Entity entity : mapAnalyser.obstacles)
             entity.draw(batch);
+
+        for(StraightLine straightLine : straightLines)
+            straightLine.draw(batch);
 
         batch.end();
 
@@ -160,7 +160,7 @@ public class PlayScreen extends GameScreen {
         mapAnalyser = new MapAnalyser(map, unitScale);
 
         // Retrieve values from the mapanalyser
-        maxStraightLines = (Integer) mapAnalyser.mapProperties.get("maxlines");
+        //maxStraightLines = (Integer) mapAnalyser.mapProperties.get("maxlines");
 
         ball = new Ball(mapAnalyser.ball);
         goal = new Goal(mapAnalyser.goal);

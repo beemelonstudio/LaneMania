@@ -31,7 +31,7 @@ public class TriangleObstacle extends Entity {
         super(body);
 
         this.name = name;
-        this.speed = speed;
+        this.speed = speed / 100;
         this.rotationSpeed = rotationSpeed;
         this.circle = circle;
         this.timer = timer;
