@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -134,17 +135,17 @@ public class MapSelectionScreen extends GameScreen {
                     }
                 });
 
-                worldButton.addMapButton(mapButton, skin, levelPreviews, i);
+                worldButton.addMapButton(mapButton, skin, levelPreviews, mapIndex);
 
             }
         }
 
         worldsTable.add(leftArrowButton);
-        worldsTable.add(worldButtons.get(worldIndex)).pad(10f);
+        worldsTable.add(worldButtons.get(worldIndex)).width(Value.percentWidth(.50F, worldsTable)).height(Value.percentHeight(.50f, worldsTable)).pad(10f);
         worldsTable.add(rightArrowButton);
 
         mapsTable.add(leftArrowButton2);
-        mapsTable.add(worldButtons.get(worldIndex).mapButtons.get(mapIndex)).pad(10f).fillX().expandX();
+        mapsTable.add(worldButtons.get(worldIndex).mapButtons.get(mapIndex)).width(Value.percentWidth(.75F, mapsTable)).height(Value.percentHeight(.75f, mapsTable)).pad(10f);
         mapsTable.add(rightArrowButton2);
 
         leftArrowButton.addListener(new ClickListener(){
@@ -224,11 +225,11 @@ public class MapSelectionScreen extends GameScreen {
         mapsTable.clear();
 
         worldsTable.add(leftArrowButton);
-        worldsTable.add(worldButtons.get(worldIndex)).pad(10f);
+        worldsTable.add(worldButtons.get(worldIndex)).width(Value.percentWidth(.50F, worldsTable)).height(Value.percentHeight(.50f, worldsTable)).pad(10f);
         worldsTable.add(rightArrowButton);
 
         mapsTable.add(leftArrowButton2);
-        mapsTable.add(worldButtons.get(worldIndex).mapButtons.get(mapIndex)).pad(10f).fillX().expandX();
+        mapsTable.add(worldButtons.get(worldIndex).mapButtons.get(mapIndex)).width(Value.percentWidth(.75F, mapsTable)).height(Value.percentHeight(.75f, mapsTable)).pad(10f);
         mapsTable.add(rightArrowButton2);
     }
 
