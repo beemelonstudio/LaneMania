@@ -1,0 +1,82 @@
+
+w1_levels.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+level02_w1
+  rotate: false
+  xy: 1443, 857
+  size: 478, 851
+  orig: 478, 851
+  offset: 0, 0
+  index: -1
+level03_w1
+  rotate: false
+  xy: 482, 2
+  size: 478, 852
+  orig: 478, 852
+  offset: 0, 0
+  index: -1
+level04_w1
+  rotate: false
+  xy: 483, 856
+  size: 478, 852
+  orig: 478, 852
+  offset: 0, 0
+  index: -1
+level05_w1
+  rotate: false
+  xy: 2, 2
+  size: 478, 852
+  orig: 478, 852
+  offset: 0, 0
+  index: -1
+level06_w1
+  rotate: false
+  xy: 1442, 4
+  size: 478, 851
+  orig: 478, 851
+  offset: 0, 0
+  index: -1
+level08_w1
+  rotate: false
+  xy: 963, 857
+  size: 478, 851
+  orig: 478, 851
+  offset: 0, 0
+  index: -1
+level09_w1
+  rotate: false
+  xy: 2, 856
+  size: 479, 852
+  orig: 479, 852
+  offset: 0, 0
+  index: -1
+level10_w1
+  rotate: false
+  xy: 962, 2
+  size: 478, 852
+  orig: 478, 852
+  offset: 0, 0
+  index: -1
+
+w1_levels2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+level01_w1
+  rotate: false
+  xy: 2, 2
+  size: 477, 851
+  orig: 477, 851
+  offset: 0, 0
+  index: -1
+level07_w1
+  rotate: false
+  xy: 481, 3
+  size: 477, 850
+  orig: 477, 850
+  offset: 0, 0
+  index: -1

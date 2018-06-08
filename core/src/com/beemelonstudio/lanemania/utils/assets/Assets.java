@@ -30,6 +30,8 @@ public class Assets {
         files.put("orange-theme",   new AssetFile("sprites/orange-theme/orange-theme.atlas",    TextureAtlas.class));
         files.put("wildwest-theme", new AssetFile("sprites/wildwest-theme/wildwest-theme.atlas",TextureAtlas.class));
         files.put("general-theme",  new AssetFile("sprites/general-theme/general-theme.atlas",  TextureAtlas.class));
+        files.put("w1_levels",  new AssetFile("sprites/w1_levels/w1_levels.atlas",  TextureAtlas.class));
+        files.put("worldicons",  new AssetFile("sprites/worldicons/worldicons.atlas",  TextureAtlas.class));
 
         //Skins
         files.put("defaultSkin",    new AssetFile("skins/default/uiskin.json",          Skin.class));

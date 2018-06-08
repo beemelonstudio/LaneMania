@@ -60,13 +60,6 @@ button_background_pressed
   orig: 141, 141
   offset: 0, 0
   index: -1
-star_empty
-  rotate: false
-  xy: 1258, 176
-  size: 64, 61
-  orig: 64, 61
-  offset: 0, 0
-  index: -1
 line_back
   rotate: false
   xy: 1106, 101
@@ -90,7 +83,7 @@ logo
   index: -1
 menu_button
   rotate: false
-  xy: 895, 20
+  xy: 1519, 196
   size: 46, 41
   orig: 46, 41
   offset: 0, 0
@@ -116,13 +109,6 @@ mute_button_on
   orig: 43, 44
   offset: 0, 0
   index: -1
-particle
-  rotate: false
-  xy: 1567, 205
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
 play_button
   rotate: false
   xy: 1423, 196
@@ -132,7 +118,7 @@ play_button
   index: -1
 play_button_light
   rotate: false
-  xy: 1519, 196
+  xy: 895, 20
   size: 46, 41
   orig: 46, 41
   offset: 0, 0
@@ -142,5 +128,12 @@ star
   xy: 1190, 175
   size: 66, 62
   orig: 66, 62
+  offset: 0, 0
+  index: -1
+star_empty
+  rotate: false
+  xy: 1258, 176
+  size: 64, 61
+  orig: 64, 61
   offset: 0, 0
   index: -1

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
+import com.beemelonstudio.lanemania.screens.custombuttons.WorldImageButton;
 import com.beemelonstudio.lanemania.screens.custombuttons.WorldTextButton;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
 
@@ -30,7 +31,9 @@ public class MapSelectionScreen extends GameScreen {
     public BmsImageButton leftArrowButton2;
     public BmsImageButton rightArrowButton2;
 
-    public Array<WorldTextButton> worldButtons;
+    public Array<WorldImageButton> worldButtons;
+    public TextureAtlas levelPreviews;
+    public TextureAtlas worldIcons;
 
     private TextureRegion leftArrowIcon;
     private TextureRegion rightArrowIcon;
@@ -56,6 +59,8 @@ public class MapSelectionScreen extends GameScreen {
 
         isBackgroundDrawing = true;
         textureAtlas = (TextureAtlas) Assets.get("general-theme");
+        levelPreviews = (TextureAtlas) Assets.get("w1_levels");
+        worldIcons = (TextureAtlas) Assets.get("worldicons");
 
         leftArrowIcon = textureAtlas.findRegion("arrow_left");
         rightArrowIcon = textureAtlas.findRegion("arrow_right");
@@ -96,11 +101,11 @@ public class MapSelectionScreen extends GameScreen {
         rightArrowButton2.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("arrow_right_light"));
         TextButton returnButton = new TextButton("Return", skin);
 
-        worldButtons = new Array<WorldTextButton>();
+        worldButtons = new Array<WorldImageButton>();
 
         for(int i = 0; i < worlds.size; i++) {
 
-            final WorldTextButton worldButton = new WorldTextButton("World " + (i+1), skin);
+            final WorldImageButton worldButton = new WorldImageButton(skin, worldIcons.findRegion("w" + (i+1)));
             worldButton.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -118,7 +123,7 @@ public class MapSelectionScreen extends GameScreen {
 
                 final String map = worlds.get(i).get(j);
 
-                TextButton mapButton = new TextButton(map, skin);
+                BmsImageButton mapButton = new BmsImageButton(skin);
                 mapButton.addListener(new ClickListener(){
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
@@ -129,7 +134,7 @@ public class MapSelectionScreen extends GameScreen {
                     }
                 });
 
-                worldButton.addMapButton(mapButton);
+                worldButton.addMapButton(mapButton, skin, levelPreviews, i);
 
             }
         }
@@ -209,7 +214,7 @@ public class MapSelectionScreen extends GameScreen {
 
     public void setAllMapsVisibility(boolean visibility) {
 
-        for(WorldTextButton button : worldButtons)
+        for(WorldImageButton button : worldButtons)
             button.setMapButtonVisibility(visibility);
     }
 
