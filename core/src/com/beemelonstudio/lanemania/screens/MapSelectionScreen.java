@@ -37,6 +37,9 @@ public class MapSelectionScreen extends GameScreen {
     private int worldIndex = 0;
     private int mapIndex = 0;
 
+    private float height, width;
+    private float numberOfButtons = 3f;
+
     public MapSelectionScreen(LaneMania game) {
         super(game);
     }
@@ -44,6 +47,9 @@ public class MapSelectionScreen extends GameScreen {
     public MapSelectionScreen(LaneMania game, Array<Array<String>> worlds) {
         super(game);
         this.worlds = worlds;
+
+        height = (Gdx.graphics.getHeight() / 2f) / 2f;
+        width = Gdx.graphics.getWidth() / numberOfButtons;
     }
 
     @Override
@@ -137,13 +143,13 @@ public class MapSelectionScreen extends GameScreen {
             }
         }
 
-        worldsTable.add(leftArrowButton);
+        worldsTable.add(leftArrowButton).width(width).height(height);
         worldsTable.add(worldButtons.get(worldIndex)).pad(10f);
-        worldsTable.add(rightArrowButton);
+        worldsTable.add(rightArrowButton).width(width).height(height);
 
-        mapsTable.add(leftArrowButton2);
+        mapsTable.add(leftArrowButton2).width(width).height(height);
         mapsTable.add(worldButtons.get(worldIndex).mapButtons.get(mapIndex)).pad(10f).fillX().expandX();
-        mapsTable.add(rightArrowButton2);
+        mapsTable.add(rightArrowButton2).width(width).height(height);
 
         leftArrowButton.addListener(new ClickListener(){
             @Override
@@ -221,13 +227,13 @@ public class MapSelectionScreen extends GameScreen {
         worldsTable.clear();
         mapsTable.clear();
 
-        worldsTable.add(leftArrowButton);
+        worldsTable.add(leftArrowButton).width(width).height(height);
         worldsTable.add(worldButtons.get(worldIndex)).pad(10f);
-        worldsTable.add(rightArrowButton);
+        worldsTable.add(rightArrowButton).width(width).height(height);
 
-        mapsTable.add(leftArrowButton2);
+        mapsTable.add(leftArrowButton2).width(width).height(height);
         mapsTable.add(worldButtons.get(worldIndex).mapButtons.get(mapIndex)).pad(10f).fillX().expandX();
-        mapsTable.add(rightArrowButton2);
+        mapsTable.add(rightArrowButton2).width(width).height(height);
     }
 
     @Override

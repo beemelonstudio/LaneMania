@@ -2,6 +2,7 @@ package com.beemelonstudio.lanemania.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -56,7 +57,7 @@ public class PlayScreen extends GameScreen {
     public Pool<StraightLine> straightLinePool = Pools.get(StraightLine.class);
     public Array<Body> toBeDeleted;
 
-    public int maxStraightLines;
+    public float star3, star2;
 
     public PlayScreen(LaneMania game) {
         super(game);
@@ -72,7 +73,7 @@ public class PlayScreen extends GameScreen {
         super.show();
 
         toBeDeleted = new Array<Body>();
-        debugRenderer = new Box2DDebugRenderer(true,true,false,true,true,true);
+        //debugRenderer = new Box2DDebugRenderer(true,true,false,true,true,true);
 
         worldManager = new WorldManager();
         worldManager.world.setContactListener(new CustomContactListener(this));
@@ -108,6 +109,16 @@ public class PlayScreen extends GameScreen {
 
         for(Entity entity : mapAnalyser.obstacles)
             entity.act(delta);
+
+        if(straightLines.size <= star3) {
+            playScreenUI.amountStars = 3;
+        }
+        else if(straightLines.size <= star2) {
+            playScreenUI.amountStars = 2;
+        }
+        else {
+            playScreenUI.amountStars = 1;
+        }
     }
 
     @Override
@@ -119,8 +130,6 @@ public class PlayScreen extends GameScreen {
         // Drawing
         renderer.setView(camera);
         renderer.render();
-
-        playScreenUI.draw(batch);
 
         batch.begin();
 
@@ -136,9 +145,11 @@ public class PlayScreen extends GameScreen {
         for(StraightLine straightLine : straightLines)
             straightLine.draw(batch);
 
+        playScreenUI.draw(batch);
+
         batch.end();
 
-        debugRenderer.render(worldManager.world, camera.combined);
+        //debugRenderer.render(worldManager.world, camera.combined);
     }
 
     private void loadLevel() {
@@ -160,7 +171,8 @@ public class PlayScreen extends GameScreen {
         mapAnalyser = new MapAnalyser(map, unitScale);
 
         // Retrieve values from the mapanalyser
-        //maxStraightLines = (Integer) mapAnalyser.mapProperties.get("maxlines");
+        star3 = (Float) mapAnalyser.mapProperties.get("star3");
+        star2 = (Float) mapAnalyser.mapProperties.get("star2");
 
         ball = new Ball(mapAnalyser.ball);
         goal = new Goal(mapAnalyser.goal);
@@ -168,9 +180,8 @@ public class PlayScreen extends GameScreen {
 
     private void setupTextures() {
 
-        //TODO: Remove Orange Theme
-        if(mapName.contains("world1") || mapName.contains("world2")) Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
-        else Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("orange-theme");
+        if(mapName.contains("Wild-West") || mapName.contains("world2")) Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        else Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
 
         backgroundTexture = Assets.currentWorldTextureAtlas.findRegion("background");
         backgroundTile = new TiledDrawable(backgroundTexture);
@@ -186,9 +197,11 @@ public class PlayScreen extends GameScreen {
     public void endLevel() {
 
         Gdx.app.log("The End", "You did it!");
-        playScreenUI.createEndTable();
-        stage.addActor(playScreenUI.endTable);
-        playScreenUI.endTable.toFront();
+        if(playScreenUI.endTable == null) {
+            playScreenUI.createEndTable();
+            stage.addActor(playScreenUI.endTable);
+            playScreenUI.endTable.toFront();
+        }
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -32,6 +31,9 @@ public class PlayScreenUI extends GameScreenUI {
     private float height, width;
     private float numberOfButtons = 7f;
 
+    private TextureRegion[] starsTextures;
+    public int amountStars;
+
     private BmsImageButton playButton;
     private BmsImageButton menuButton;
     private BmsImageButton undoButton;
@@ -49,6 +51,12 @@ public class PlayScreenUI extends GameScreenUI {
         this.screen = (PlayScreen) screen;
 
         textureAtlas = (TextureAtlas) Assets.get("general-theme");
+
+        starsTextures = new TextureRegion[3];
+        starsTextures[0] = Assets.currentWorldTextureAtlas.findRegion("1stars");
+        starsTextures[1] = Assets.currentWorldTextureAtlas.findRegion("2stars");
+        starsTextures[2] = Assets.currentWorldTextureAtlas.findRegion("3stars");
+        amountStars = 3;
 
         height = (Gdx.graphics.getHeight() / 2f) / 6f;
         width = Gdx.graphics.getWidth() / numberOfButtons;
@@ -68,6 +76,9 @@ public class PlayScreenUI extends GameScreenUI {
     @Override
     public void draw(PolygonSpriteBatch batch) {
         super.draw(batch);
+
+        //batch.draw(starsTextures[amountStars], screen.viewport.getScreenWidth() / 3, screen.viewport.getScreenHeight() - starsTextures[amountStars].getRegionHeight(), starsTextures[amountStars].getRegionWidth(), starsTextures[amountStars].getRegionHeight());
+        batch.draw(starsTextures[amountStars-1], 0.65f, 1.849f, 0.3f, 0.161f);
     }
 
     public void createEndTable() {

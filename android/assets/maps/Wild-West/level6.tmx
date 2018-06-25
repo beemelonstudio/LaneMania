@@ -166,7 +166,7 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="19" name="goal" x="353.33" y="864" width="62.6667" height="94.6667">
+  <object id="19" name="goal" x="353.33" y="864" width="60" height="94.6667">
    <properties>
     <property name="entity" value="goal"/>
    </properties>

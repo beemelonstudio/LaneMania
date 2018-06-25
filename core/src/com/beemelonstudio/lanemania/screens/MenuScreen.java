@@ -3,6 +3,7 @@ package com.beemelonstudio.lanemania.screens;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -39,7 +40,7 @@ public class MenuScreen extends GameScreen {
         textureAtlas = (TextureAtlas) Assets.get("general-theme");
 
         // Used for debugging
-        table.setDebug(true);
+        //table.setDebug(true);
 
         createMenu();
 
@@ -56,16 +57,18 @@ public class MenuScreen extends GameScreen {
         table.padBottom(100);
         Image logo = new Image(textureAtlas.findRegion("logo"));
         TextButton continueButton = new TextButton("Continue", skin);
-        TextButton selectLevelButton = new TextButton("Select Level", skin);
+        TextButton selectLevelButton = new TextButton("Select\nLevel", skin);
         TextButton settingsButton = new TextButton("Settings", skin);
 
-        table.add(logo).width(logo.getWidth()/2).height((logo.getHeight()/logo.getWidth())*logo.getWidth()/2);
+        //table.add(logo).width(logo.getWidth()/2).height((logo.getHeight()/logo.getWidth())*logo.getWidth()/2);
+        table.add(logo).width(Gdx.graphics.getWidth()/2).height((logo.getHeight()/logo.getWidth())*Gdx.graphics.getWidth()/2);///2)
         table.row().pad(80, 0, 10, 0);
-        table.add(continueButton).width(continueButton.getWidth()).height(continueButton.getHeight()/2);
+        //table.add(continueButton).width(continueButton.getWidth()).height(continueButton.getHeight()/2);
+        table.add(continueButton).width(Gdx.graphics.getWidth()/4).height((continueButton.getHeight()/continueButton.getWidth())*(Gdx.graphics.getWidth()/4));
         table.row().pad(10, 0, 10, 0);
-        table.add(selectLevelButton).width(selectLevelButton.getWidth()).height(selectLevelButton.getHeight()/2);
+        table.add(selectLevelButton).width(Gdx.graphics.getWidth()/4).height((selectLevelButton.getHeight()/selectLevelButton.getWidth())*(Gdx.graphics.getWidth()/4));
         table.row().pad(10, 0, 10, 0);
-        table.add(settingsButton).width(settingsButton.getWidth()).height(settingsButton.getHeight()/2);
+        table.add(settingsButton).width(Gdx.graphics.getWidth()/4).height((settingsButton.getHeight()/settingsButton.getWidth())*(Gdx.graphics.getWidth()/4));
 
         selectLevelButton.addListener(new ClickListener(){
             @Override

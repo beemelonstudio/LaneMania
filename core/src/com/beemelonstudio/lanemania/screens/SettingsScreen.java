@@ -26,12 +26,12 @@ public class SettingsScreen extends GameScreen {
     private TextureRegion rightArrowIcon;
 
     private float height, width;
-    private float numberOfButtons = 4f;
+    private float numberOfButtons = 3f;
 
     public SettingsScreen(LaneMania game) {
         super(game);
 
-        height = (Gdx.graphics.getHeight() / 2f) / 5f;
+        height = (Gdx.graphics.getHeight() / 2f) / 2f;
         width = Gdx.graphics.getWidth() / numberOfButtons;
     }
 
@@ -80,7 +80,7 @@ public class SettingsScreen extends GameScreen {
         table.add(english).height(height).width(width).center();
         table.add(rightArrowButton).height(height).width(width);
         table.row().pad(10, 0, 10, 0);
-        table.add(returnButton).colspan(3).center();
+        table.add(returnButton).width(Gdx.graphics.getWidth()/4).height((returnButton.getHeight()/returnButton.getWidth())*(Gdx.graphics.getWidth()/4)).colspan(3).center();
 
         muteButton.addListener(new ClickListener(){
             @Override

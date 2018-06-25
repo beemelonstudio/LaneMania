@@ -68,6 +68,7 @@ public class LaneMania extends Game {
         backgroundViewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         batch = new PolygonSpriteBatch();
         stage = new Stage(new ScreenViewport(hudCamera));
+        stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
         screens = new Stack<GameScreen>();
         screens.push(new MenuScreen(this));

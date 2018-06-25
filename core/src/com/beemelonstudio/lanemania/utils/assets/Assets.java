@@ -1,10 +1,20 @@
 package com.beemelonstudio.lanemania.utils.assets;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.ObjectMap;
 
 import java.util.HashMap;
 
@@ -27,21 +37,21 @@ public class Assets {
         files = new HashMap<String, AssetFile>();
 
         //TextureAtlases
-        files.put("orange-theme",   new AssetFile("sprites/orange-theme/orange-theme.atlas",    TextureAtlas.class));
-        files.put("wildwest-theme", new AssetFile("sprites/wildwest-theme/wildwest-theme.atlas",TextureAtlas.class));
-        files.put("general-theme",  new AssetFile("sprites/general-theme/general-theme.atlas",  TextureAtlas.class));
+        files.put("wildwest-theme", new AssetFile("sprites/wildwest-theme/wildwest-theme.atlas", TextureAtlas.class));
+        files.put("general-theme",  new AssetFile("sprites/general-theme/general-theme.atlas",   TextureAtlas.class));
+
+        //Fonts
+        //files.put("passion-one", new AssetFile("skins/beemelon/passion-one.fnt", BitmapFont.class));
+        //files.put("passion-oneTTF", new AssetFile("skins/beemelon/passion-one.ttf", TrueT.class));
 
         //Skins
-        files.put("defaultSkin",    new AssetFile("skins/default/uiskin.json",          Skin.class));
-        files.put("pixthulhuSkin",  new AssetFile("skins/pixthulhu/pixthulhu-ui.json",  Skin.class));
-        files.put("comicSkin",      new AssetFile("skins/comic/comic-ui.json",          Skin.class));
-        files.put("beemelonSkin",   new AssetFile("skins/beemelon/skin.json",           Skin.class));
+        files.put("beemelonSkin", new AssetFile("skins/beemelon/skin.json", Skin.class));
 
         //Sounds
-        files.put("backgroundMenuMusic",    new AssetFile("sounds/backgroundExample.mp3",   Music.class));
+        files.put("backgroundMenuMusic", new AssetFile("sounds/backgroundExample.mp3", Music.class));
 
         //Images
-        files.put("backgroundW1",   new AssetFile("images/background_w1.jpg",   Texture.class));
+        //files.put("backgroundW1",   new AssetFile("images/background_w1.jpg",   Texture.class));
 
         //I18Ns
         //files.put("defaultI18N",     new AssetFile("i18N/prototype",  I18NBundle.class));
@@ -53,10 +63,63 @@ public class Assets {
 
         assetManager.finishLoading();
         //while(!assetManager.update()){} TODO: Decide for one method
+
+        //generateFont();
     }
 
     public static Object get(String hashmapKey){
         return assetManager.get(files.get(hashmapKey).path, files.get(hashmapKey).type);
+    }
+
+    private static void generateFont() {
+
+        // Load and generate font
+        FileHandleResolver resolver = new InternalFileHandleResolver();
+        assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+        assetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+        FreetypeFontLoader.FreeTypeFontLoaderParameter parameter = new FreetypeFontLoader.FreeTypeFontLoaderParameter();
+        parameter.fontFileName = "skins/beemelon/passion-one-regular.ttf";
+        parameter.fontParameters.size = 50;
+        parameter.fontParameters.color = Color.BLACK;
+        files.put("font", new AssetFile("font.ttf", BitmapFont.class));
+        assetManager.load("font.ttf", BitmapFont.class, parameter);
+        assetManager.finishLoading();
+
+        // Add fonts to ObjectMap
+        BitmapFont font = assetManager.get("font.ttf", BitmapFont.class);
+        ObjectMap<String, Object> fontMap = new ObjectMap<String, Object>();
+        fontMap.put("font-export.fnt", font);
+        fontMap.put("title", font);
+
+        SkinLoader.SkinParameter skinParameter = new SkinLoader.SkinParameter(fontMap);
+
+        files.put("beemelonSkin", new AssetFile("skins/beemelon/skin.json", Skin.class));
+        assetManager.load("skins/beemelon/skin.json", Skin.class, skinParameter);
+        assetManager.finishLoading();
+        /*
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skins/beemelon/passion-one-regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 24;
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+
+        Skin skin = new Skin();
+        skin.add("font", font, BitmapFont.class);
+        skin.add("title", font, BitmapFont.class);
+
+        //Skin originalSkin = (Skin) get("beemelonSkin");
+        skin.load(Gdx.files.internal(files.get("beemelonSkin").path));
+
+        /*
+        com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	font: {
+		file: font-export.fnt
+	}
+	title: {
+		file: font-title-export.fnt
+	}
+}
+         */
     }
 
     public static void dispose(){

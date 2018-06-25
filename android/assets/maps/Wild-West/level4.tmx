@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="7">
+ <properties>
+  <property name="star2" type="float" value="2"/>
+  <property name="star3" type="float" value="1"/>
+ </properties>
+ <layer name="Kachelebene 1" width="15" height="30">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup name="obstacles">
+  <object id="4" name="circle141" x="18.9983" y="201.002" width="124.67" height="123.33">
+   <properties>
+    <property name="rspeed" type="float" value="100"/>
+    <property name="type" value="circle14"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="5" name="square1" x="32.5" y="589" width="107" height="88.6666">
+   <properties>
+    <property name="circle" type="bool" value="false"/>
+    <property name="speed" type="float" value="80"/>
+    <property name="timer" type="float" value="1.5"/>
+    <property name="type" value="square"/>
+   </properties>
+  </object>
+  <object id="6" name="waypoint1" x="401.333" y="577.333">
+   <properties>
+    <property name="obstacle" value="square1"/>
+    <property name="order" type="float" value="2"/>
+    <property name="timer" type="float" value="0.099999"/>
+    <property name="type" value="waypoint"/>
+   </properties>
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup name="objects">
+  <object id="1" name="ball" x="31.33" y="31.33" width="32" height="32">
+   <properties>
+    <property name="entity" value="ball"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="2" name="goal" x="353.33" y="864" width="60" height="94.6667">
+   <properties>
+    <property name="entity" value="goal"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

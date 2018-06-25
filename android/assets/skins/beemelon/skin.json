@@ -1,7 +1,7 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	font: {
-		file: font-export.fnt
+		file: passion-one42.fnt
 	}
 	title: {
 		file: font-title-export.fnt
@@ -119,6 +119,21 @@ com.kotcrab.vis.ui.widget.VisTextField$VisTextFieldStyle: {
 		focusedBackground: textfield-pressed
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+        font:font
+	}
+	title: {
+		font: title
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: font
+		up: button_background
+		down: button_background_pressed
+	}
+}
 com.kotcrab.vis.ui.widget.VisTextButton$VisTextButtonStyle: {
 	default: {
 		down: button-pressed
@@ -149,21 +164,6 @@ com.kotcrab.vis.ui.widget.VisTextButton$VisTextButtonStyle: {
 		font: font
 		fontColor: white
 		checked: tab
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-	default: {
-		hScrollKnob: scrollbar-horizontal
-		vScrollKnob: scrollbar-vertical
-	}
-	list: {
-		hScrollKnob: scrollbar-horizontal
-		vScrollKnob: scrollbar-vertical
-	}
-	select-box: {
-		background: list
-		hScrollKnob: scrollbar-horizontal
-		vScrollKnob: scrollbar-vertical
 	}
 }
 com.kotcrab.vis.ui.widget.VisImageButton$VisImageButtonStyle: {
@@ -256,16 +256,6 @@ com.kotcrab.vis.ui.widget.Menu$MenuStyle: {
 com.kotcrab.vis.ui.widget.MenuBar$MenuBarStyle: {
 	default: {
 		background: menu-bar
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
-	default: {
-		up: button_background
-		down: button_background_pressed
-	}
-	transparent: {
-		up: transparent
-		down: transparent
 	}
 }
 com.kotcrab.vis.ui.widget.Separator$SeparatorStyle: {
@@ -365,7 +355,6 @@ com.kotcrab.vis.ui.widget.file.FileChooserStyle: {
 		expandDropdown: expand-drop-down
 	}
 }
-
 com.kotcrab.vis.ui.widget.color.ColorPickerWidgetStyle: {
 	default: {
 		barSelector: bar-selector
@@ -392,6 +381,21 @@ com.kotcrab.vis.ui.widget.BusyBar$BusyBarStyle: {
 		segmentOverflow: 10
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		hScrollKnob: scrollbar-horizontal
+		vScrollKnob: scrollbar-vertical
+	}
+	list: {
+		hScrollKnob: scrollbar-horizontal
+		vScrollKnob: scrollbar-vertical
+	}
+	select-box: {
+		background: list
+		hScrollKnob: scrollbar-horizontal
+		vScrollKnob: scrollbar-vertical
+	}
+}
 com.kotcrab.vis.ui.widget.ListViewStyle: {
 	default: {
 		scrollPaneStyle: default
@@ -413,45 +417,19 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		down: black
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: {
-		checkboxOn: checkbox-checked
-		checkboxOff: checkbox
-		font: font
-	}
-	radio: {
-		checkboxOn: radio-checked
-		checkboxOff: radio
-		font: font
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
-	default: {
-		font: font
 		up: button_background
 		down: button_background_pressed
 	}
+	transparent: {
+		up: transparent
+		down: transparent
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: {
-		font: font
-	}
-	menuitem-shortcut: {
-		font: font
-	}
-	small: {
-		font: font
-	}
 	title: {
 		font: title
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
-	default: {
-		font: font
-		fontColorSelected: white
-		fontColorUnselected: light-gray
-		selection: selection
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
@@ -464,14 +442,19 @@ com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 		knobBefore: progress-bar-knob-vertical
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: {
-		font: font
-		fontColor: white
-		background: select-box
-		scrollStyle: select-box
-		listStyle: default
-		backgroundOpen: select-box-pressed
+		hScrollKnob: scrollbar-horizontal
+		vScrollKnob: scrollbar-vertical
+	}
+	list: {
+		hScrollKnob: scrollbar-horizontal
+		vScrollKnob: scrollbar-vertical
+	}
+	select-box: {
+		background: list
+		hScrollKnob: scrollbar-horizontal
+		vScrollKnob: scrollbar-vertical
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
@@ -496,30 +479,6 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 		handle: splitpane-vertical
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-	default: {
-		font: font
-		up: button_background
-		down: button_background_pressed
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
-	default: {
-		font: font
-		fontColor: white
-		focusedFontColor: black
-		background: textfield
-		focusedBackground: textfield-pressed
-		cursor: black
-		selection: gray
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
-	default: {
-		label: default
-		background: button
-	}
-}
 com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
 	default: {
 		background: touchpad
@@ -530,12 +489,6 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 	default: {
 		plus: tree-plus
 		minus: tree-minus
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
-	default: {
-		background: window
-		titleFont: font
 	}
 }
 }

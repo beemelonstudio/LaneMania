@@ -74,9 +74,11 @@ public class MapAnalyser {
 
     private void loadMapProperties() {
 
-        // TODO: Check this correctly
-        int maxlines = map.getProperties().get("maxlines") != null ? (Integer) map.getProperties().get("maxlines") : 100;
-        if(maxlines != 0) mapProperties.put("maxlines", maxlines);
+        float star2 = map.getProperties().get("star2") != null ? (Float) map.getProperties().get("star2") : 3;
+        mapProperties.put("star2", star2);
+
+        float star3 = map.getProperties().get("star3") != null ? (Float) map.getProperties().get("star3") : 2;
+        mapProperties.put("star3", star3);
     }
 
     private void loadObjects() {

@@ -64,7 +64,7 @@
    </properties>
    <point/>
   </object>
-  <object id="15" name="waypoint1" x="161.37" y="540.614">
+  <object id="15" name="waypoint1" x="202.703" y="540.614">
    <properties>
     <property name="obstacle" value="square1"/>
     <property name="order" type="float" value="2"/>
@@ -104,7 +104,7 @@
    </properties>
    <ellipse/>
   </object>
-  <object id="2" name="goal" x="353.33" y="864" width="62.6667" height="94.6667">
+  <object id="2" name="goal" x="353.33" y="864" width="60" height="94.6667">
    <properties>
     <property name="entity" value="goal"/>
    </properties>
