@@ -148,8 +148,12 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
 
             case STRAIGHTLINE:
                 if(drawing) {
-                    straightStraightLine.setEnd(coordinates.x, coordinates.y);
-                    straightStraightLine.build();
+                    if (straightStraightLine.width > 0.05f) {
+                        straightStraightLine.build();
+                    } else {
+                        screen.straightLines.removeValue(straightStraightLine, true);
+                        screen.straightLinePool.free(straightStraightLine);
+                    }
                     drawing = false;
                 }
                 break;
@@ -171,6 +175,14 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
             case STRAIGHTLINE:
                 if(drawing) {
                     straightStraightLine.setEnd(coordinates.x, coordinates.y);
+                    if(straightStraightLine.width > 0.49f) {
+                        float x = (float) (straightStraightLine.start.x + 0.5f * Math.cos(straightStraightLine.angle));
+                        float y = (float) (straightStraightLine.start.y + 0.5f * Math.sin(straightStraightLine.angle));
+
+                        straightStraightLine.setEnd(x, y);
+                    }
+                    else
+                        straightStraightLine.setEnd(coordinates.x, coordinates.y);
                 }
                 break;
 

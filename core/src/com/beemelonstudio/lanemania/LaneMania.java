@@ -63,7 +63,7 @@ public class LaneMania extends Game {
 
         camera = new OrthographicCamera();
         hudCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new FitViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
+        viewport = new ExtendViewport(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, camera);
         backgroundViewport = new ScreenViewport();
         backgroundViewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         batch = new PolygonSpriteBatch();
@@ -73,7 +73,7 @@ public class LaneMania extends Game {
         screens = new Stack<GameScreen>();
         screens.push(new MenuScreen(this));
         //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        //screens.push(new PlayScreen(this, mapLoader.getMap(0,1)));
+        //screens.push(new PlayScreen(this, mapLoader.getMap(0,4)));
 
         setScreen(screens.peek());
 	}

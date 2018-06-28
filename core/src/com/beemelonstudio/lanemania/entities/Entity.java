@@ -80,8 +80,6 @@ public abstract class Entity implements Actable {
 
             if (waypoints.get(waypointCounter).timer != 0 && !waitingLocked) {
 
-                Gdx.app.log("Waiting", waitedTime + " of " + waypoints.get(waypointCounter).timer);
-
                 waitedTime += delta;
                 if (waitedTime >= waypoints.get(waypointCounter).timer) {
                     waitedTime = 0;

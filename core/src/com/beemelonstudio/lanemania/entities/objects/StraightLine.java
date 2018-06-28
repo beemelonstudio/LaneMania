@@ -22,6 +22,7 @@ public class StraightLine extends Entity implements Pool.Poolable {
     private TextureRegion textureRegionShort;
 
     public float rotation;
+    public double angle;
     private float height = 0.025f;
 
     public Vector2 start, end;
@@ -114,7 +115,8 @@ public class StraightLine extends Entity implements Pool.Poolable {
         float dx = end.x - start.x;
         float dy = end.y - start.y;
         width = (float) Math.sqrt(dx*dx + dy*dy);
-        rotation = (float) Math.toDegrees(Math.atan2(end.y - start.y, end.x - start.x)) + 180f;
+        angle = Math.atan2(end.y - start.y, end.x - start.x);
+        rotation = (float) Math.toDegrees(angle) + 180f;
     }
 
     public void build() {
@@ -134,7 +136,9 @@ public class StraightLine extends Entity implements Pool.Poolable {
         end.set(0, 0);
         rotation = 0;
 
-        body.getWorld().destroyBody(body);
-        body = null;
+        if(body != null) {
+            body.getWorld().destroyBody(body);
+            body = null;
+        }
     }
 }

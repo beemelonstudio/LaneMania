@@ -73,7 +73,7 @@ public class PlayScreen extends GameScreen {
         super.show();
 
         toBeDeleted = new Array<Body>();
-        //debugRenderer = new Box2DDebugRenderer(true,true,false,true,true,true);
+        debugRenderer = new Box2DDebugRenderer(true,true,false,true,true,true);
 
         worldManager = new WorldManager();
         worldManager.world.setContactListener(new CustomContactListener(this));
@@ -149,7 +149,7 @@ public class PlayScreen extends GameScreen {
 
         batch.end();
 
-        //debugRenderer.render(worldManager.world, camera.combined);
+        debugRenderer.render(worldManager.world, camera.combined);
     }
 
     private void loadLevel() {

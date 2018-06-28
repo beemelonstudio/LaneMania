@@ -10,9 +10,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
-import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -71,6 +68,7 @@ public class Assets {
         return assetManager.get(files.get(hashmapKey).path, files.get(hashmapKey).type);
     }
 
+    /*
     private static void generateFont() {
 
         // Load and generate font
@@ -119,8 +117,9 @@ public class Assets {
 		file: font-title-export.fnt
 	}
 }
-         */
+
     }
+    */
 
     public static void dispose(){
         assetManager.dispose();
