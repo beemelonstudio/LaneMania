@@ -303,6 +303,40 @@ public class BodyFactory {
         return body;
     }
 
+    public static Body createArrow(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/wildwest.json"));
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x, y);
+        bodyDef.type = bodyType;
+        bodyDef.fixedRotation = false;
+
+        Body body = world.createBody(bodyDef);
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+
+        loader.attachFixture(body, "arrow", createFixture(obstacleType, new PolygonShape()), width);
+
+        return body;
+    }
+
+    public static Body createBullet(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
+
+        BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/wildwest.json"));
+
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.position.set(x, y);
+        bodyDef.type = bodyType;
+        bodyDef.fixedRotation = false;
+
+        Body body = world.createBody(bodyDef);
+        body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
+
+        loader.attachFixture(body, "bullet", createFixture(obstacleType, new PolygonShape()), width);
+
+        return body;
+    }
+
     public static Body createCircle18(float x, float y, float width, float rotation, BodyDef.BodyType bodyType, ObstacleType obstacleType) {
 
         BodyEditorLoader loader = new BodyEditorLoader(Gdx.files.internal("bodies/wildwest.json"));

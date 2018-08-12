@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beemelonstudio.lanemania.screens.GameScreen;
 import com.beemelonstudio.lanemania.screens.MapSelectionScreen;
@@ -73,9 +74,10 @@ public class LaneMania extends Game {
         screens = new Stack<GameScreen>();
         screens.push(new MenuScreen(this));
         //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        //screens.push(new PlayScreen(this, mapLoader.getMap(0,4)));
+        //screens.push(new PlayScreen(this, mapLoader.getMap(0,6)));
 
         setScreen(screens.peek());
+        //setScreen(new ViewportTest(this));
 	}
 
     @Override
@@ -103,7 +105,9 @@ public class LaneMania extends Game {
     public void resize(int width, int height) {
         super.resize(width, height);
 
-        viewport.update(width, height, true);
+        stage.getViewport().update(width, height, true);
+        viewport.update(width, height, false);
+        camera.position.set(VIRTUAL_WIDTH/2, VIRTUAL_HEIGHT/2, 0);
         backgroundViewport.update(width, height, true);
         hudCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         batch.setProjectionMatrix(camera.combined);

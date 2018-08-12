@@ -17,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Sort;
 import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.obstacles.ArrowObstacle;
+import com.beemelonstudio.lanemania.entities.obstacles.BulletObstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.Circle14Obstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.Circle18Obstacle;
 import com.beemelonstudio.lanemania.entities.obstacles.CircleObstacle;
@@ -167,6 +169,32 @@ public class MapAnalyser {
                     //body.setUserData(type);
 
                     obstacles.add(new PickaxeObstacle(body, extractor.name, rectangle.width * unitScale, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
+                }
+                else if (extractor.type.equals("arrow")) {
+
+                    body = BodyFactory.createArrow(
+                            rectangle.x * unitScale,
+                            rectangle.y * unitScale,
+                            rectangle.width * unitScale,
+                            rotation,
+                            BodyDef.BodyType.KinematicBody,
+                            ObstacleType.SOLID);
+                    //body.setUserData(type);
+
+                    obstacles.add(new ArrowObstacle(body, extractor.name, rectangle.width * unitScale, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
+                }
+                else if (extractor.type.equals("bullet")) {
+
+                    body = BodyFactory.createBullet(
+                            rectangle.x * unitScale,
+                            rectangle.y * unitScale,
+                            rectangle.width * unitScale,
+                            rotation,
+                            BodyDef.BodyType.KinematicBody,
+                            ObstacleType.SOLID);
+                    //body.setUserData(type);
+
+                    obstacles.add(new BulletObstacle(body, extractor.name, rectangle.width * unitScale, extractor.speed, extractor.rotationSpeed, extractor.circle, extractor.timer));
                 }
                 else if (extractor.type.equals("waypoint")) {
 

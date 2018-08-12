@@ -78,7 +78,7 @@ public class PlayScreenUI extends GameScreenUI {
         super.draw(batch);
 
         //batch.draw(starsTextures[amountStars], screen.viewport.getScreenWidth() / 3, screen.viewport.getScreenHeight() - starsTextures[amountStars].getRegionHeight(), starsTextures[amountStars].getRegionWidth(), starsTextures[amountStars].getRegionHeight());
-        batch.draw(starsTextures[amountStars-1], 0.65f, 1.849f, 0.3f, 0.161f);
+        batch.draw(starsTextures[amountStars-1], 0.7f, 1.849f, 0.30f, 0.161f);
     }
 
     public void createEndTable() {
@@ -158,9 +158,7 @@ public class PlayScreenUI extends GameScreenUI {
                 }
                 else {
                     // When the game is playing
-                    screen.customInputListener.reset();
-                    screen.gravity = false;
-                    screen.ball.reset();
+                    screen.reset();
                 }
             }
         });

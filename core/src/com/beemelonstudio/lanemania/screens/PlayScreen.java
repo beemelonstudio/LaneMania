@@ -101,7 +101,12 @@ public class PlayScreen extends GameScreen {
 
         worldManager.world.step(delta, 10, 8);
 
+        //ball behaviour on screen coordinates
         ball.act(delta);
+        ball.screenPosition.set(camera.project(ball.worldPosition));
+        if(!ball.checkOnScreen())
+            reset();
+
         goal.act(delta);
 
         for(StraightLine straightLine : straightLines)
@@ -128,9 +133,13 @@ public class PlayScreen extends GameScreen {
         update(delta);
 
         // Drawing
-        renderer.setView(camera);
-        renderer.render();
+        //viewport.apply(true);
+        //viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+        //viewport.getCamera().position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
+        //renderer.setView(camera);
+        //renderer.render();
 
+        //batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
         // Goal background texture
@@ -166,7 +175,7 @@ public class PlayScreen extends GameScreen {
         mapHeightInPixel = mapHeight * tileHeight;
 
         unitScale = 1/(mapWidth * tileWidth);
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        //renderer = new OrthogonalTiledMapRenderer(map, unitScale);
 
         mapAnalyser = new MapAnalyser(map, unitScale);
 
@@ -202,6 +211,13 @@ public class PlayScreen extends GameScreen {
             stage.addActor(playScreenUI.endTable);
             playScreenUI.endTable.toFront();
         }
+    }
+
+    public void reset() {
+
+        ball.reset();
+        customInputListener.reset();
+        gravity = false;
     }
 
     @Override

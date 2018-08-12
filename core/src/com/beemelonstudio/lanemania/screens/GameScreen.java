@@ -127,21 +127,25 @@ public class GameScreen implements Screen, InputProcessor {
         stage.draw();
 
         // Set GL Viewport
-        Gdx.gl.glViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
+        //TODO: Do we still need this?
+        //Gdx.gl.glViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
 
         // Catch Androids native back button
         handleBackButton();
 
-        camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
+        //TODO: Do we still need this?
+        //camera.position.set(camera.viewportWidth/2, camera.viewportHeight/2, 0);
 
-        camera.update();
         batch.setProjectionMatrix(camera.combined);
+        viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), false);
+        camera.position.set(LaneMania.VIRTUAL_WIDTH/2, LaneMania.VIRTUAL_HEIGHT/2, 0);
+        //camera.update();
     }
 
     @Override
     public void resize(int width, int height) {
 
-        stage.getViewport().update(width, height, true);
+        //stage.getViewport().update(width, height, true);
     }
 
     @Override

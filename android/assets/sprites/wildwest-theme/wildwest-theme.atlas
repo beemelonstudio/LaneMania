@@ -6,7 +6,7 @@ filter: Nearest,Nearest
 repeat: none
 1stars
   rotate: false
-  xy: 1825, 843
+  xy: 1825, 747
   size: 175, 94
   orig: 175, 94
   offset: 0, 0
@@ -20,9 +20,23 @@ repeat: none
   index: -1
 3stars
   rotate: false
-  xy: 1825, 747
+  xy: 1825, 843
   size: 175, 94
   orig: 175, 94
+  offset: 0, 0
+  index: -1
+arrow
+  rotate: false
+  xy: 1825, 610
+  size: 170, 64
+  orig: 170, 64
+  offset: 0, 0
+  index: -1
+bullet
+  rotate: false
+  xy: 1825, 676
+  size: 178, 69
+  orig: 178, 69
   offset: 0, 0
   index: -1
 circle
@@ -48,14 +62,14 @@ circle18
   index: -1
 crane_closed
   rotate: false
-  xy: 1825, 465
+  xy: 1825, 328
   size: 72, 139
   orig: 72, 139
   offset: 0, 0
   index: -1
 crane_opened
   rotate: false
-  xy: 1825, 606
+  xy: 1825, 469
   size: 76, 139
   orig: 76, 139
   offset: 0, 0
