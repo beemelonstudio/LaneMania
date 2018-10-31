@@ -1,7 +1,13 @@
 {
 com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	font: {
+		file: font-export.fnt
+	}
+	passion-one42: {
 		file: passion-one42.fnt
+	}
+	passion-one50: {
+		file: passion-one50.fnt
 	}
 	title: {
 		file: font-title-export.fnt
@@ -48,6 +54,12 @@ com.badlogic.gdx.graphics.Color: {
 		r: 1
 		g: 0
 		b: 0
+		a: 1
+	}
+	RGBA_255_161_0_255: {
+		r: 1
+		g: 0.64705884
+		b: 0.09019608
 		a: 1
 	}
 	white: {
@@ -117,21 +129,6 @@ com.kotcrab.vis.ui.widget.VisTextField$VisTextFieldStyle: {
 		cursor: black
 		focusedFontColor: black
 		focusedBackground: textfield-pressed
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: {
-        font:font
-	}
-	title: {
-		font: title
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-	default: {
-		font: font
-		up: button_background
-		down: button_background_pressed
 	}
 }
 com.kotcrab.vis.ui.widget.VisTextButton$VisTextButtonStyle: {
@@ -381,26 +378,6 @@ com.kotcrab.vis.ui.widget.BusyBar$BusyBarStyle: {
 		segmentOverflow: 10
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-	default: {
-		hScrollKnob: scrollbar-horizontal
-		vScrollKnob: scrollbar-vertical
-	}
-	list: {
-		hScrollKnob: scrollbar-horizontal
-		vScrollKnob: scrollbar-vertical
-	}
-	select-box: {
-		background: list
-		hScrollKnob: scrollbar-horizontal
-		vScrollKnob: scrollbar-vertical
-	}
-}
-com.kotcrab.vis.ui.widget.ListViewStyle: {
-	default: {
-		scrollPaneStyle: default
-	}
-}
 com.kotcrab.vis.ui.util.form.SimpleFormValidator$FormValidatorStyle: {
 	default: {
 		errorLabelColor: red
@@ -416,6 +393,26 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		up: black
 		down: black
 	}
+	two_arrows: {
+		up: großes_brett_pfeile
+		down: großes_brett_pfeile_smaller
+	}
+	one_arrow: {
+		up: großes_brett_ein_pfeil
+		down: großes_brett_ein_pfeil_smaller
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: checkbox-checked
+		checkboxOff: checkbox
+		font: font
+	}
+	radio: {
+		checkboxOn: radio-checked
+		checkboxOff: radio
+		font: font
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: {
@@ -427,9 +424,33 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		down: transparent
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+	default: {
+		font: font
+		up: button_background
+		down: button_background_pressed
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: font
+	}
+	menuitem-shortcut: {
+		font: font
+	}
+	small: {
+		font: font
+	}
 	title: {
 		font: title
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: font
+		fontColorSelected: white
+		fontColorUnselected: light-gray
+		selection: selection
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
@@ -457,6 +478,16 @@ com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 		vScrollKnob: scrollbar-vertical
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
+	default: {
+		font: font
+		fontColor: white
+		background: select-box
+		scrollStyle: select-box
+		listStyle: default
+		backgroundOpen: select-box-pressed
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-horizontal: {
 		knobDown: slider-knob-pressed-horizontal
@@ -479,6 +510,49 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 		handle: splitpane-vertical
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: passion-one50
+		fontColor: RGBA_255_161_0_255
+		up: großes_schild
+		down: großes_schild_smaller
+	}
+	small: {
+		font: font
+		fontColor: RGBA_255_161_0_255
+		up: kleines_brett
+		down: kleines_brett_smaller
+	}
+	one_arrow: {
+		font: passion-one50
+		fontColor: RGBA_255_161_0_255
+		up: großes_brett_ein_pfeil
+		down: großes_brett_ein_pfeil_smaller
+	}
+	two_arrows: {
+		font: passion-one50
+		fontColor: RGBA_255_161_0_255
+		up: großes_brett_pfeile
+		down: großes_brett_pfeile_smaller
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: font
+		fontColor: white
+		focusedFontColor: black
+		background: textfield
+		focusedBackground: textfield-pressed
+		cursor: black
+		selection: gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+		background: button
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.Touchpad$TouchpadStyle: {
 	default: {
 		background: touchpad
@@ -489,6 +563,12 @@ com.badlogic.gdx.scenes.scene2d.ui.Tree$TreeStyle: {
 	default: {
 		plus: tree-plus
 		minus: tree-minus
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: window
+		titleFont: font
 	}
 }
 }

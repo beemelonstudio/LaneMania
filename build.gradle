@@ -27,6 +27,7 @@ allprojects {
         aiVersion = '1.8.0'
         gdxUtilsVersion = '0.13.4'
         visuiVersion = '1.4.0'
+        libVersion = '1.9.1.9.6'
     }
 
     repositories {
@@ -113,6 +114,8 @@ project(":core") {
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         //compile "com.underwaterapps.overlap2druntime:overlap2d-runtime-libgdx:0.1.2-SNAPSHOT"
         compile "com.kotcrab.vis:vis-ui:$visuiVersion"
+        compile "com.github.czyzby:gdx-lml:$libVersion"//.$gdxVersion"
+        compile "com.github.czyzby:gdx-lml-vis:$libVersion"//.$gdxVersion"
         //compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         //compile fileTree(dir: '../libs', include: '*.jar')
     }

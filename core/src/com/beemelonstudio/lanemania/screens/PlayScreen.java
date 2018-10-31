@@ -159,6 +159,8 @@ public class PlayScreen extends GameScreen {
         batch.end();
 
         debugRenderer.render(worldManager.world, camera.combined);
+
+        postDraw(delta);
     }
 
     private void loadLevel() {

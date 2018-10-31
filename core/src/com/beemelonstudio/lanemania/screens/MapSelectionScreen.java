@@ -77,6 +77,8 @@ public class MapSelectionScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+
+        postDraw(delta);
     }
 
     public void createWorldSelection() {

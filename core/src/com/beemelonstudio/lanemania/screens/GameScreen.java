@@ -123,9 +123,6 @@ public class GameScreen implements Screen, InputProcessor {
             batch.end();
         }
 
-        stage.act(delta);
-        stage.draw();
-
         // Set GL Viewport
         //TODO: Do we still need this?
         //Gdx.gl.glViewport(viewport.getScreenX(), viewport.getScreenY(), viewport.getScreenWidth(), viewport.getScreenHeight());
@@ -142,10 +139,16 @@ public class GameScreen implements Screen, InputProcessor {
         //camera.update();
     }
 
+    protected void postDraw(float delta) {
+
+        stage.act(delta);
+        stage.draw();
+    }
+
     @Override
     public void resize(int width, int height) {
 
-        //stage.getViewport().update(width, height, true);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
