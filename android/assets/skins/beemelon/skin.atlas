@@ -24,42 +24,42 @@ passion-one50
   orig: 512, 512
   offset: 0, 0
   index: -1
-großes_brett_ein_pfeil
+grosses_brett_ein_pfeil
   rotate: false
   xy: 515, 599
   size: 476, 208
   orig: 476, 208
   offset: 0, 0
   index: -1
-großes_brett_ein_pfeil_smaller
+grosses_brett_ein_pfeil_smaller
   rotate: false
   xy: 515, 809
   size: 490, 214
   orig: 490, 214
   offset: 0, 0
   index: -1
-großes_brett_pfeile
+grosses_brett_pfeile
   rotate: false
   xy: 1, 129
   size: 485, 186
   orig: 485, 186
   offset: 0, 0
   index: -1
-großes_brett_pfeile_smaller
+grosses_brett_pfeile_smaller
   rotate: false
   xy: 1, 317
   size: 500, 192
   orig: 500, 192
   offset: 0, 0
   index: -1
-großes_schild
+grosses_schild
   rotate: false
   xy: 515, 509
   size: 313, 88
   orig: 313, 88
   offset: 0, 0
   index: -1
-großes_schild_smaller
+grosses_schild_smaller
   rotate: false
   xy: 1, 36
   size: 323, 91

@@ -394,12 +394,12 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		down: black
 	}
 	two_arrows: {
-		up: großes_brett_pfeile
-		down: großes_brett_pfeile_smaller
+		up: grosses_brett_pfeile
+		down: grosses_brett_pfeile_smaller
 	}
 	one_arrow: {
-		up: großes_brett_ein_pfeil
-		down: großes_brett_ein_pfeil_smaller
+		up: grosses_brett_ein_pfeil
+		down: grosses_brett_ein_pfeil_smaller
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
@@ -514,8 +514,8 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: passion-one50
 		fontColor: RGBA_255_161_0_255
-		up: großes_schild
-		down: großes_schild_smaller
+		up: grosses_schild
+		down: grosses_schild_smaller
 	}
 	small: {
 		font: font
@@ -526,14 +526,14 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	one_arrow: {
 		font: passion-one50
 		fontColor: RGBA_255_161_0_255
-		up: großes_brett_ein_pfeil
-		down: großes_brett_ein_pfeil_smaller
+		up: grosses_brett_ein_pfeil
+		down: grosses_brett_ein_pfeil_smaller
 	}
 	two_arrows: {
 		font: passion-one50
 		fontColor: RGBA_255_161_0_255
-		up: großes_brett_pfeile
-		down: großes_brett_pfeile_smaller
+		up: grosses_brett_pfeile
+		down: grosses_brett_pfeile_smaller
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
