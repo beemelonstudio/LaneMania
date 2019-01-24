@@ -80,7 +80,6 @@ public class LaneMania extends Game {
         //screens.push(new PlayScreen(this, mapLoader.getMap(0,6)));
 
         setScreen(screens.peek());
-        //setScreen(new ViewportTest(this));
 	}
 
     @Override

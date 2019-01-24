@@ -36,6 +36,7 @@ public class GameScreen implements Screen, InputProcessor {
 
     protected Stage stage;
     protected Skin skin;
+    protected float uiScale = 1f;
 
     protected TextureAtlas textureAtlas;
     protected TextureRegion backgroundTexture;
@@ -143,6 +144,10 @@ public class GameScreen implements Screen, InputProcessor {
 
         stage.act(delta);
         stage.draw();
+    }
+
+    protected float scaleUI(float value) {
+        return value * uiScale;
     }
 
     @Override

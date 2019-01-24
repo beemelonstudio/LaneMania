@@ -2,7 +2,9 @@ package com.beemelonstudio.lanemania.screens.custombuttons;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.github.czyzby.lml.parser.impl.tag.AbstractActorLmlTag;
 
 import javax.xml.soap.Text;
 
@@ -23,7 +25,7 @@ public class WorldTextButton extends TextButton {
     public void addMapButton(TextButton button) {
 
         String text = button.getText().toString();
-        text = text.substring(12, text.length()-4);
+        text = text.substring(15, text.length()-4);
         button.setText(text);
 
         button.setVisible(false);

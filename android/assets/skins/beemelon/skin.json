@@ -423,6 +423,22 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		up: transparent
 		down: transparent
 	}
+	languageDE: {
+		imageUp: german_button
+		imageDown: german_button_down
+	}
+	languageEN: {
+		imageUp: english_button
+		imageDown: english_button_down
+	}
+	sound_on: {
+		imageUp: sound_on
+		imageDown: sound_on_down
+	}
+	sound_off: {
+		imageUp: sound_off
+		imageDown: sound_off_down
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 	default: {
