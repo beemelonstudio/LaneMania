@@ -66,21 +66,28 @@ public class MapAnalyser {
 
         obstacles = new Array<Entity>();
         waypoints = new Array<Waypoint>();
+    }
 
-        loadMapProperties();
+    public void generateLevel() {
         loadObjects();
         loadObstacles();
         loadBackground();
         setupWaypoints();
     }
 
-    private void loadMapProperties() {
+    public void loadMapProperties() {
 
         float star2 = map.getProperties().get("star2") != null ? (Float) map.getProperties().get("star2") : 3;
         mapProperties.put("star2", star2);
 
         float star3 = map.getProperties().get("star3") != null ? (Float) map.getProperties().get("star3") : 2;
         mapProperties.put("star3", star3);
+
+        float starsNeeded = map.getProperties().get("starsNeeded") != null ? (Float) map.getProperties().get("starsNeeded") : 0;
+        mapProperties.put("starsNeeded", starsNeeded);
+
+        String preview = map.getProperties().get("preview") != null ? map.getProperties().get("preview").toString() : "w1l1";
+        mapProperties.put("preview", preview);
     }
 
     private void loadObjects() {
