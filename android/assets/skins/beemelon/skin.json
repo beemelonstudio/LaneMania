@@ -9,6 +9,9 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	passion-one50: {
 		file: passion-one50.fnt
 	}
+	passion-one80: {
+		file: passion-one80.fnt
+	}
 	title: {
 		file: font-title-export.fnt
 	}
@@ -401,6 +404,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		up: grosses_brett_ein_pfeil
 		down: grosses_brett_ein_pfeil_smaller
 	}
+	languageEN: {
+		up: english_button_down
+		down: english_button
+	}
+	languageDE: {
+		up: german_button
+		down: german_button_down
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: {
@@ -424,20 +435,20 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 		down: transparent
 	}
 	languageDE: {
-		imageUp: german_button
-		imageDown: german_button_down
+		up: german_button
+		down: german_button_down
 	}
 	languageEN: {
-		imageUp: english_button
-		imageDown: english_button_down
+		up: english_button_down
+		down: english_button
 	}
 	sound_on: {
-		imageUp: sound_on
-		imageDown: sound_on_down
+		up: sound_on
+		down: sound_on_down
 	}
 	sound_off: {
-		imageUp: sound_off
-		imageDown: sound_off_down
+		up: sound_off
+		down: sound_off_down
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
@@ -450,6 +461,8 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: font
+		fontColor: RGBA_255_161_0_255
+		background: grosses_schild
 	}
 	menuitem-shortcut: {
 		font: font
@@ -540,16 +553,26 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		down: kleines_brett_smaller
 	}
 	one_arrow: {
-		font: passion-one50
+		font: passion-one80
 		fontColor: RGBA_255_161_0_255
 		up: grosses_brett_ein_pfeil
 		down: grosses_brett_ein_pfeil_smaller
 	}
 	two_arrows: {
-		font: passion-one50
+		font: passion-one80
 		fontColor: RGBA_255_161_0_255
 		up: grosses_brett_pfeile
 		down: grosses_brett_pfeile_smaller
+	}
+	languageEN: {
+		font: font
+		up: english_button_down
+		down: english_button
+	}
+	languageDE: {
+		font: font
+		up: german_button
+		down: german_button_down
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {

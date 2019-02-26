@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2018.01.23" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="28">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="28">
  <properties>
   <property name="star2" type="float" value="2"/>
   <property name="star3" type="float" value="1"/>
  </properties>
- <layer name="baclground" width="15" height="30">
+ <layer id="1" name="baclground" width="15" height="30">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -38,7 +38,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="obstacles">
+ <objectgroup id="2" name="obstacles">
   <object id="3" name="square2" x="0" y="124.091" width="127.818" height="95.4697">
    <properties>
     <property name="circle" type="bool" value="false"/>
@@ -68,7 +68,7 @@
    <properties>
     <property name="obstacle" value="square1"/>
     <property name="order" type="float" value="2"/>
-    <property name="timer" type="float" value="0.099999000000000005"/>
+    <property name="timer" type="float" value="0.099999"/>
     <property name="type" value="waypoint"/>
    </properties>
    <point/>
@@ -97,7 +97,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup name="objects">
+ <objectgroup id="3" name="objects">
   <object id="1" name="ball" x="31.33" y="31.33" width="32" height="32">
    <properties>
     <property name="entity" value="ball"/>

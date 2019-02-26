@@ -17,6 +17,26 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+passion-one50
+  rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+skin3.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+passion-one80
+  rotate: false
+  xy: 1, 496
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 english_button
   rotate: false
   xy: 326, 3
@@ -136,15 +156,8 @@ kleines_brett_smaller
   orig: 129, 90
   offset: 0, 0
   index: -1
-passion-one50
-  rotate: false
-  xy: 1, 496
-  size: 512, 512
-  orig: 512, 512
-  offset: 0, 0
-  index: -1
 
-skin3.png
+skin4.png
 size: 512,512
 format: RGBA8888
 filter: Linear,Linear

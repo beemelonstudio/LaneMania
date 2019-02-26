@@ -1,180 +1,243 @@
 
 general-theme.png
-size: 512,1024
+size: 2048,2048
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 app_name_plate
   rotate: false
-  xy: 2, 252
+  xy: 1290, 1916
   size: 475, 125
   orig: 475, 125
   offset: 0, 0
   index: -1
-arrow_left
-  rotate: false
-  xy: 271, 819
-  size: 15, 17
-  orig: 15, 17
-  offset: 0, 0
-  index: -1
-arrow_left_light
-  rotate: false
-  xy: 56, 113
-  size: 15, 17
-  orig: 15, 17
-  offset: 0, 0
-  index: -1
-arrow_right_light
-  rotate: false
-  xy: 2, 2
-  size: 14, 16
-  orig: 14, 16
-  offset: 0, 0
-  index: -1
 ball
   rotate: false
-  xy: 114, 838
+  xy: 1290, 1647
   size: 174, 174
   orig: 174, 174
   offset: 0, 0
   index: -1
 ball_back
   rotate: false
-  xy: 180, 595
+  xy: 1125, 737
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
+congrats
+  rotate: false
+  xy: 2, 61
+  size: 497, 237
+  orig: 497, 237
+  offset: 0, 0
+  index: -1
+grosses_schild
+  rotate: false
+  xy: 968, 791
+  size: 313, 88
+  orig: 313, 88
+  offset: 0, 0
+  index: -1
+grosses_schild_smaller
+  rotate: false
+  xy: 1290, 1823
+  size: 323, 91
+  orig: 323, 91
+  offset: 0, 0
+  index: -1
+kein_star_wood
+  rotate: false
+  xy: 1466, 1726
+  size: 100, 95
+  orig: 100, 95
+  offset: 0, 0
+  index: -1
+level
+  rotate: false
+  xy: 501, 154
+  size: 330, 144
+  orig: 330, 144
+  offset: 0, 0
+  index: -1
 line_back
   rotate: false
-  xy: 290, 896
+  xy: 501, 100
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 line_back_light
   rotate: false
-  xy: 358, 960
+  xy: 1869, 1989
   size: 52, 52
   orig: 52, 52
   offset: 0, 0
   index: -1
 menu_button
   rotate: false
-  xy: 148, 209
+  xy: 1379, 1604
   size: 46, 41
   orig: 46, 41
   offset: 0, 0
   index: -1
 menu_button_light
   rotate: false
-  xy: 290, 853
+  xy: 1070, 559
   size: 46, 41
   orig: 46, 41
   offset: 0, 0
   index: -1
 menu_button_off
   rotate: false
-  xy: 114, 535
+  xy: 1290, 1476
   size: 55, 49
   orig: 55, 49
   offset: 0, 0
   index: -1
 menu_button_on
   rotate: false
-  xy: 91, 201
+  xy: 1615, 1865
   size: 55, 49
   orig: 55, 49
   offset: 0, 0
   index: -1
 mute_button_off
   rotate: false
-  xy: 2, 73
+  xy: 2, 2
   size: 52, 57
   orig: 52, 57
   offset: 0, 0
   index: -1
 mute_button_on
   rotate: false
-  xy: 114, 489
+  xy: 1466, 1680
   size: 43, 44
   orig: 43, 44
   offset: 0, 0
   index: -1
-no_star
-  rotate: false
-  xy: 114, 586
-  size: 64, 61
-  orig: 64, 61
-  offset: 0, 0
-  index: -1
 play_button
   rotate: false
-  xy: 234, 631
-  size: 14, 16
-  orig: 14, 16
-  offset: 0, 0
-  index: -1
-arrow_right
-  rotate: false
-  xy: 234, 631
-  size: 14, 16
-  orig: 14, 16
+  xy: 968, 463
+  size: 46, 41
+  orig: 46, 41
   offset: 0, 0
   index: -1
 play_button_light
   rotate: false
-  xy: 412, 971
+  xy: 56, 18
   size: 46, 41
   orig: 46, 41
   offset: 0, 0
   index: -1
 play_button_off
   rotate: false
-  xy: 2, 20
-  size: 43, 51
-  orig: 43, 51
+  xy: 1767, 1922
+  size: 100, 119
+  orig: 100, 119
   offset: 0, 0
   index: -1
 play_button_on
   rotate: false
-  xy: 91, 148
-  size: 43, 51
-  orig: 43, 51
+  xy: 833, 179
+  size: 100, 119
+  orig: 100, 119
   offset: 0, 0
   index: -1
 schloss
   rotate: false
-  xy: 2, 132
+  xy: 1290, 1527
   size: 87, 118
   orig: 87, 118
   offset: 0, 0
   index: -1
-seil1
-  rotate: false
-  xy: 2, 379
-  size: 54, 633
-  orig: 54, 633
-  offset: 0, 0
-  index: -1
-seil2
-  rotate: false
-  xy: 58, 379
-  size: 54, 633
-  orig: 54, 633
-  offset: 0, 0
-  index: -1
 star
   rotate: false
-  xy: 290, 950
-  size: 66, 62
-  orig: 66, 62
+  xy: 968, 506
+  size: 100, 94
+  orig: 100, 94
+  offset: 0, 0
+  index: -1
+w1l1
+  rotate: false
+  xy: 646, 881
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l10
+  rotate: false
+  xy: 646, 1462
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l11
+  rotate: false
+  xy: 324, 300
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l2
+  rotate: false
+  xy: 968, 1462
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l3
+  rotate: false
+  xy: 646, 300
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l4
+  rotate: false
+  xy: 2, 300
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l5
+  rotate: false
+  xy: 968, 881
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l6
+  rotate: false
+  xy: 324, 881
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l7
+  rotate: false
+  xy: 2, 1462
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l8
+  rotate: false
+  xy: 2, 881
+  size: 320, 579
+  orig: 320, 579
+  offset: 0, 0
+  index: -1
+w1l9
+  rotate: false
+  xy: 324, 1462
+  size: 320, 579
+  orig: 320, 579
   offset: 0, 0
   index: -1
 wanted_poster
   rotate: false
-  xy: 114, 649
+  xy: 968, 602
   size: 155, 187
   orig: 155, 187
   offset: 0, 0
