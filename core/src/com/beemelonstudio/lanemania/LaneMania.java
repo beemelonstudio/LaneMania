@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,12 +22,14 @@ import com.beemelonstudio.lanemania.screens.MapSelectionScreen;
 import com.beemelonstudio.lanemania.screens.MenuScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
+import com.beemelonstudio.lanemania.utils.mapeditor.Level;
 import com.beemelonstudio.lanemania.utils.mapeditor.MapLoader;
 import com.github.czyzby.lml.parser.LmlParser;
 import com.github.czyzby.lml.util.LmlApplicationListener;
 import com.github.czyzby.lml.vis.util.VisLml;
 import com.kotcrab.vis.ui.VisUI;
 
+import java.util.List;
 import java.util.Stack;
 
 public class LaneMania extends Game {
@@ -43,10 +46,13 @@ public class LaneMania extends Game {
 
     public Stack<GameScreen> screens;
     public MapLoader mapLoader;
+    public Array<Level> levels;
 
     public float volume = 0f;
     public Boolean muted = false;
     public Music backgroundMusic;
+
+    public boolean english = true;
 
     @Override
 	public void create () {
@@ -54,13 +60,11 @@ public class LaneMania extends Game {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
         Assets.load();
-        mapLoader = new MapLoader();
-        mapLoader.loadMaps();
 
         skin = (Skin) Assets.get("beemelonSkin");
         VisUI.load(skin);
 
-        backgroundMusic = (Music)Assets.get("backgroundMenuMusic");
+        backgroundMusic = (Music) Assets.get("backgroundMenuMusic");
         backgroundMusic.play();
         backgroundMusic.setVolume(volume);
         backgroundMusic.setLooping(true);
@@ -71,16 +75,34 @@ public class LaneMania extends Game {
         backgroundViewport = new ScreenViewport();
         backgroundViewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
         batch = new PolygonSpriteBatch();
-        stage = new Stage(new ScreenViewport(hudCamera));
+        stage = new Stage(new ScreenViewport());
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
-        screens = new Stack<GameScreen>();
-        screens.push(new MenuScreen(this));
-        //screens.push(new MapSelectionScreen(this, mapLoader.worlds));
-        //screens.push(new PlayScreen(this, mapLoader.getMap(0,6)));
+        levels = loadLevels();
+
+        screens = new Stack<>();
+//        screens.push(new MenuScreen(this));
+        screens.push(new MapSelectionScreen(this, levels));
+//        screens.push(new PlayScreen(this, levels.get(0)));
 
         setScreen(screens.peek());
 	}
+
+	private Array<Level> loadLevels() {
+        mapLoader = new MapLoader();
+        mapLoader.loadMaps();
+
+        Array<Level> levels = new Array<>();
+        for (Array<String> world : mapLoader.worlds) {
+            for (String map : world) {
+                Gdx.app.log("Map", map);
+                Level level = new Level(map);
+                levels.add(level);
+            }
+        }
+
+        return levels;
+    }
 
     @Override
     public void dispose() {
