@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -26,6 +27,8 @@ public class Assets {
     private static HashMap<String, AssetFile> files;
 
     public static TextureAtlas currentWorldTextureAtlas;
+
+    public static BitmapFont font;
 
     public static void load(){
 
@@ -61,11 +64,23 @@ public class Assets {
         assetManager.finishLoading();
         //while(!assetManager.update()){} TODO: Decide for one method
 
-        //generateFont();
+        font = generateFont();
+
+        Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
     }
 
     public static Object get(String hashmapKey){
         return assetManager.get(files.get(hashmapKey).path, files.get(hashmapKey).type);
+    }
+
+    private static BitmapFont generateFont(){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skins/beemelon/passion-one-regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = (int) (38 * Gdx.graphics.getDensity());
+        parameter.color = new Color(255f / 255f, 165f / 255f, 23f / 255f, 1f); // Divide by 255f to get a value between 0 and 1
+        BitmapFont bitmapFont = generator.generateFont(parameter);
+        generator.dispose();
+        return bitmapFont;
     }
 
     /*

@@ -1,6 +1,7 @@
 package com.beemelonstudio.lanemania.utils.listeners;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
@@ -88,6 +89,12 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
 
     @Override
     public boolean keyDown(int keycode) {
+
+        if(keycode == 67){
+            screen.game.screens.pop();
+            screen.game.setScreen(screen.game.screens.peek());
+        }
+
         return false;
     }
 
