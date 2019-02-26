@@ -13,7 +13,7 @@ import com.beemelonstudio.lanemania.entities.types.EntityType;
 
 public class CircleObstacle extends Entity {
 
-    float radius;
+    private float radius;
 
     public CircleObstacle(Body body, String name, float speed, float rotationSpeed, boolean circle, float timer) {
         super(body);
@@ -50,7 +50,7 @@ public class CircleObstacle extends Entity {
     /**
      * Retrieve PolygonShape vertices and calculate width and height
      */
-    private void calculateSizes(){
+    private void calculateSizes() {
 
         CircleShape shape = (CircleShape) body.getFixtureList().get(0).getShape();
 
