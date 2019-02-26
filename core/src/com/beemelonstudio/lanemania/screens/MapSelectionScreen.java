@@ -3,23 +3,19 @@ package com.beemelonstudio.lanemania.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
-import com.beemelonstudio.lanemania.screens.custombuttons.WorldTextButton;
+import com.beemelonstudio.lanemania.utils.UIHelper;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
+import com.beemelonstudio.lanemania.utils.mapeditor.Level;
 
 /**
  * Created by Jann on 27.01.18.
@@ -27,41 +23,35 @@ import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 public class MapSelectionScreen extends GameScreen {
 
-    public Array<Array<String>> worlds;
+    public Array<Level> levels;
 
     public Table table;
-    public HorizontalGroup worldsGroup;
-    public HorizontalGroup mapsGroup;
     public BmsImageButton leftArrowButton;
     public BmsImageButton rightArrowButton;
-    public BmsImageButton leftArrowButton2;
-    public BmsImageButton rightArrowButton2;
-
-    public Array<WorldTextButton> worldButtons;
-
-    private Actor currentWorld;
-    private Actor currentMap;
 
     private TextureRegion leftArrowIconUp;
     private TextureRegion leftArrowIconDown;
     private TextureRegion rightArrowIconUp;
     private TextureRegion rightArrowIconDown;
+    private TextureRegion emptyStar;
+    private TextureRegion fullStar;
+    private TextureRegion wantedPoster;
+
+    private TextureRegion rope;
+
+    private Image levelImage;
+    private Label levelLabel;
+
+    private Cell starCell;
+
+    private float ropeWidth, ropeHeight;
+
     private int worldIndex = 0;
     private int mapIndex = 0;
 
-    private float height, width;
-    private float numberOfButtons = 3f;
-
-    public MapSelectionScreen(LaneMania game) {
+    public MapSelectionScreen(LaneMania game, Array<Level> levels) {
         super(game);
-    }
-
-    public MapSelectionScreen(LaneMania game, Array<Array<String>> worlds) {
-        super(game);
-        this.worlds = worlds;
-
-        height = (Gdx.graphics.getHeight() / 2f) / 2f;
-        width = Gdx.graphics.getWidth() / numberOfButtons;
+        this.levels = levels;
 
         isBackgroundDrawing = true;
         textureAtlas = (TextureAtlas) Assets.get("general-theme");
@@ -74,6 +64,9 @@ public class MapSelectionScreen extends GameScreen {
         leftArrowIconDown = new TextureRegion(textureAtlas.findRegion("play_button_off"));
         leftArrowIconDown.flip(true, false);
 
+        emptyStar = new TextureRegion(textureAtlas.findRegion("kein_star_wood"));
+        fullStar = new TextureRegion(textureAtlas.findRegion("star"));
+
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -82,38 +75,51 @@ public class MapSelectionScreen extends GameScreen {
         super.show();
 
         table = new Table();
-
+        table.setFillParent(true);
         stage.addActor(table);
 
         // Used for debugging
-        table.setDebug(true);
+//        table.setDebug(true);
 
         createWorldSelection();
-
-        table.setFillParent(true);
-
-        table.setTransform(true);
-        table.setScale(1.5f);
-        table.setOrigin(Align.center);
-        table.setPosition(-Gdx.graphics.getWidth()/4f, -Gdx.graphics.getHeight()/4f);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
+        batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
+        batch.begin();
+
+        if(starCell != null) {
+            batch.draw(rope, starCell.getActorX() + starCell.getActorWidth() * 0.15f, starCell.getActorY() + starCell.getActorHeight()/2f, 0, 0, ropeWidth, ropeHeight/2f, 1f, 1f, 90f);
+            batch.draw(rope, starCell.getActorX() + starCell.getActorWidth() * 0.9f, starCell.getActorY() + starCell.getActorHeight()/2f, 0, 0, ropeWidth, ropeHeight/2f, 1f, 1f, 90f);
+        }
+
+        batch.end();
+        batch.setProjectionMatrix(camera.combined);
 
         postDraw(delta);
+
+        batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
+        batch.begin();
+
+        // TODO: Do this right
+        float width = starCell.getActorWidth() * 0.8f;
+        float widthPerStar = width/3f;
+        for (int i = 0; i < 3; i++)
+            batch.draw(emptyStar, starCell.getActorX() + widthPerStar * i + widthPerStar/2f, starCell.getActorY() + starCell.getActorHeight()/2f - widthPerStar/4f, widthPerStar/2f, widthPerStar/2f);
+
+        batch.end();
+        batch.setProjectionMatrix(camera.combined);
     }
 
     public void createWorldSelection() {
 
-        worldsGroup = new HorizontalGroup();
-        mapsGroup = new HorizontalGroup();
-
-        table.add(worldsGroup).pad(20f);
-        table.row();
-        table.add(mapsGroup).pad(20f);
-        table.row();
+        rope = ((TextureAtlas) Assets.get("wildwest-theme")).findRegion("straightline");
+        Image level = new Image(new TextureRegionDrawable(textureAtlas.findRegion("level")));
+        Image starDisplay = new Image(new TextureRegionDrawable(textureAtlas.findRegion("grosses_schild")));
+        levelImage = new Image(new TextureRegionDrawable(textureAtlas.findRegion("w1l1")));
+        levelLabel = new Label("Level Placeholder", skin);
 
         leftArrowButton = new BmsImageButton(skin, leftArrowIconUp, "transparent");
         leftArrowButton.getStyle().imageDown = new TextureRegionDrawable(leftArrowIconDown);
@@ -121,85 +127,36 @@ public class MapSelectionScreen extends GameScreen {
         rightArrowButton = new BmsImageButton(skin, rightArrowIconUp, "transparent");
         rightArrowButton.getStyle().imageDown = new TextureRegionDrawable(rightArrowIconDown);
 
-        leftArrowButton2 = new BmsImageButton(skin, leftArrowIconUp, "transparent");
-        leftArrowButton2.getStyle().imageDown = new TextureRegionDrawable(leftArrowIconDown);
+        float width = (float)Gdx.graphics.getWidth()*0.8f;
 
-        rightArrowButton2 = new BmsImageButton(skin, rightArrowIconUp, "transparent");
-        rightArrowButton2.getStyle().imageDown = new TextureRegionDrawable(rightArrowIconDown);
+        UIHelper.addToTable(table, level, (float)Gdx.graphics.getWidth()*0.5f).colspan(3).pad(20);
+        table.row();
+        starCell = UIHelper.addToTable(table, starDisplay, width).colspan(3).pad(20);
+        table.row();
+        UIHelper.addToTable(table, leftArrowButton, width / 5f);
+        UIHelper.addToTable(table, levelImage, width / 5f * 3f);
+        UIHelper.addToTable(table, rightArrowButton, width / 5f);
+        table.row();
+        UIHelper.addToTable(table, levelLabel, width).colspan(3).pad(20);
 
-        worldButtons = new Array<WorldTextButton>();
+        float aspectRatio = (float) rope.getRegionWidth() / (float) rope.getRegionHeight();
+        float upperDistance = Gdx.graphics.getHeight() * 1.1f - starCell.getActorY();
 
-        for(int i = 0; i < worlds.size; i++) {
+        ropeWidth = upperDistance;
+        ropeHeight = ropeWidth / aspectRatio;
 
-            final WorldTextButton worldButton = new WorldTextButton("World " + (i+1), skin);
-            worldButton.addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    super.clicked(event, x, y);
+        // Button ClickListeners
+        levelImage.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
 
-                    setAllMapsVisibility(false);
-                    worldButton.setMapButtonVisibility(true);
-                }
-            });
-
-            worldButtons.add(worldButton);
-
-            for(int j = 0; j < worlds.get(i).size; j++) {
-
-                final String map = worlds.get(i).get(j);
-
-                TextButton mapButton = new TextButton(map, skin);
-                mapButton.addListener(new ClickListener(){
-                    @Override
-                    public void clicked(InputEvent event, float x, float y) {
-                        super.clicked(event, x, y);
-
-                        screens.push(new PlayScreen(game, map));
-                        game.setScreen(screens.peek());
-                    }
-                });
-
-                worldButton.addMapButton(mapButton);
+                screens.push(new PlayScreen(game, levels.get(mapIndex)));
+                game.setScreen(screens.peek());
             }
-        }
-
-        //updateTable();
-        /*
-        worldsGroup.add(leftArrowButton).width(width).height(height);
-        worldsGroup.add(worldButtons.get(worldIndex)).pad(1f);
-        worldsGroup.add(rightArrowButton).width(width).height(height);
-
-        mapsGroup.add(leftArrowButton2).width(width).height(height);
-        mapsGroup.add(worldButtons.get(worldIndex).mapButtons.get(mapIndex)).pad(1f).expand().fill().grow();//.fillX().expandX();
-        mapsGroup.add(rightArrowButton2).width(width).height(height);*/
+        });
 
         leftArrowButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-
-                if (worldIndex > 0) {
-                    worldIndex -= 1;
-                    mapIndex = 0;
-                    updateTable();
-                }
-            }
-        });
-
-        rightArrowButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-
-                if (worldIndex < worldButtons.size-1) {
-                    worldIndex += 1;
-                    mapIndex = 0;
-                    updateTable();
-                }
-            }
-        });
-
-        leftArrowButton2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -211,63 +168,24 @@ public class MapSelectionScreen extends GameScreen {
             }
         });
 
-        rightArrowButton2.addListener(new ClickListener(){
+        rightArrowButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
-                if (mapIndex < worldButtons.get(worldIndex).mapButtons.size-1) {
+                if (mapIndex < levels.size-1) {
                     mapIndex += 1;
                     updateTable();
                 }
             }
         });
 
-        worldButtons.get(0).setMapButtonVisibility(true);
-        setAllMapsVisibility(true);
-
-        TextButton returnButton = new TextButton("Return", skin);
-        returnButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-
-                screens.pop();
-                game.setScreen(screens.peek());
-            }
-        });
-        table.add(returnButton).width(width/1.5f).pad(20f);
-
-        currentWorld = worldButtons.get(worldIndex);
-        currentMap = worldButtons.get(worldIndex).mapButtons.get(mapIndex);
-
-        worldsGroup.addActor(leftArrowButton);
-        worldsGroup.grow();//.width(width).height(height).center();
-        worldsGroup.addActor(worldButtons.get(worldIndex));
-        worldsGroup.setWidth(width);
-        worldsGroup.addActor(rightArrowButton);
-        worldsGroup.grow();//.width(width).height(height).center();
-
-        mapsGroup.addActor(leftArrowButton2);
-        mapsGroup.grow();
-        mapsGroup.addActor(worldButtons.get(worldIndex).mapButtons.get(mapIndex));
-        mapsGroup.setWidth(width);//.pad(1f);//.expandX().center();
-        mapsGroup.addActor(rightArrowButton2);
-        mapsGroup.grow();
-    }
-
-    public void setAllMapsVisibility(boolean visibility) {
-
-        for(WorldTextButton button : worldButtons)
-            button.setMapButtonVisibility(visibility);
+        updateTable();
     }
 
     public void updateTable() {
-        table.swapActor(currentWorld, worldButtons.get(worldIndex));
-        currentWorld = worldButtons.get(worldIndex);
-
-        table.swapActor(currentMap, worldButtons.get(worldIndex));
-        currentMap = worldButtons.get(worldIndex).mapButtons.get(mapIndex);
+        levelLabel.setText("Level " + (worldIndex + 1) + " - " + (mapIndex + 1));
+        levelImage.setDrawable(new TextureRegionDrawable(textureAtlas.findRegion("w" + (worldIndex + 1) + "l" + (mapIndex + 1))));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.beemelonstudio.lanemania.screens.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -110,7 +111,7 @@ public class PlayScreenUI extends GameScreenUI {
                 super.clicked(event, x, y);
 
                 screen.game.screens.pop();
-                screen.game.screens.push(new MapSelectionScreen(screen.game, screen.game.mapLoader.worlds));
+                screen.game.screens.push(new MapSelectionScreen(screen.game, screen.game.levels));
                 screen.game.setScreen(screen.game.screens.peek());
             }
         });
@@ -124,6 +125,7 @@ public class PlayScreenUI extends GameScreenUI {
         undoButton.setHeight(height);
         undoButton.setWidth(width);
         undoButton.setPosition(0, 0);
+//        undoButton.setVisible(false);
         stage.addActor(undoButton);
 
         // Listener
@@ -169,6 +171,7 @@ public class PlayScreenUI extends GameScreenUI {
         menuButton.setHeight(height);
         menuButton.setWidth(width);
         menuButton.setPosition(Gdx.graphics.getWidth() - width, 0);
+//        menuButton.setVisible(false);
         stage.addActor(menuButton);
 
         // Listener

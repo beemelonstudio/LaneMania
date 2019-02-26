@@ -1,6 +1,7 @@
 package com.beemelonstudio.lanemania.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -8,12 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.beemelonstudio.lanemania.LaneMania;
+import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
+import com.beemelonstudio.lanemania.screens.custombuttons.BmsTextButton;
+import com.beemelonstudio.lanemania.utils.UIHelper;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
 
 /**
@@ -35,6 +37,8 @@ public class MenuScreen extends GameScreen {
     private float upperRopeWidth, upperRopeHeight;
     private float lowerRopeWidth, lowerRopeHeight;
 
+    Sprite sprite, sprite2;
+
     public MenuScreen(LaneMania game) {
         super(game);
     }
@@ -53,14 +57,9 @@ public class MenuScreen extends GameScreen {
         rightRope = textureAtlas.findRegion("straightline");
 
         // Used for debugging
-        table.setDebug(true);
+//        table.setDebug(true);
 
         createMenu();
-
-        table.setTransform(true);
-        table.setScale(1.5f);
-        table.setOrigin(Align.center);
-        table.setPosition(-Gdx.graphics.getWidth()/4f, -Gdx.graphics.getHeight()/4f);
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -73,17 +72,17 @@ public class MenuScreen extends GameScreen {
         batch.begin();
 
         if(logoCell != null) {
-            float logoPositionY = logoCell.getActorY() ;//+ (logoCell.getActorHeight()/2f);
+            float logoPositionY = logoCell.getActorY() ;
 
             // Ropes above the logo
-            batch.draw(leftRope, scaleUI(logoCell.getActorX()) * 3f, logoPositionY, 0, 0, upperRopeWidth, upperRopeHeight, 1f, 1f, 90f);
-            batch.draw(rightRope, scaleUI((logoCell.getActorX()) + scaleUI(logoCell.getActorWidth()) * 0.95f), logoPositionY, 0, 0, upperRopeWidth, upperRopeHeight, 1f, 1f, 90f);
+            batch.draw(leftRope, logoCell.getActorX() + logoCell.getActorWidth() * 0.15f, logoPositionY, 0, 0, upperRopeWidth, upperRopeHeight, 1f, 1f, 90f);
+            batch.draw(rightRope, logoCell.getActorX() + logoCell.getActorWidth() * 0.9f, logoPositionY, 0, 0, upperRopeWidth, upperRopeHeight, 1f, 1f, 90f);
 
             // Ropes below the logo
-            batch.draw(leftRope, scaleUI(soundCell.getActorX()) + scaleUI(soundCell.getActorWidth()) / 2f, logoPositionY, 0, 0, lowerRopeWidth, lowerRopeHeight, 1f, 1f, -90f);
-            batch.draw(rightRope, scaleUI(languageCell.getActorX()) + (scaleUI(languageCell.getActorWidth()) * 0.5f), logoPositionY, 0, 0, lowerRopeWidth, lowerRopeHeight, 1f, 1f, -90f);
-            //batch.draw(leftRope, logoCell.getActorX(), logoCell.getActorY(), 0, 0, width, height, 1f, 1f, 90f);
+            batch.draw(leftRope, (soundCell.getActorX() + soundCell.getActorWidth()/2f - lowerRopeHeight/2f), logoPositionY + logoCell.getActorHeight()/2f, 0, 0, lowerRopeWidth, lowerRopeHeight, 1f, 1f, -90f);
+            batch.draw(rightRope, (languageCell.getActorX() + languageCell.getActorWidth()/2f - lowerRopeHeight/2f), logoPositionY + logoCell.getActorHeight()/2f, 0, 0, lowerRopeWidth, lowerRopeHeight, 1f, 1f, -90f);
         }
+
         batch.end();
         batch.setProjectionMatrix(camera.combined);
 
@@ -99,29 +98,70 @@ public class MenuScreen extends GameScreen {
 
     public void createMenu() {
 
-        //table.padBottom(100);
-        Image logo = new Image(new TextureRegionDrawable(((TextureAtlas)Assets.get("general-theme")).findRegion("app_name_plate")), Scaling.fillX);
-        TextButton continueButton = new TextButton("Continue", skin, "two_arrows");
-        TextButton selectLevelButton = new TextButton("Level", skin, "one_arrow");
-        ImageButton languageButton = new ImageButton(skin, "languageDE");
-        ImageButton soundButton = new ImageButton(skin, "sound_on");
+        TextureRegionDrawable d = new TextureRegionDrawable(((TextureAtlas)Assets.get("general-theme")).findRegion("app_name_plate"));
+        Image logo = new Image(d, Scaling.stretch);
+        float aspectRatio = d.getRegion().getRegionWidth()/d.getRegion().getRegionHeight();
+        float width = (float)Gdx.graphics.getWidth()*0.8f;
+        float height = width / aspectRatio;
 
-        logoCell = table.add(logo).colspan(2);//.pad(50f).padBottom(60f).colspan(2);//.grow();
+        BmsTextButton continueButton = new BmsTextButton("Continue", skin, "two_arrows");
+        BmsTextButton selectLevelButton = new BmsTextButton("Level", skin, "one_arrow");
+        final BmsImageButton languageButton = new BmsImageButton(skin, "languageEN");
+        final BmsImageButton soundButton = new BmsImageButton(skin, "sound_on");
+
+        logoCell = table.add(logo).width(width).height(height).colspan(2);
         table.row();
-        table.add(continueButton).colspan(2);//.grow();
+        table.add(continueButton).width(width).height(height).colspan(2);
         table.row();
-        table.add(selectLevelButton).colspan(2);//.grow();
+        table.add(selectLevelButton).width(width).height(height).colspan(2);
         table.row();
-        soundCell = table.add(soundButton);//.grow();
-        languageCell = table.add(languageButton);//.grow();
+
+        // Recalculate width and height
+        soundCell = UIHelper.addToTable(table, soundButton, width/4f);
+        languageCell = UIHelper.addToTable(table, languageButton, width/3.5f);
 
         selectLevelButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
-                screens.push(new MapSelectionScreen(game, game.mapLoader.worlds));
+                screens.push(new MapSelectionScreen(game, game.levels));
                 game.setScreen(screens.peek());
+            }
+        });
+
+        soundButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                if (!muted){
+                    volume = 0.0f;
+                    backgroundMusic.setVolume(volume);
+                    muted = true;
+                    soundButton.setStyle(skin.get("sound_off", ImageButton.ImageButtonStyle.class));
+                }
+                else {
+                    volume = 1.0f;
+                    backgroundMusic.setVolume(volume);
+                    muted = false;
+                    soundButton.setStyle(skin.get("sound_on", ImageButton.ImageButtonStyle.class));
+                }
+            }
+        });
+
+        languageButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                if (!english){
+                    languageButton.setStyle(skin.get("languageEN", ImageButton.ImageButtonStyle.class));
+                }
+                else {
+                    languageButton.setStyle(skin.get("languageDE", ImageButton.ImageButtonStyle.class));
+                }
+                english = !english;
             }
         });
     }

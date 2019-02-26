@@ -36,7 +36,6 @@ public class GameScreen implements Screen, InputProcessor {
 
     protected Stage stage;
     protected Skin skin;
-    protected float uiScale = 1f;
 
     protected TextureAtlas textureAtlas;
     protected TextureRegion backgroundTexture;
@@ -59,9 +58,11 @@ public class GameScreen implements Screen, InputProcessor {
     private boolean backButtonLocked = false;
     protected boolean isBackgroundDrawing = false;
 
-    protected float volume = 1.0f;
-    protected Boolean muted = false;
+    protected float volume;
+    protected Boolean muted;
     protected Music backgroundMusic;
+
+    protected boolean english;
 
     public GameScreen(LaneMania game) {
         this.game = game;
@@ -75,6 +76,7 @@ public class GameScreen implements Screen, InputProcessor {
         this.volume = game.volume;
         this.muted = game.muted;
         this.backgroundMusic = game.backgroundMusic;
+        this.english = game.english;
 
         textureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
         backgroundTexture = textureAtlas.findRegion("background");
@@ -120,7 +122,7 @@ public class GameScreen implements Screen, InputProcessor {
             batch.draw(backgroundTexture, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
             animation1.render();
             animation2.render();
-            animation3.render();
+//            animation3.render();
             batch.end();
         }
 
@@ -144,10 +146,6 @@ public class GameScreen implements Screen, InputProcessor {
 
         stage.act(delta);
         stage.draw();
-    }
-
-    protected float scaleUI(float value) {
-        return value * uiScale;
     }
 
     @Override
@@ -230,6 +228,7 @@ public class GameScreen implements Screen, InputProcessor {
             screens.pop();
             game.setScreen(screens.peek());
         }
+
         /* TODO: Pixthulu Skin doesn't have Dialog Skin
         else {
 

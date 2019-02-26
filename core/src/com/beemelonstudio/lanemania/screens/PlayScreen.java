@@ -2,10 +2,7 @@ package com.beemelonstudio.lanemania.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -26,7 +23,7 @@ import com.beemelonstudio.lanemania.utils.assets.Assets;
 import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
 import com.beemelonstudio.lanemania.utils.listeners.CustomContactListener;
 import com.beemelonstudio.lanemania.utils.listeners.CustomInputListener;
-import com.beemelonstudio.lanemania.utils.mapeditor.MapAnalyser;
+import com.beemelonstudio.lanemania.utils.mapeditor.Level;
 
 /**
  * Created by Jann on 09.01.2018.
@@ -38,16 +35,12 @@ public class PlayScreen extends GameScreen {
 
     private PlayScreenUI playScreenUI;
     public WorldManager worldManager;
-    private MapAnalyser mapAnalyser;
 
     public boolean gravity = false;
     public CustomInputListener customInputListener;
 
-    public String mapName;
-    private TiledMap map;
+    public Level level;
     private OrthogonalTiledMapRenderer renderer;
-    public float unitScale;
-    public float mapHeightInPixel;
 
     public EntityType currentType;
 
@@ -57,22 +50,16 @@ public class PlayScreen extends GameScreen {
     public Pool<StraightLine> straightLinePool = Pools.get(StraightLine.class);
     public Array<Body> toBeDeleted;
 
-    public float star3, star2;
-
-    public PlayScreen(LaneMania game) {
+    public PlayScreen(LaneMania game, Level level) {
         super(game);
-    }
-
-    public PlayScreen(LaneMania game, String mapName) {
-        super(game);
-        this.mapName = mapName;
+        this.level = level;
     }
 
     @Override
     public void show() {
         super.show();
 
-        toBeDeleted = new Array<Body>();
+        toBeDeleted = new Array<>();
         debugRenderer = new Box2DDebugRenderer(true,true,false,true,true,true);
 
         worldManager = new WorldManager();
@@ -90,6 +77,7 @@ public class PlayScreen extends GameScreen {
         setupTextures();
         loadLevel();
         playScreenUI = new PlayScreenUI(this);
+//        update(Gdx.graphics.getDeltaTime());
     }
 
     private void update(float delta) {
@@ -112,13 +100,13 @@ public class PlayScreen extends GameScreen {
         for(StraightLine straightLine : straightLines)
             straightLine.act(delta);
 
-        for(Entity entity : mapAnalyser.obstacles)
+        for(Entity entity : level.mapAnalyser.obstacles)
             entity.act(delta);
 
-        if(straightLines.size <= star3) {
+        if(straightLines.size <= level.star3) {
             playScreenUI.amountStars = 3;
         }
-        else if(straightLines.size <= star2) {
+        else if(straightLines.size <= level.star2) {
             playScreenUI.amountStars = 2;
         }
         else {
@@ -148,7 +136,7 @@ public class PlayScreen extends GameScreen {
         ball.draw(batch);
         goal.draw(batch);
 
-        for(Entity entity : mapAnalyser.obstacles)
+        for(Entity entity : level.mapAnalyser.obstacles)
             entity.draw(batch);
 
         for(StraightLine straightLine : straightLines)
@@ -158,7 +146,7 @@ public class PlayScreen extends GameScreen {
 
         batch.end();
 
-        debugRenderer.render(worldManager.world, camera.combined);
+//        debugRenderer.render(worldManager.world, camera.combined);
 
         postDraw(delta);
     }
@@ -166,32 +154,18 @@ public class PlayScreen extends GameScreen {
     private void loadLevel() {
 
         currentType = EntityType.STRAIGHTLINE;
-        straightLines = new Array<StraightLine>();
+        straightLines = new Array<>();
 
-        map = new TmxMapLoader().load(mapName);
-        float mapWidth = (float) map.getProperties().get("width", Integer.class);
-        float tileWidth = (float) map.getProperties().get("tilewidth", Integer.class);
-
-        float mapHeight = (float) map.getProperties().get("height", Integer.class);
-        float tileHeight = (float) map.getProperties().get("tileheight", Integer.class);
-        mapHeightInPixel = mapHeight * tileHeight;
-
-        unitScale = 1/(mapWidth * tileWidth);
         //renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        level.setup();
 
-        mapAnalyser = new MapAnalyser(map, unitScale);
-
-        // Retrieve values from the mapanalyser
-        star3 = (Float) mapAnalyser.mapProperties.get("star3");
-        star2 = (Float) mapAnalyser.mapProperties.get("star2");
-
-        ball = new Ball(mapAnalyser.ball);
-        goal = new Goal(mapAnalyser.goal);
+        ball = new Ball(level.mapAnalyser.ball);
+        goal = new Goal(level.mapAnalyser.goal);
     }
 
     private void setupTextures() {
 
-        if(mapName.contains("Wild-West") || mapName.contains("world2")) Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+        if(level.worldName.contains("Wild-West") || level.worldName.contains("world2")) Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
         else Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
 
         backgroundTexture = Assets.currentWorldTextureAtlas.findRegion("background");
@@ -209,9 +183,9 @@ public class PlayScreen extends GameScreen {
 
         Gdx.app.log("The End", "You did it!");
         if(playScreenUI.endTable == null) {
-            playScreenUI.createEndTable();
-            stage.addActor(playScreenUI.endTable);
-            playScreenUI.endTable.toFront();
+            //playScreenUI.createEndTable();
+            //stage.addActor(playScreenUI.endTable);
+            //playScreenUI.endTable.toFront();
         }
     }
 
