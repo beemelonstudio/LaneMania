@@ -77,10 +77,16 @@ public class MapAnalyser {
 
     public void loadMapProperties() {
 
-        float star2 = map.getProperties().get("star2") != null ? (Float) map.getProperties().get("star2") : 3;
+        float gameplayOrder = (Float) map.getProperties().get("gameplayOrder");
+        mapProperties.put("gameplayOrder", gameplayOrder);
+
+        float star1 = map.getProperties().get("star1") != null ? (Float) map.getProperties().get("star1") : 3;
+        mapProperties.put("star1", star1);
+
+        float star2 = map.getProperties().get("star2") != null ? (Float) map.getProperties().get("star2") : 2;
         mapProperties.put("star2", star2);
 
-        float star3 = map.getProperties().get("star3") != null ? (Float) map.getProperties().get("star3") : 2;
+        float star3 = map.getProperties().get("star3") != null ? (Float) map.getProperties().get("star3") : 1;
         mapProperties.put("star3", star3);
 
         float starsNeeded = map.getProperties().get("starsNeeded") != null ? (Float) map.getProperties().get("starsNeeded") : 0;

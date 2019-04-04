@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -12,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.beemelonstudio.lanemania.LaneMania;
+import com.beemelonstudio.lanemania.screens.custombuttons.BmsImage;
 import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
+import com.beemelonstudio.lanemania.screens.custombuttons.BmsDrawable;
 import com.beemelonstudio.lanemania.utils.UIHelper;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
 import com.beemelonstudio.lanemania.utils.mapeditor.Level;
@@ -35,14 +38,18 @@ public class MapSelectionScreen extends GameScreen {
     private TextureRegion rightArrowIconDown;
     private TextureRegion emptyStar;
     private TextureRegion fullStar;
-    private TextureRegion wantedPoster;
+    private TextureRegion[] wantedPosters;
+    private TextureRegion lock;
 
     private TextureRegion rope;
 
-    private Image levelImage;
+    private BmsImage levelImage;
     private Label levelLabel;
+    private BmsDrawable[] wantedImages;
+    private BmsDrawable lockImage;
 
     private Cell starCell;
+    private Cell levelCell;
 
     private float ropeWidth, ropeHeight;
 
@@ -66,6 +73,16 @@ public class MapSelectionScreen extends GameScreen {
 
         emptyStar = new TextureRegion(textureAtlas.findRegion("kein_star_wood"));
         fullStar = new TextureRegion(textureAtlas.findRegion("star"));
+        lock = new TextureRegion(textureAtlas.findRegion("schloss"));
+
+        wantedPosters = new TextureRegion[] {
+                new TextureRegion(textureAtlas.findRegion("wanted_poster1")),
+                new TextureRegion(textureAtlas.findRegion("wanted_poster2")),
+                new TextureRegion(textureAtlas.findRegion("wanted_poster3")),
+                new TextureRegion(textureAtlas.findRegion("wanted_poster3+"))
+        };
+
+        mapIndex = 7;
 
         Gdx.input.setInputProcessor(stage);
     }
@@ -80,6 +97,8 @@ public class MapSelectionScreen extends GameScreen {
 
         // Used for debugging
 //        table.setDebug(true);
+
+        amountOfStars = Assets.preferences.getInteger("sumStars");
 
         createWorldSelection();
     }
@@ -103,11 +122,29 @@ public class MapSelectionScreen extends GameScreen {
         batch.setProjectionMatrix(backgroundViewport.getCamera().combined);
         batch.begin();
 
-        // TODO: Do this right
+        // TODO: Do this right; Check stars with if
         float width = starCell.getActorWidth() * 0.8f;
         float widthPerStar = width/3f;
-        for (int i = 0; i < 3; i++)
-            batch.draw(emptyStar, starCell.getActorX() + widthPerStar * i + widthPerStar/2f, starCell.getActorY() + starCell.getActorHeight()/2f - widthPerStar/4f, widthPerStar/2f, widthPerStar/2f);
+        for (int i = 0; i < 3; i++) {
+            if(levels.get(mapIndex).stars > i)
+                batch.draw(fullStar, starCell.getActorX() + widthPerStar * i + widthPerStar / 2f, starCell.getActorY() + starCell.getActorHeight() / 2f - widthPerStar / 4f, widthPerStar / 2f, widthPerStar / 2f);
+            else
+                batch.draw(emptyStar, starCell.getActorX() + widthPerStar * i + widthPerStar / 2f, starCell.getActorY() + starCell.getActorHeight() / 2f - widthPerStar / 4f, widthPerStar / 2f, widthPerStar / 2f);
+        }
+
+        if (amountOfStars < levels.get(mapIndex).starsNeeded) {
+            lockImage.draw(batch);
+
+            int difference = (int) levels.get(mapIndex).starsNeeded - amountOfStars;
+            if(difference == 3)
+                wantedImages[2].draw(batch);
+            else if(difference == 2)
+                wantedImages[1].draw(batch);
+            else if(difference == 1)
+                wantedImages[0].draw(batch);
+            else
+                wantedImages[3].draw(batch);
+        }
 
         batch.end();
         batch.setProjectionMatrix(camera.combined);
@@ -118,7 +155,7 @@ public class MapSelectionScreen extends GameScreen {
         rope = ((TextureAtlas) Assets.get("wildwest-theme")).findRegion("straightline");
         Image level = new Image(new TextureRegionDrawable(textureAtlas.findRegion("level")));
         Image starDisplay = new Image(new TextureRegionDrawable(textureAtlas.findRegion("grosses_schild")));
-        levelImage = new Image(new TextureRegionDrawable(textureAtlas.findRegion("w1l1")));
+        levelImage = new BmsImage(new TextureRegionDrawable(textureAtlas.findRegion("w1l1")));
         levelLabel = new Label("Level Placeholder", skin);
 
         leftArrowButton = new BmsImageButton(skin, leftArrowIconUp, "transparent");
@@ -134,7 +171,7 @@ public class MapSelectionScreen extends GameScreen {
         starCell = UIHelper.addToTable(table, starDisplay, width).colspan(3).pad(20);
         table.row();
         UIHelper.addToTable(table, leftArrowButton, width / 5f);
-        UIHelper.addToTable(table, levelImage, width / 5f * 3f);
+        levelCell = UIHelper.addToTable(table, levelImage, width / 5f * 3f);
         UIHelper.addToTable(table, rightArrowButton, width / 5f);
         table.row();
         UIHelper.addToTable(table, levelLabel, width).colspan(3).pad(20);
@@ -147,6 +184,16 @@ public class MapSelectionScreen extends GameScreen {
 
         // Button ClickListeners
         levelImage.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                screens.push(new PlayScreen(game, levels.get(mapIndex)));
+                game.setScreen(screens.peek());
+            }
+        });
+
+        levelLabel.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
@@ -181,11 +228,38 @@ public class MapSelectionScreen extends GameScreen {
         });
 
         updateTable();
+
+        postDraw(Gdx.graphics.getDeltaTime());
+        float ar = (float) wantedPosters[0].getRegionWidth() / (float) wantedPosters[0].getRegionHeight();
+        float wWidth = starCell.getActorWidth()/3f;
+        float wHeight = wWidth / ar;
+        wantedImages = new BmsDrawable[] {
+                new BmsDrawable(wantedPosters[0], starCell.getActorX() + starCell.getActorWidth() * 0.8f, starCell.getActorY() + starCell.getActorHeight()/2f - wHeight, wWidth, wHeight, 20f),
+                new BmsDrawable(wantedPosters[1], starCell.getActorX() + starCell.getActorWidth() * 0.8f, starCell.getActorY() + starCell.getActorHeight()/2f - wHeight, wWidth, wHeight, 20f),
+                new BmsDrawable(wantedPosters[2], starCell.getActorX() + starCell.getActorWidth() * 0.8f, starCell.getActorY() + starCell.getActorHeight()/2f - wHeight, wWidth, wHeight, 20f),
+                new BmsDrawable(wantedPosters[3], starCell.getActorX() + starCell.getActorWidth() * 0.8f, starCell.getActorY() + starCell.getActorHeight()/2f - wHeight, wWidth, wHeight, 20f)
+        };
+
+        ar = (float) lock.getRegionWidth() / (float) lock.getRegionHeight();
+        wWidth = levelCell.getActorWidth()/3f;
+        wHeight = wWidth / ar;
+        lockImage = new BmsDrawable(lock, levelCell.getActorX() + levelCell.getActorWidth()/2f - wWidth/2f, levelCell.getActorY() + levelCell.getActorHeight()/2f - wHeight/2f, wWidth, wHeight, 0f);
     }
 
     public void updateTable() {
-        levelLabel.setText("Level " + (worldIndex + 1) + " - " + (mapIndex + 1));
-        levelImage.setDrawable(new TextureRegionDrawable(textureAtlas.findRegion("w" + (worldIndex + 1) + "l" + (mapIndex + 1))));
+        levelLabel.setText(levels.get(mapIndex).name);
+        levelImage.setDrawable(levels.get(mapIndex).preview);
+
+        if(amountOfStars < levels.get(mapIndex).starsNeeded) {
+            levelLabel.setTouchable(Touchable.disabled);
+            levelImage.setTouchable(Touchable.disabled);
+            levelImage.setBlurred(true);
+        }
+        else {
+            levelLabel.setTouchable(Touchable.enabled);
+            levelImage.setTouchable(Touchable.enabled);
+            levelImage.setBlurred(false);
+        }
     }
 
     @Override
@@ -201,6 +275,7 @@ public class MapSelectionScreen extends GameScreen {
     @Override
     public void resume() {
         super.resume();
+        amountOfStars = Assets.preferences.getInteger("sumStars");
     }
 
     @Override

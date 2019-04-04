@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="23">
+<map version="1.0" tiledversion="2018.01.23" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="9">
  <properties>
-  <property name="star2" type="float" value="2"/>
-  <property name="star3" type="float" value="1"/>
+  <property name="gameplayOrder" type="float" value="2"/>
+  <property name="preview" value="w1l2"/>
+  <property name="star1" type="float" value="4"/>
+  <property name="star2" type="float" value="3"/>
+  <property name="star3" type="float" value="2"/>
+  <property name="starsNeeded" type="float" value="0"/>
  </properties>
  <layer name="background" width="15" height="30">
   <data encoding="csv">
@@ -39,43 +43,12 @@
 </data>
  </layer>
  <objectgroup name="obstacles">
-  <object id="9" name="circle183" x="0" y="228.667" width="124.67" height="123.33">
+  <object id="3" name="rectangle" x="31" y="192" width="226" height="95">
    <properties>
-    <property name="rspeed" type="float" value="250"/>
-    <property name="type" value="circle18"/>
+    <property name="type" value="rectangle"/>
    </properties>
-   <ellipse/>
   </object>
-  <object id="13" name="circle182" x="128.666" y="228.67" width="124.667" height="123.333">
-   <properties>
-    <property name="rspeed" type="float" value="100"/>
-    <property name="type" value="circle18"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="14" name="circle181" x="260.666" y="228.67" width="124.67" height="123.33">
-   <properties>
-    <property name="rspeed" type="float" value="-200"/>
-    <property name="type" value="circle18"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="18" name="circle184" x="132.332" y="510.33" width="124.67" height="123.33">
-   <properties>
-    <property name="rspeed" type="float" value="65"/>
-    <property name="type" value="circle18"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="19" name="circle185" x="264.332" y="511.668" width="124.67" height="123.33">
-   <properties>
-    <property name="rotation" type="float" value="0"/>
-    <property name="rspeed" type="float" value="-100"/>
-    <property name="type" value="circle18"/>
-   </properties>
-   <ellipse/>
-  </object>
-  <object id="22" name="square1" x="397.833" y="380.667" width="80.3333" height="76.6667">
+  <object id="5" name="square1" x="265.334" y="481.333" width="130.667" height="126.667" rotation="90">
    <properties>
     <property name="type" value="square"/>
    </properties>

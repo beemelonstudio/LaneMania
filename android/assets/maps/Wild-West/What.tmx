@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="18">
+<map version="1.2" tiledversion="1.2.2" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="4" nextobjectid="28">
  <properties>
+  <property name="gameplayOrder" type="float" value="3"/>
+  <property name="preview" value="w1l3"/>
+  <property name="star1" type="float" value="3"/>
   <property name="star2" type="float" value="2"/>
   <property name="star3" type="float" value="1"/>
+  <property name="starsNeeded" type="float" value="0"/>
  </properties>
- <layer name="Kachelebene 1" width="15" height="30">
+ <layer id="1" name="baclground" width="15" height="30">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -38,17 +42,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="obstacles">
-  <object id="7" name="waypoint1" x="69.3333" y="917.333">
-   <properties>
-    <property name="obstacle" value="square1"/>
-    <property name="order" type="float" value="2"/>
-    <property name="timer" type="float" value="1.8"/>
-    <property name="type" value="waypoint"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="10" name="square1" x="26.091" y="106.265" width="73.1513" height="70.1364">
+ <objectgroup id="2" name="obstacles">
+  <object id="3" name="square2" x="0" y="124.091" width="127.818" height="95.4697">
    <properties>
     <property name="circle" type="bool" value="false"/>
     <property name="speed" type="float" value="80"/>
@@ -56,41 +51,7 @@
     <property name="type" value="square"/>
    </properties>
   </object>
-  <object id="11" name="stone1" x="-197.879" y="511.827" width="121.906" height="53.2542" rotation="1.78512">
-   <properties>
-    <property name="circle" type="bool" value="false"/>
-    <property name="speed" type="float" value="80"/>
-    <property name="timer" type="float" value="3"/>
-    <property name="type" value="stone"/>
-   </properties>
-  </object>
-  <object id="12" name="waypoint1" x="610.667" y="565.333">
-   <properties>
-    <property name="obstacle" value="stone1"/>
-    <property name="order" type="float" value="2"/>
-    <property name="timer" type="float" value="1.8"/>
-    <property name="type" value="waypoint"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="13" name="stone2" x="-195.62" y="268.04" width="121.906" height="53.2542" rotation="1.78512">
-   <properties>
-    <property name="circle" type="bool" value="false"/>
-    <property name="speed" type="float" value="80"/>
-    <property name="timer" type="float" value="3"/>
-    <property name="type" value="stone"/>
-   </properties>
-  </object>
-  <object id="14" name="waypoint1" x="586.667" y="316">
-   <properties>
-    <property name="obstacle" value="stone2"/>
-    <property name="order" type="float" value="2"/>
-    <property name="timer" type="float" value="1.8"/>
-    <property name="type" value="waypoint"/>
-   </properties>
-   <point/>
-  </object>
-  <object id="15" name="square2" x="231.424" y="399.598" width="73.1513" height="70.1364">
+  <object id="10" name="square1" x="525.5" y="512" width="123" height="95.3333">
    <properties>
     <property name="circle" type="bool" value="false"/>
     <property name="speed" type="float" value="80"/>
@@ -98,16 +59,39 @@
     <property name="type" value="square"/>
    </properties>
   </object>
-  <object id="16" name="waypoint1" x="272" y="800">
+  <object id="13" name="waypoint1" x="63.74" y="795.99">
    <properties>
     <property name="obstacle" value="square2"/>
     <property name="order" type="float" value="2"/>
-    <property name="timer" type="float" value="0.4"/>
+    <property name="timer" type="float" value="1.8"/>
     <property name="type" value="waypoint"/>
    </properties>
    <point/>
   </object>
-  <object id="17" name="waypoint1" x="441.333" y="800">
+  <object id="15" name="waypoint1" x="202.703" y="540.614">
+   <properties>
+    <property name="obstacle" value="square1"/>
+    <property name="order" type="float" value="2"/>
+    <property name="timer" type="float" value="0.099999"/>
+    <property name="type" value="waypoint"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="19" name="stone1" x="280.205" y="99.9425" width="124.244" height="82.1982" rotation="1.78512">
+   <properties>
+    <property name="type" value="stone"/>
+   </properties>
+  </object>
+  <object id="26" name="waypoint3" x="385.333" y="348">
+   <properties>
+    <property name="obstacle" value="square2"/>
+    <property name="order" type="float" value="4"/>
+    <property name="timer" type="float" value="1.8"/>
+    <property name="type" value="waypoint"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="27" name="waypoint2" x="63.74" y="348">
    <properties>
     <property name="obstacle" value="square2"/>
     <property name="order" type="float" value="3"/>
@@ -117,17 +101,17 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup name="objects">
-  <object id="2" name="goal" x="353.33" y="864" width="60" height="94.6667">
-   <properties>
-    <property name="entity" value="goal"/>
-   </properties>
-  </object>
-  <object id="4" name="ball" x="31.33" y="31.33" width="32" height="32">
+ <objectgroup id="3" name="objects">
+  <object id="1" name="ball" x="31.33" y="31.33" width="32" height="32">
    <properties>
     <property name="entity" value="ball"/>
    </properties>
    <ellipse/>
+  </object>
+  <object id="2" name="goal" x="353.33" y="864" width="60" height="94.6667">
+   <properties>
+    <property name="entity" value="goal"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

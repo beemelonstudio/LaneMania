@@ -3,6 +3,7 @@ package com.beemelonstudio.lanemania.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -64,6 +65,8 @@ public class GameScreen implements Screen, InputProcessor {
 
     protected boolean english;
 
+    public int amountOfStars;
+
     public GameScreen(LaneMania game) {
         this.game = game;
         this.screens = game.screens;
@@ -122,7 +125,7 @@ public class GameScreen implements Screen, InputProcessor {
             batch.draw(backgroundTexture, 0, 0, backgroundViewport.getScreenWidth(), backgroundViewport.getScreenHeight());
             animation1.render();
             animation2.render();
-//            animation3.render();
+            animation3.render();
             batch.end();
         }
 
@@ -160,13 +163,10 @@ public class GameScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public void resume() {
-
-    }
+    public void resume() { }
 
     @Override
     public void hide() {
-
     }
 
     @Override

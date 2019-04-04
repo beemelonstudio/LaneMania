@@ -9,12 +9,15 @@ import com.beemelonstudio.lanemania.utils.assets.Assets;
 public class Level {
 
     public MapAnalyser mapAnalyser;
+    private boolean isLoaded = false;
+    public int gameplayOrder;
 
     public String worldName;
     public String name;
     public TextureRegionDrawable preview;
-    public float star2, star3;
+    public float star1, star2, star3;
     public float starsNeeded;
+    public int stars;
 
     public TiledMap map;
     public float mapHeightInPixel;
@@ -23,8 +26,9 @@ public class Level {
     public Level(String mapName) {
 
         // Remove unwanted path before and after the world name
-        worldName = mapName.substring("maps/".length());
-        worldName = worldName.substring(0, worldName.indexOf("/"));
+        String prefixRemoved = mapName.substring("maps/".length());
+        worldName = prefixRemoved.substring(0, prefixRemoved.indexOf("/"));
+        name = prefixRemoved.substring(prefixRemoved.indexOf("/")+1, prefixRemoved.indexOf("."));
 
         map = new TmxMapLoader().load(mapName);
         float mapWidth = (float) map.getProperties().get("width", Integer.class);
@@ -38,13 +42,30 @@ public class Level {
 
         mapAnalyser = new MapAnalyser(map, unitScale);
         mapAnalyser.loadMapProperties();
+        gameplayOrder = ((Float) mapAnalyser.mapProperties.get("gameplayOrder")).intValue();
+        star1 = (Float) mapAnalyser.mapProperties.get("star1");
         star2 = (Float) mapAnalyser.mapProperties.get("star2");
         star3 = (Float) mapAnalyser.mapProperties.get("star3");
         starsNeeded = (Float) mapAnalyser.mapProperties.get("starsNeeded");
-        preview = new TextureRegionDrawable(Assets.currentWorldTextureAtlas.findRegion(mapAnalyser.mapProperties.get("preview").toString()));
+        stars = Assets.preferences.getInteger(name, 0);
+        preview = new TextureRegionDrawable(Assets.generalTextureAtlas.findRegion(mapAnalyser.mapProperties.get("preview").toString()));
     }
 
     public void setup() {
-        mapAnalyser.generateLevel();
+        if(!isLoaded) {
+            mapAnalyser.generateLevel();
+            isLoaded = true;
+        }
+    }
+
+    public void saveStars(int amountOfStars) {
+        int sumStars = Assets.preferences.getInteger("amountOfStars", 0);
+        sumStars += amountOfStars;
+
+        if(amountOfStars > Assets.preferences.getInteger(name, 0))
+            Assets.preferences.putInteger(name, amountOfStars);
+        Assets.preferences.putInteger("sumStars", sumStars);
+        Assets.preferences.flush();
+        stars = amountOfStars;
     }
 }

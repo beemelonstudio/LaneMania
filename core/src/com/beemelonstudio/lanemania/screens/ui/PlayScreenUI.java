@@ -53,10 +53,11 @@ public class PlayScreenUI extends GameScreenUI {
 
         textureAtlas = (TextureAtlas) Assets.get("general-theme");
 
-        starsTextures = new TextureRegion[3];
-        starsTextures[0] = Assets.currentWorldTextureAtlas.findRegion("1stars");
-        starsTextures[1] = Assets.currentWorldTextureAtlas.findRegion("2stars");
-        starsTextures[2] = Assets.currentWorldTextureAtlas.findRegion("3stars");
+        starsTextures = new TextureRegion[4];
+        starsTextures[0] = Assets.currentWorldTextureAtlas.findRegion("0stars");
+        starsTextures[1] = Assets.currentWorldTextureAtlas.findRegion("1stars");
+        starsTextures[2] = Assets.currentWorldTextureAtlas.findRegion("2stars");
+        starsTextures[3] = Assets.currentWorldTextureAtlas.findRegion("3stars");
         amountStars = 3;
 
         height = (Gdx.graphics.getHeight() / 2f) / 6f;
@@ -79,7 +80,7 @@ public class PlayScreenUI extends GameScreenUI {
         super.draw(batch);
 
         //batch.draw(starsTextures[amountStars], screen.viewport.getScreenWidth() / 3, screen.viewport.getScreenHeight() - starsTextures[amountStars].getRegionHeight(), starsTextures[amountStars].getRegionWidth(), starsTextures[amountStars].getRegionHeight());
-        batch.draw(starsTextures[amountStars-1], 0.7f, 1.849f, 0.30f, 0.161f);
+        batch.draw(starsTextures[amountStars], 0.7f, 1.849f, 0.30f, 0.161f);
     }
 
     public void createEndTable() {
@@ -111,7 +112,7 @@ public class PlayScreenUI extends GameScreenUI {
                 super.clicked(event, x, y);
 
                 screen.game.screens.pop();
-                screen.game.screens.push(new MapSelectionScreen(screen.game, screen.game.levels));
+                //screen.game.screens.push(new MapSelectionScreen(screen.game, screen.game.levels));
                 screen.game.setScreen(screen.game.screens.peek());
             }
         });

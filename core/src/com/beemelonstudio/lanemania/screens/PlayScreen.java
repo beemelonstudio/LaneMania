@@ -33,6 +33,7 @@ public class PlayScreen extends GameScreen {
 
     private Box2DDebugRenderer debugRenderer;
 
+    private boolean isFinished = false;
     private PlayScreenUI playScreenUI;
     public WorldManager worldManager;
 
@@ -109,8 +110,11 @@ public class PlayScreen extends GameScreen {
         else if(straightLines.size <= level.star2) {
             playScreenUI.amountStars = 2;
         }
-        else {
+        else if(straightLines.size <= level.star1) {
             playScreenUI.amountStars = 1;
+        }
+        else {
+            playScreenUI.amountStars = 0;
         }
     }
 
@@ -181,11 +185,15 @@ public class PlayScreen extends GameScreen {
 
     public void endLevel() {
 
-        Gdx.app.log("The End", "You did it!");
-        if(playScreenUI.endTable == null) {
-            //playScreenUI.createEndTable();
-            //stage.addActor(playScreenUI.endTable);
-            //playScreenUI.endTable.toFront();
+        if(!isFinished) {
+            Gdx.app.log("The End", "You did it!");
+            level.saveStars(playScreenUI.amountStars);
+            if (playScreenUI.endTable == null) {
+                //playScreenUI.createEndTable();
+                //stage.addActor(playScreenUI.endTable);
+                //playScreenUI.endTable.toFront();
+            }
+            isFinished = true;
         }
     }
 

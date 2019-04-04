@@ -3,6 +3,7 @@ package com.beemelonstudio.lanemania;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Sort;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -29,8 +31,12 @@ import com.github.czyzby.lml.util.LmlApplicationListener;
 import com.github.czyzby.lml.vis.util.VisLml;
 import com.kotcrab.vis.ui.VisUI;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
+
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 
 public class LaneMania extends Game {
 
@@ -47,6 +53,8 @@ public class LaneMania extends Game {
     public Stack<GameScreen> screens;
     public MapLoader mapLoader;
     public Array<Level> levels;
+
+    public Preferences preferences;
 
     public float volume = 0f;
     public Boolean muted = false;
@@ -79,6 +87,7 @@ public class LaneMania extends Game {
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
         levels = loadLevels();
+        Sort.instance().sort(levels, (l1, l2) -> { return l1.gameplayOrder - l2.gameplayOrder; });
 
         screens = new Stack<>();
 //        screens.push(new MenuScreen(this));
@@ -95,7 +104,6 @@ public class LaneMania extends Game {
         Array<Level> levels = new Array<>();
         for (Array<String> world : mapLoader.worlds) {
             for (String map : world) {
-                Gdx.app.log("Map", map);
                 Level level = new Level(map);
                 levels.add(level);
             }
@@ -108,6 +116,7 @@ public class LaneMania extends Game {
     public void dispose() {
         super.dispose();
         VisUI.dispose();
+        Assets.dispose();
     }
 
     @Override

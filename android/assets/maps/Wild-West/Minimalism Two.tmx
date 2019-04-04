@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="15" height="30" tilewidth="32" tileheight="32" infinite="0" nextobjectid="9">
  <properties>
+  <property name="gameplayOrder" type="float" value="11"/>
+  <property name="preview" value="w1l11"/>
+  <property name="star1" type="float" value="3"/>
   <property name="star2" type="float" value="2"/>
   <property name="star3" type="float" value="1"/>
+  <property name="starsNeeded" type="float" value="11"/>
  </properties>
  <layer name="Kachelebene 1" width="15" height="30">
   <data encoding="csv">

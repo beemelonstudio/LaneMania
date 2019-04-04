@@ -1,0 +1,181 @@
+
+general-theme.png
+size: 512,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+app_name_plate
+  rotate: false
+  xy: 2, 252
+  size: 475, 125
+  orig: 475, 125
+  offset: 0, 0
+  index: -1
+arrow_left
+  rotate: false
+  xy: 271, 819
+  size: 15, 17
+  orig: 15, 17
+  offset: 0, 0
+  index: -1
+arrow_left_light
+  rotate: false
+  xy: 56, 113
+  size: 15, 17
+  orig: 15, 17
+  offset: 0, 0
+  index: -1
+arrow_right_light
+  rotate: false
+  xy: 2, 2
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+ball
+  rotate: false
+  xy: 114, 838
+  size: 174, 174
+  orig: 174, 174
+  offset: 0, 0
+  index: -1
+ball_back
+  rotate: false
+  xy: 180, 595
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+line_back
+  rotate: false
+  xy: 290, 896
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+line_back_light
+  rotate: false
+  xy: 358, 960
+  size: 52, 52
+  orig: 52, 52
+  offset: 0, 0
+  index: -1
+menu_button
+  rotate: false
+  xy: 148, 209
+  size: 46, 41
+  orig: 46, 41
+  offset: 0, 0
+  index: -1
+menu_button_light
+  rotate: false
+  xy: 290, 853
+  size: 46, 41
+  orig: 46, 41
+  offset: 0, 0
+  index: -1
+menu_button_off
+  rotate: false
+  xy: 114, 535
+  size: 55, 49
+  orig: 55, 49
+  offset: 0, 0
+  index: -1
+menu_button_on
+  rotate: false
+  xy: 91, 201
+  size: 55, 49
+  orig: 55, 49
+  offset: 0, 0
+  index: -1
+mute_button_off
+  rotate: false
+  xy: 2, 73
+  size: 52, 57
+  orig: 52, 57
+  offset: 0, 0
+  index: -1
+mute_button_on
+  rotate: false
+  xy: 114, 489
+  size: 43, 44
+  orig: 43, 44
+  offset: 0, 0
+  index: -1
+no_star
+  rotate: false
+  xy: 114, 586
+  size: 64, 61
+  orig: 64, 61
+  offset: 0, 0
+  index: -1
+play_button
+  rotate: false
+  xy: 234, 631
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+arrow_right
+  rotate: false
+  xy: 234, 631
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+play_button_light
+  rotate: false
+  xy: 412, 971
+  size: 46, 41
+  orig: 46, 41
+  offset: 0, 0
+  index: -1
+play_button_off
+  rotate: false
+  xy: 2, 20
+  size: 43, 51
+  orig: 43, 51
+  offset: 0, 0
+  index: -1
+play_button_on
+  rotate: false
+  xy: 91, 148
+  size: 43, 51
+  orig: 43, 51
+  offset: 0, 0
+  index: -1
+schloss
+  rotate: false
+  xy: 2, 132
+  size: 87, 118
+  orig: 87, 118
+  offset: 0, 0
+  index: -1
+seil1
+  rotate: false
+  xy: 2, 379
+  size: 54, 633
+  orig: 54, 633
+  offset: 0, 0
+  index: -1
+seil2
+  rotate: false
+  xy: 58, 379
+  size: 54, 633
+  orig: 54, 633
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 290, 950
+  size: 66, 62
+  orig: 66, 62
+  offset: 0, 0
+  index: -1
+wanted_poster
+  rotate: false
+  xy: 114, 649
+  size: 155, 187
+  orig: 155, 187
+  offset: 0, 0
+  index: -1

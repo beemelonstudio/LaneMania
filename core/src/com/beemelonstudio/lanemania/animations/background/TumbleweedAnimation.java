@@ -22,8 +22,10 @@ public class TumbleweedAnimation {
         this.weedY = weedY;
         this.batch = batch;
         this.backgroundViewport = backgroundViewport;
+
+        float aspectRatio = tumbleweed.getRegionWidth()/tumbleweed.getRegionHeight();
         width = backgroundViewport.getScreenWidth()/8;
-        height = backgroundViewport.getScreenHeight()/12;
+        height = width / aspectRatio;
     }
 
     public void update(float delta){
@@ -34,7 +36,7 @@ public class TumbleweedAnimation {
     }
 
     public void render(){
-        batch.draw(tumbleweed, weedX, weedY, width/2, height/2, backgroundViewport.getScreenWidth()/8, backgroundViewport.getScreenHeight()/12, 1f, 1f, rotation);
+        batch.draw(tumbleweed, weedX, weedY, width/2, height/2, width, height, 1f, 1f, rotation);
         if (weedX > backgroundViewport.getScreenWidth()) {
             weedX = -800f;
         }

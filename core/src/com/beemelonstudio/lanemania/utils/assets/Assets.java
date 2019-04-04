@@ -1,6 +1,7 @@
 package com.beemelonstudio.lanemania.utils.assets;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ObjectMap;
 
@@ -26,9 +28,18 @@ public class Assets {
 
     private static HashMap<String, AssetFile> files;
 
+    public static TextureAtlas generalTextureAtlas;
     public static TextureAtlas currentWorldTextureAtlas;
 
+    public static Preferences preferences;
+
     public static BitmapFont font;
+    public static BitmapFont starFont;
+
+    public static String VERT_1;
+    public static String FRAG_1;
+    public static String VERT_BLUR;
+    public static String FRAG_BLUR;
 
     public static void load(){
 
@@ -37,8 +48,8 @@ public class Assets {
         files = new HashMap<String, AssetFile>();
 
         //TextureAtlases
-        files.put("wildwest-theme", new AssetFile("sprites/wildwest-theme/wildwest-theme.atlas", TextureAtlas.class));
         files.put("general-theme",  new AssetFile("sprites/general-theme/general-theme.atlas",   TextureAtlas.class));
+        files.put("wildwest-theme", new AssetFile("sprites/wildwest-theme/wildwest-theme.atlas", TextureAtlas.class));
 
         //Fonts
         //files.put("passion-one", new AssetFile("skins/beemelon/passion-one.fnt", BitmapFont.class));
@@ -64,9 +75,62 @@ public class Assets {
         assetManager.finishLoading();
         //while(!assetManager.update()){} TODO: Decide for one method
 
-        font = generateFont();
+        preferences = Gdx.app.getPreferences("Lanemania");
 
+        font = generateFont();
+        starFont = generateStarFont();
+
+        Assets.generalTextureAtlas = (TextureAtlas) Assets.get("general-theme");
         Assets.currentWorldTextureAtlas = (TextureAtlas) Assets.get("wildwest-theme");
+
+        VERT_1 = "attribute vec4 "+ShaderProgram.POSITION_ATTRIBUTE+";\n" +
+                    "attribute vec4 "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
+                    "attribute vec2 "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
+
+                    "uniform mat4 u_projTrans;\n" +
+                    " \n" +
+                    "varying vec4 vColor;\n" +
+                    "varying vec2 vTexCoord;\n" +
+
+                    "void main() {\n" +
+                    "	vColor = "+ShaderProgram.COLOR_ATTRIBUTE+";\n" +
+                    "	vTexCoord = "+ShaderProgram.TEXCOORD_ATTRIBUTE+"0;\n" +
+                    "	gl_Position =  u_projTrans * " + ShaderProgram.POSITION_ATTRIBUTE + ";\n" +
+                    "}";
+
+        FRAG_1 = "#ifdef GL_ES\n" //
+                + "#define LOWP lowp\n" //
+                + "precision mediump float;\n" //
+                + "#else\n" //
+                + "#define LOWP \n" //
+                + "#endif\n" + //
+                "//texture 0\n" +
+                "uniform sampler2D u_texture;\n" +
+                "uniform vec2 resolution;\n" +
+                "varying LOWP vec4 vColor;\n" +
+                "varying vec2 vTexCoord;\n" +
+                "\n" +
+                "const float RADIUS = 0.75;\n" +
+                "const float SOFTNESS = 0.45;\n" +
+                "const vec3 SEPIA = vec3(1.2, 1.0, 0.8); \n" +
+                "\n" +
+                "void main() {\n" +
+                "	vec4 texColor = texture2D(u_texture, vTexCoord);\n" +
+                "	vec2 position = (gl_FragCoord.xy / resolution.xy) - vec2(0.5);\n" +
+                "	float len = length(position);\n" +
+                "	\n" +
+                "	float vignette = smoothstep(RADIUS, RADIUS-SOFTNESS, len);\n" +
+                "	\n" +
+                "	texColor.rgb = mix(texColor.rgb, texColor.rgb * vignette, 0.5);\n" +
+                " 	\n" +
+                "	float gray = dot(texColor.rgb, vec3(0.299, 0.587, 0.114));\n" +
+                "	\n" +
+                "	vec3 sepiaColor = vec3(gray) * SEPIA;\n" +
+                "   \n" +
+                "	texColor.rgb = mix(texColor.rgb, sepiaColor, 0.75);\n" +
+                "	\n" +
+                "	gl_FragColor = texColor * vColor;\n" +
+                "}";
     }
 
     public static Object get(String hashmapKey){
@@ -78,6 +142,20 @@ public class Assets {
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = (int) (38 * Gdx.graphics.getDensity());
         parameter.color = new Color(255f / 255f, 165f / 255f, 23f / 255f, 1f); // Divide by 255f to get a value between 0 and 1
+        parameter.borderWidth = parameter.size / 10f;
+        parameter.borderColor = Color.BLACK;
+        BitmapFont bitmapFont = generator.generateFont(parameter);
+        generator.dispose();
+        return bitmapFont;
+    }
+
+    private static BitmapFont generateStarFont(){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skins/beemelon/passion-one-regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = (int) (38 * Gdx.graphics.getDensity());
+        parameter.color = new Color(255f / 255f, 165f / 255f, 23f / 255f, 1f); // Divide by 255f to get a value between 0 and 1
+        parameter.borderWidth = parameter.size / 10f;
+        parameter.borderColor = Color.YELLOW;
         BitmapFont bitmapFont = generator.generateFont(parameter);
         generator.dispose();
         return bitmapFont;
