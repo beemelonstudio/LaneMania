@@ -1,6 +1,5 @@
 android {
-    buildToolsVersion "26.0.1"
-    compileSdkVersion 26
+    compileSdkVersion 28
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -12,12 +11,17 @@ android {
             jniLibs.srcDirs = ['libs']
         }
 
-        instrumentTest.setRoot('tests')
+            //instrumentTest.setRoot('tests')
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     packagingOptions {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
+        multiDexEnabled = true
         applicationId "com.beemelonstudio.lanemania"
         minSdkVersion 9
         targetSdkVersion 26
