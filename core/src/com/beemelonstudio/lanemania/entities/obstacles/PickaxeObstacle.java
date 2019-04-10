@@ -42,7 +42,7 @@ public class PickaxeObstacle extends Entity {
     @Override
     public void draw(PolygonSpriteBatch batch) {
 
-        batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, rotation);
+        batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, -rotation);
     }
 
     /**

@@ -36,14 +36,14 @@ public class RectangleObstacle extends Entity {
 
         if(rotationSpeed != 0) {
             rotation += rotationSpeed * delta;
-            body.setTransform(body.getPosition(), (rotation * DEGTORAD));
+            body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
         }
     }
 
     @Override
     public void draw(PolygonSpriteBatch batch) {
 
-        batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, rotation);
+        batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, -rotation);
     }
 
     /**

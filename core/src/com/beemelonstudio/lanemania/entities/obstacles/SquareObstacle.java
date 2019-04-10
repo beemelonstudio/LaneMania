@@ -35,14 +35,14 @@ public class SquareObstacle extends Entity {
 
         if(rotationSpeed != 0) {
             rotation += rotationSpeed * delta;
-            body.setTransform(body.getPosition(), (rotation * DEGTORAD));
+            body.setTransform(body.getPosition(), -(rotation * DEGTORAD));
         }
     }
 
     @Override
     public void draw(PolygonSpriteBatch batch) {
 
-        batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, rotation);
+        batch.draw(textureRegion, x - width / 2, y - height / 2, width / 2, height / 2, width, height, 1f, 1f, -rotation);
     }
 
     /**
@@ -63,7 +63,7 @@ public class SquareObstacle extends Entity {
         height = Math.abs(vertices[1].y) + Math.abs(vertices[2].y);
 
         rotation = body.getAngle() * RADTODEG;
-        body.setTransform(body.getPosition(), (rotation * DEGTORAD));
+//        body.setTransform(body.getPosition(), (rotation * DEGTORAD));
 
         x = body.getPosition().x;
         y = body.getPosition().y;

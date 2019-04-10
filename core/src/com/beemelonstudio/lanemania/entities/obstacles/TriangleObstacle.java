@@ -45,6 +45,7 @@ public class TriangleObstacle extends Entity {
         textureRegion = textureAtlas.findRegion("rectangle");
         polygonRegion = new PolygonRegion(textureRegion, vertices, triangles.toArray());
         polygonSprite = new PolygonSprite(polygonRegion);
+        polygonSprite.setPosition(x, y);
 
         body.setUserData(type);
     }
