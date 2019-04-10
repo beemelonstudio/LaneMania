@@ -124,14 +124,6 @@ public class PlayScreen extends GameScreen {
 
         update(delta);
 
-        // Drawing
-        //viewport.apply(true);
-        //viewport.update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
-        //viewport.getCamera().position.set(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2, 0);
-        //renderer.setView(camera);
-        //renderer.render();
-
-        //batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
         // Goal background texture
@@ -150,7 +142,7 @@ public class PlayScreen extends GameScreen {
 
         batch.end();
 
-//        debugRenderer.render(worldManager.world, camera.combined);
+        debugRenderer.render(worldManager.world, camera.combined);
 
         postDraw(delta);
     }
@@ -160,7 +152,6 @@ public class PlayScreen extends GameScreen {
         currentType = EntityType.STRAIGHTLINE;
         straightLines = new Array<>();
 
-        //renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         level.setup();
 
         ball = new Ball(level.mapAnalyser.ball);

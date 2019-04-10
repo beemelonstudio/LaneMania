@@ -122,7 +122,6 @@ public class MapAnalyser {
         for(MapObject object : obstaclesLayer.getObjects()) {
 
             Body body;
-            float rotation = 0f;
 
             extractor.extract(object);
 
@@ -137,7 +136,7 @@ public class MapAnalyser {
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
-                            rotation,
+                            extractor.rotation,
                             BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
@@ -150,7 +149,7 @@ public class MapAnalyser {
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
-                            rotation,
+                            extractor.rotation,
                             BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
@@ -163,7 +162,7 @@ public class MapAnalyser {
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
-                            rotation,
+                            extractor.rotation,
                             BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
@@ -176,7 +175,7 @@ public class MapAnalyser {
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
-                            rotation,
+                            extractor.rotation,
                             BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
@@ -189,7 +188,7 @@ public class MapAnalyser {
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
-                            rotation,
+                            extractor.rotation,
                             BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
@@ -202,7 +201,7 @@ public class MapAnalyser {
                             rectangle.x * unitScale,
                             rectangle.y * unitScale,
                             rectangle.width * unitScale,
-                            rotation,
+                            extractor.rotation,
                             BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(type);
@@ -226,7 +225,7 @@ public class MapAnalyser {
                             (ellipse.x + (ellipse.width / 2)) * unitScale,
                             (ellipse.y + (ellipse.height / 2)) * unitScale,
                             ellipse.width * unitScale,
-                            rotation,
+                            extractor.rotation,
                             BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(object.getProperties().get("type"));
@@ -239,7 +238,7 @@ public class MapAnalyser {
                             (ellipse.x + (ellipse.width / 2)) * unitScale,
                             (ellipse.y + (ellipse.height / 2)) * unitScale,
                             ellipse.width * unitScale,
-                            rotation,
+                            extractor.rotation,
                             BodyDef.BodyType.KinematicBody,
                             ObstacleType.SOLID);
                     //body.setUserData(object.getProperties().get("type"));

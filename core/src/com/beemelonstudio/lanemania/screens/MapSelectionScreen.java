@@ -82,8 +82,6 @@ public class MapSelectionScreen extends GameScreen {
                 new TextureRegion(textureAtlas.findRegion("wanted_poster3+"))
         };
 
-        mapIndex = 7;
-
         Gdx.input.setInputProcessor(stage);
     }
 

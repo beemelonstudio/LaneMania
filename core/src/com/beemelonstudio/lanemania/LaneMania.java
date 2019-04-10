@@ -87,12 +87,12 @@ public class LaneMania extends Game {
         stage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
 
         levels = loadLevels();
-        Sort.instance().sort(levels, (l1, l2) -> { return l1.gameplayOrder - l2.gameplayOrder; });
+        Sort.instance().sort(levels, (l1, l2) -> l1.gameplayOrder - l2.gameplayOrder);
 
         screens = new Stack<>();
 //        screens.push(new MenuScreen(this));
-        screens.push(new MapSelectionScreen(this, levels));
-//        screens.push(new PlayScreen(this, levels.get(0)));
+//        screens.push(new MapSelectionScreen(this, levels));
+        screens.push(new PlayScreen(this, levels.get(11)));
 
         setScreen(screens.peek());
 	}
