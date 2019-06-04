@@ -1,11 +1,10 @@
 package com.beemelonstudio.lanemania.screens.ui;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -13,10 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.beemelonstudio.lanemania.entities.objects.JumpLine;
+import com.beemelonstudio.lanemania.entities.objects.Line;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
+import com.beemelonstudio.lanemania.entities.types.LineType;
 import com.beemelonstudio.lanemania.screens.GameScreen;
-import com.beemelonstudio.lanemania.screens.MapSelectionScreen;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
 import com.beemelonstudio.lanemania.screens.custombuttons.BmsImageButton;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
@@ -38,6 +39,7 @@ public class PlayScreenUI extends GameScreenUI {
     private BmsImageButton playButton;
     private BmsImageButton menuButton;
     private BmsImageButton undoButton;
+    private BmsImageButton lineChooserButton;
     private BmsImageButton[] lineButtons;
 
     public Table endTable;
@@ -66,8 +68,7 @@ public class PlayScreenUI extends GameScreenUI {
         table.row();
 
         createButtonRow();
-        //createPlayButton();
-        //createBmsImageButtons();
+        createPlayButton();
     }
 
     @Override
@@ -119,14 +120,19 @@ public class PlayScreenUI extends GameScreenUI {
     }
 
     private void createButtonRow() {
+        createUndoButton();
+        createPlayButton();
+        createLineChooserButton();
+        createMenuButton();
+    }
 
+    private void createUndoButton() {
         // Create and position
         undoButton = new BmsImageButton(skin, textureAtlas.findRegion("line_back"), "transparent");
         undoButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("line_back_light"));
         undoButton.setHeight(height);
         undoButton.setWidth(width);
         undoButton.setPosition(0, 0);
-//        undoButton.setVisible(false);
         stage.addActor(undoButton);
 
         // Listener
@@ -137,25 +143,26 @@ public class PlayScreenUI extends GameScreenUI {
                 super.clicked(event, x, y);
 
                 if(!screen.gravity) {
-                    // When in creative mode
-                    /*
-                    for (Array.ArrayIterator<Body> iter = new Array.ArrayIterator<Body>(bodies, true); iter.hasNext(); ) {
-                        Body body = iter.next();
-                        if (body != null && body.getUserData() != null) {
-                            EntityType type = asEntityType(body.getUserData().toString());
-                            if (type == EntityType.STRAIGHTLINE) {
-                                straightLines.add(body);
-                            }
-                        }
-                    }
-                    */
-                    if (screen.straightLines.size > 0) {
-                        int index = screen.straightLines.size-1;
+//                    if (screen.straightLines.size > 0) {
+//                        int index = screen.straightLines.size-1;
+//
+//                        if(screen.straightLines.get(index).body != null) {
+//                            StraightLine line = screen.straightLines.get(index);
+//                            screen.straightLines.removeIndex(index);
+//                            screen.straightLinePool.free(line);
+//                        }
+//                    }
+                    if (screen.lines.size > 0) {
+                        int index = screen.lines.size-1;
 
-                        if(screen.straightLines.get(index).body != null) {
-                            StraightLine line = screen.straightLines.get(index);
-                            screen.straightLines.removeIndex(index);
-                            screen.straightLinePool.free(line);
+                        if(screen.lines.get(index).body != null) {
+                            Line line = screen.lines.get(index);
+                            screen.lines.removeIndex(index);
+//                            screen.straightLinePool.free(line);
+                            if(line instanceof StraightLine)
+                                screen.straightLinePool.free((StraightLine) line);
+                            if(line instanceof JumpLine)
+                                screen.jumpLinePool.free((JumpLine) line);
                         }
                     }
                 }
@@ -165,7 +172,9 @@ public class PlayScreenUI extends GameScreenUI {
                 }
             }
         });
+    }
 
+    private void createMenuButton() {
         // Create and position
         menuButton = new BmsImageButton(skin, textureAtlas.findRegion("menu_button"), "transparent");
         menuButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("menu_button_light"));
@@ -183,30 +192,19 @@ public class PlayScreenUI extends GameScreenUI {
 
                 screen.game.screens.pop();
                 screen.game.setScreen(screen.game.screens.peek());
+//                screen.currentType = LineType.STRAIGHTLINE;
             }
         });
     }
 
     private void createPlayButton() {
-
-        // Translate ball bounds to screen coordinates for play button
-        Vector3 position = new Vector3(screen.ball.x, screen.ball.y, 0);
-        screen.camera.project(position);
-        Vector3 sizes = new Vector3(screen.ball.width, screen.ball.height, 0);
-        screen.camera.project(sizes);
-
         // Create and position
         playButton = new BmsImageButton(skin, textureAtlas.findRegion("play_button"), "default");
         playButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("play_button_light"));
-        playButton.setPosition(
-                position.x - playButton.getWidth(),
-                position.y - playButton.getHeight());
+        playButton.setHeight(height);
+        playButton.setWidth(width);
+        playButton.setPosition(Gdx.graphics.getWidth() / 2f - width, 0);
         stage.addActor(playButton);
-
-        Gdx.app.log("pos - size", position.x + "/"+position.y + " - " +sizes.x+"/"+sizes.y);
-        Gdx.app.log("Playbutton", playButton.getX() + "/" + playButton.getY());
-        //table.add(playButton).height(height).width(width);
-        //table.top().left();
 
         // Listener
         playButton.addListener(new ClickListener() {
@@ -220,37 +218,32 @@ public class PlayScreenUI extends GameScreenUI {
         });
     }
 
-    private void createBmsImageButtons() {
+    private void createLineChooserButton() {
+        // Create and position
+        lineChooserButton = new BmsImageButton(skin, textureAtlas.findRegion("straightline_icon"), "default");
+        lineChooserButton.getStyle().imageDown = new TextureRegionDrawable(textureAtlas.findRegion("straightline_icon"));
+        lineChooserButton.setHeight(height);
+        lineChooserButton.setWidth(width);
+        lineChooserButton.setPosition(Gdx.graphics.getWidth() / 2f, 0);
+        stage.addActor(lineChooserButton);
 
-        // Retrieve images for buttons
-        TextureRegion arrow = textureAtlas.findRegion("pickaxe");
-        TextureRegion straightLine = textureAtlas.findRegion("straightline");
-        TextureRegion curvyLine = textureAtlas.findRegion("circle");
+        // Listener
+        lineChooserButton.addListener(new ClickListener() {
 
-        // Setup BmsImageButton Array and set left and right button for switching
-        lineButtons = new BmsImageButton[4];
-        lineButtons[3] = new BmsImageButton(skin, arrow);
-        arrow = new TextureRegion(arrow);
-        arrow.flip(true, false);
-        lineButtons[0] = new BmsImageButton(skin, arrow);
-
-        // Insert actual line buttons
-        lineButtons[1] = new BmsImageButton(skin, straightLine);
-        lineButtons[2] = new BmsImageButton(skin, curvyLine);
-
-        // Add to table
-        for(int i = 0; i < lineButtons.length; i++)
-            table.add(lineButtons[i]).height(height).width(width);
-        table.top().right();
-
-        // TODO: This is for going back to the MapSelectionScreen
-        lineButtons[3].addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
 
-                screen.game.screens.pop();
-                screen.game.setScreen(screen.game.screens.peek());
+                screen.toggleLineType();
+
+                switch (screen.currentType) {
+                    case STRAIGHTLINE:
+                        lineChooserButton.getStyle().imageUp = new TextureRegionDrawable(textureAtlas.findRegion("straightline_icon"));
+                        break;
+                    case JUMPLINE:
+                        lineChooserButton.getStyle().imageUp = new TextureRegionDrawable(textureAtlas.findRegion("jumpline_icon"));
+                        break;
+                }
             }
         });
     }

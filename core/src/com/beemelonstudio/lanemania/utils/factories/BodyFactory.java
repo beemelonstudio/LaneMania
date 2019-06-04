@@ -37,13 +37,13 @@ public class BodyFactory {
 
         switch (lineType) {
 
-            case ELASTIC:
-                fixtureDef.density = 0.5f;
+            case JUMPLINE:
+                fixtureDef.density = 1f;
                 fixtureDef.friction = 0.5f;
-                fixtureDef.restitution = 0.8f;
+                fixtureDef.restitution = 1f;
                 break;
 
-            case SOLID:
+            case STRAIGHTLINE:
                 fixtureDef.density = 1f;
                 fixtureDef.friction = 0.3f;
                 fixtureDef.restitution = 0.1f;

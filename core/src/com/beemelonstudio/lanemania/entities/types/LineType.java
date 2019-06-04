@@ -6,5 +6,5 @@ package com.beemelonstudio.lanemania.entities.types;
 
 public enum LineType {
 
-    ELASTIC, SOLID
+    JUMPLINE, STRAIGHTLINE
 }

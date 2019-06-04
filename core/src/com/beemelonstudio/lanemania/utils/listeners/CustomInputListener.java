@@ -1,23 +1,15 @@
 package com.beemelonstudio.lanemania.utils.listeners;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
-import com.badlogic.gdx.utils.Array;
-import com.beemelonstudio.lanemania.entities.Entity;
+import com.beemelonstudio.lanemania.entities.objects.JumpLine;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
 import com.beemelonstudio.lanemania.screens.PlayScreen;
-
-import java.util.ArrayList;
-
-import static com.badlogic.gdx.graphics.g2d.ParticleEmitter.SpawnShape.point;
 
 /**
  * Created by Jann on 09.01.2018.
@@ -27,7 +19,8 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
     private PlayScreen screen;
 
     private Vector3 coordinates;
-    private StraightLine straightStraightLine;
+    private StraightLine straightLine;
+    private JumpLine jumpLine;
     private boolean ballWasHit;
     private boolean drawing;
 
@@ -130,11 +123,20 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
 
                 case STRAIGHTLINE:
                     //if (screen.straightLines.size < screen.maxStraightLines) {
-                        straightStraightLine = screen.straightLinePool.obtain();
-                        straightStraightLine.init(coordinates.x, coordinates.y);
-                        screen.straightLines.add(straightStraightLine);
+                        straightLine = screen.straightLinePool.obtain();
+                        straightLine.init(coordinates.x, coordinates.y);
+                        //screen.straightLines.add(straightLine);
+                    screen.lines.add(straightLine);
                         drawing = true;
                     //}
+                    break;
+
+                case JUMPLINE:
+                    jumpLine = screen.jumpLinePool.obtain();
+                    jumpLine.init(coordinates.x, coordinates.y);
+//                    screen.jumpLines.add(jumpLine);
+                    screen.lines.add(jumpLine);
+                    drawing = true;
                     break;
 
                 default:
@@ -155,11 +157,25 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
 
             case STRAIGHTLINE:
                 if(drawing) {
-                    if (straightStraightLine.width > 0.05f) {
-                        straightStraightLine.build();
+                    if (straightLine.width > 0.05f) {
+                        straightLine.build();
                     } else {
-                        screen.straightLines.removeValue(straightStraightLine, true);
-                        screen.straightLinePool.free(straightStraightLine);
+//                        screen.straightLines.removeValue(straightLine, true);
+                        screen.lines.removeValue(straightLine, true);
+                        screen.straightLinePool.free(straightLine);
+                    }
+                    drawing = false;
+                }
+                break;
+
+            case JUMPLINE:
+                if(drawing) {
+                    if (jumpLine.width > 0.05f) {
+                        jumpLine.build();
+                    } else {
+//                        screen.jumpLines.removeValue(jumpLine, true);
+                        screen.lines.removeValue(jumpLine, true);
+                        screen.jumpLinePool.free(jumpLine);
                     }
                     drawing = false;
                 }
@@ -181,15 +197,29 @@ public class CustomInputListener implements GestureDetector.GestureListener, Inp
 
             case STRAIGHTLINE:
                 if(drawing) {
-                    straightStraightLine.setEnd(coordinates.x, coordinates.y);
-                    if(straightStraightLine.width > 0.49f) {
-                        float x = (float) (straightStraightLine.start.x + 0.5f * Math.cos(straightStraightLine.angle));
-                        float y = (float) (straightStraightLine.start.y + 0.5f * Math.sin(straightStraightLine.angle));
+                    straightLine.setEnd(coordinates.x, coordinates.y);
+                    if(straightLine.width > 0.49f) {
+                        float x = (float) (straightLine.start.x + 0.5f * Math.cos(straightLine.angle));
+                        float y = (float) (straightLine.start.y + 0.5f * Math.sin(straightLine.angle));
 
-                        straightStraightLine.setEnd(x, y);
+                        straightLine.setEnd(x, y);
                     }
                     else
-                        straightStraightLine.setEnd(coordinates.x, coordinates.y);
+                        straightLine.setEnd(coordinates.x, coordinates.y);
+                }
+                break;
+
+            case JUMPLINE:
+                if(drawing) {
+                    jumpLine.setEnd(coordinates.x, coordinates.y);
+                    if(jumpLine.width > 0.49f) {
+                        float x = (float) (jumpLine.start.x + 0.5f * Math.cos(jumpLine.angle));
+                        float y = (float) (jumpLine.start.y + 0.5f * Math.sin(jumpLine.angle));
+
+                        jumpLine.setEnd(x, y);
+                    }
+                    else
+                        jumpLine.setEnd(coordinates.x, coordinates.y);
                 }
                 break;
 

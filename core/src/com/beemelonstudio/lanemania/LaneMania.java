@@ -92,7 +92,7 @@ public class LaneMania extends Game {
         screens = new Stack<>();
 //        screens.push(new MenuScreen(this));
 //        screens.push(new MapSelectionScreen(this, levels));
-        screens.push(new PlayScreen(this, levels.get(11)));
+        screens.push(new PlayScreen(this, levels.get(10)));
 
         setScreen(screens.peek());
 	}

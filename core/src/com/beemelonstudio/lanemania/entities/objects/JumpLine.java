@@ -1,6 +1,5 @@
 package com.beemelonstudio.lanemania.entities.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.PolygonSpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -17,22 +16,22 @@ import com.beemelonstudio.lanemania.utils.factories.BodyFactory;
  * Created by Jann on 09.01.2018.
  */
 
-public class StraightLine extends Line {
+public class JumpLine extends Line {
 
     public void init(float x, float y) {
 
         start.set(x, y);
         end.set(x, y);
 
-        lineType = LineType.STRAIGHTLINE;
+        lineType = LineType.JUMPLINE;
     }
 
     @Override
     protected void setupTextures() {
 
         loadTextureAtlas();
-        textureRegion = textureAtlas.findRegion("straightline");
-        textureRegionShort = textureAtlas.findRegion("straightline_short");
+        textureRegion = textureAtlas.findRegion("jumpline");
+        textureRegionShort = textureAtlas.findRegion("jumpline_short");
     }
 
     @Override

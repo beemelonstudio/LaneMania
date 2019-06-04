@@ -15,7 +15,7 @@ public class Level {
     public String worldName;
     public String name;
     public TextureRegionDrawable preview;
-    public float star1, star2, star3;
+    public int star1, star2, star3;
     public float starsNeeded;
     public int stars;
 
@@ -43,9 +43,9 @@ public class Level {
         mapAnalyser = new MapAnalyser(map, unitScale);
         mapAnalyser.loadMapProperties();
         gameplayOrder = ((Float) mapAnalyser.mapProperties.get("gameplayOrder")).intValue();
-        star1 = (Float) mapAnalyser.mapProperties.get("star1");
-        star2 = (Float) mapAnalyser.mapProperties.get("star2");
-        star3 = (Float) mapAnalyser.mapProperties.get("star3");
+        star1 = ((Float) mapAnalyser.mapProperties.get("star1")).intValue();
+        star2 = ((Float) mapAnalyser.mapProperties.get("star2")).intValue();
+        star3 = ((Float) mapAnalyser.mapProperties.get("star3")).intValue();
         starsNeeded = (Float) mapAnalyser.mapProperties.get("starsNeeded");
         stars = Assets.preferences.getInteger(name, 0);
         preview = new TextureRegionDrawable(Assets.generalTextureAtlas.findRegion(mapAnalyser.mapProperties.get("preview").toString()));

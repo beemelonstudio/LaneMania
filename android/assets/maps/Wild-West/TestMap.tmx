@@ -52,7 +52,10 @@
   </object>
   <object id="5" name="square1" x="43.3844" y="428.456" width="107" height="88.6666" rotation="20">
    <properties>
+    <property name="circle" type="bool" value="false"/>
     <property name="rspeed" type="float" value="30"/>
+    <property name="speed" type="float" value="80"/>
+    <property name="timer" type="float" value="1.5"/>
     <property name="type" value="pickaxe"/>
    </properties>
   </object>
@@ -65,7 +68,7 @@
    </properties>
    <point/>
   </object>
-  <object id="7" name="arrow1" x="351.969" y="434.367" width="107" height="88.6666" rotation="20">
+  <object id="7" name="square1" x="351.969" y="434.367" width="107" height="88.6666" rotation="20">
    <properties>
     <property name="circle" type="bool" value="false"/>
     <property name="rspeed" type="float" value="30"/>
@@ -74,15 +77,21 @@
     <property name="type" value="arrow"/>
    </properties>
   </object>
-  <object id="8" name="bullet1" x="197.5" y="422.905" width="107" height="88.6666" rotation="23">
+  <object id="8" name="square1" x="197.5" y="422.905" width="107" height="88.6666" rotation="23">
    <properties>
+    <property name="circle" type="bool" value="false"/>
     <property name="rspeed" type="float" value="30"/>
+    <property name="speed" type="float" value="80"/>
+    <property name="timer" type="float" value="1.5"/>
     <property name="type" value="bullet"/>
    </properties>
   </object>
-  <object id="9" name="stone1" x="377.234" y="625.871" width="84.3334" height="64.6666" rotation="55">
+  <object id="9" name="square1" x="377.234" y="625.871" width="84.3334" height="64.6666" rotation="55">
    <properties>
+    <property name="circle" type="bool" value="false"/>
     <property name="rspeed" type="float" value="30"/>
+    <property name="speed" type="float" value="80"/>
+    <property name="timer" type="float" value="1.5"/>
     <property name="type" value="stone"/>
    </properties>
   </object>

@@ -15,8 +15,11 @@ import com.beemelonstudio.lanemania.LaneMania;
 import com.beemelonstudio.lanemania.entities.Entity;
 import com.beemelonstudio.lanemania.entities.objects.Ball;
 import com.beemelonstudio.lanemania.entities.objects.Goal;
+import com.beemelonstudio.lanemania.entities.objects.JumpLine;
+import com.beemelonstudio.lanemania.entities.objects.Line;
 import com.beemelonstudio.lanemania.entities.objects.StraightLine;
 import com.beemelonstudio.lanemania.entities.types.EntityType;
+import com.beemelonstudio.lanemania.entities.types.LineType;
 import com.beemelonstudio.lanemania.screens.ui.PlayScreenUI;
 import com.beemelonstudio.lanemania.utils.WorldManager;
 import com.beemelonstudio.lanemania.utils.assets.Assets;
@@ -43,12 +46,15 @@ public class PlayScreen extends GameScreen {
     public Level level;
     private OrthogonalTiledMapRenderer renderer;
 
-    public EntityType currentType;
+    public LineType currentType;
 
     public Ball ball;
     public Goal goal;
+    public Array<Line> lines;
     public Array<StraightLine> straightLines;
+    public Array<JumpLine> jumpLines;
     public Pool<StraightLine> straightLinePool = Pools.get(StraightLine.class);
+    public Pool<JumpLine> jumpLinePool = Pools.get(JumpLine.class);
     public Array<Body> toBeDeleted;
 
     public PlayScreen(LaneMania game, Level level) {
@@ -101,21 +107,16 @@ public class PlayScreen extends GameScreen {
         for(StraightLine straightLine : straightLines)
             straightLine.act(delta);
 
+        for(JumpLine jumpLine : jumpLines)
+            jumpLine.act(delta);
+
+        for(Line line : lines)
+            line.act(delta);
+
         for(Entity entity : level.mapAnalyser.obstacles)
             entity.act(delta);
 
-        if(straightLines.size <= level.star3) {
-            playScreenUI.amountStars = 3;
-        }
-        else if(straightLines.size <= level.star2) {
-            playScreenUI.amountStars = 2;
-        }
-        else if(straightLines.size <= level.star1) {
-            playScreenUI.amountStars = 1;
-        }
-        else {
-            playScreenUI.amountStars = 0;
-        }
+        calculateStars();
     }
 
     @Override
@@ -138,19 +139,27 @@ public class PlayScreen extends GameScreen {
         for(StraightLine straightLine : straightLines)
             straightLine.draw(batch);
 
+        for(JumpLine jumpLine : jumpLines)
+            jumpLine.draw(batch);
+
+        for (Line line : lines)
+            line.draw(batch);
+
         playScreenUI.draw(batch);
 
         batch.end();
 
-        debugRenderer.render(worldManager.world, camera.combined);
+//        debugRenderer.render(worldManager.world, camera.combined);
 
         postDraw(delta);
     }
 
     private void loadLevel() {
 
-        currentType = EntityType.STRAIGHTLINE;
+        currentType = LineType.STRAIGHTLINE;
+        lines = new Array<>();
         straightLines = new Array<>();
+        jumpLines = new Array<>();
 
         level.setup();
 
@@ -193,6 +202,23 @@ public class PlayScreen extends GameScreen {
         ball.reset();
         customInputListener.reset();
         gravity = false;
+    }
+
+    private void calculateStars() {
+        int numberOfStars = straightLines.size + jumpLines.size;
+
+        if(numberOfStars <= level.star3)
+            playScreenUI.amountStars = 3;
+        else if(numberOfStars <= level.star2)
+            playScreenUI.amountStars = 2;
+        else if(numberOfStars <= level.star1)
+            playScreenUI.amountStars = 1;
+        else
+            playScreenUI.amountStars = 0;
+    }
+
+    public void toggleLineType() {
+        currentType = (currentType == LineType.STRAIGHTLINE) ? LineType.JUMPLINE : LineType.STRAIGHTLINE; //TODO: Change needed for additional LineTypes
     }
 
     @Override

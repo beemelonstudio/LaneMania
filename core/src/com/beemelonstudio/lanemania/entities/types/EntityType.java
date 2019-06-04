@@ -5,5 +5,5 @@ package com.beemelonstudio.lanemania.entities.types;
  */
 public enum EntityType {
 
-    BALL, GOAL, STRAIGHTLINE, OBSTACLE, NONE
+    BALL, GOAL, OBSTACLE, NONE
 }

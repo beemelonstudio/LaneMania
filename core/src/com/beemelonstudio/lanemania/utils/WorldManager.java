@@ -10,11 +10,12 @@ import com.badlogic.gdx.physics.box2d.World;
 public class WorldManager {
 
     public World world;
+    private float gravity = -9.81f / 3f;
 
     public WorldManager(){
 
         if(world == null) {
-            world = new World(new Vector2(0, -9.81f / 3f), true);
+            world = new World(new Vector2(0, gravity), true);
         }
     }
 
@@ -22,11 +23,16 @@ public class WorldManager {
         this.world = world;
     }
 
+    public void invertGravity() {
+        gravity = -gravity;
+        world.setGravity(new Vector2(0, gravity));
+    }
+
     public void clearWorld(){
 
         if(world != null)
             world.dispose();
 
-        world = new World(new Vector2(0, -9.81f), true);
+        world = new World(new Vector2(0, gravity), true);
     }
 }

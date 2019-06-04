@@ -79,7 +79,7 @@ public class MapSelectionScreen extends GameScreen {
                 new TextureRegion(textureAtlas.findRegion("wanted_poster1")),
                 new TextureRegion(textureAtlas.findRegion("wanted_poster2")),
                 new TextureRegion(textureAtlas.findRegion("wanted_poster3")),
-                new TextureRegion(textureAtlas.findRegion("wanted_poster3+"))
+                new TextureRegion(textureAtlas.findRegion("wanted_poster3more"))
         };
 
         Gdx.input.setInputProcessor(stage);

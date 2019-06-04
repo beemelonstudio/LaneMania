@@ -22,7 +22,7 @@ public class MapLoader {
 
     public MapLoader() {
 
-        worlds = new Array<Array<String>>();
+        worlds = new Array<>();
     }
 
     public String getMap(int world, int map) {
