@@ -51,8 +51,8 @@ public class PlayScreen extends GameScreen {
     public Ball ball;
     public Goal goal;
     public Array<Line> lines;
-    public Array<StraightLine> straightLines;
-    public Array<JumpLine> jumpLines;
+//    public Array<StraightLine> straightLines;
+//    public Array<JumpLine> jumpLines;
     public Pool<StraightLine> straightLinePool = Pools.get(StraightLine.class);
     public Pool<JumpLine> jumpLinePool = Pools.get(JumpLine.class);
     public Array<Body> toBeDeleted;
@@ -104,11 +104,11 @@ public class PlayScreen extends GameScreen {
 
         goal.act(delta);
 
-        for(StraightLine straightLine : straightLines)
-            straightLine.act(delta);
-
-        for(JumpLine jumpLine : jumpLines)
-            jumpLine.act(delta);
+//        for(StraightLine straightLine : straightLines)
+//            straightLine.act(delta);
+//
+//        for(JumpLine jumpLine : jumpLines)
+//            jumpLine.act(delta);
 
         for(Line line : lines)
             line.act(delta);
@@ -136,11 +136,11 @@ public class PlayScreen extends GameScreen {
         for(Entity entity : level.mapAnalyser.obstacles)
             entity.draw(batch);
 
-        for(StraightLine straightLine : straightLines)
-            straightLine.draw(batch);
-
-        for(JumpLine jumpLine : jumpLines)
-            jumpLine.draw(batch);
+//        for(StraightLine straightLine : straightLines)
+//            straightLine.draw(batch);
+//
+//        for(JumpLine jumpLine : jumpLines)
+//            jumpLine.draw(batch);
 
         for (Line line : lines)
             line.draw(batch);
@@ -158,8 +158,8 @@ public class PlayScreen extends GameScreen {
 
         currentType = LineType.STRAIGHTLINE;
         lines = new Array<>();
-        straightLines = new Array<>();
-        jumpLines = new Array<>();
+//        straightLines = new Array<>();
+//        jumpLines = new Array<>();
 
         level.setup();
 
@@ -205,7 +205,7 @@ public class PlayScreen extends GameScreen {
     }
 
     private void calculateStars() {
-        int numberOfStars = straightLines.size + jumpLines.size;
+        int numberOfStars = lines.size;//straightLines.size + jumpLines.size;
 
         if(numberOfStars <= level.star3)
             playScreenUI.amountStars = 3;

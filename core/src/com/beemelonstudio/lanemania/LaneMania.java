@@ -90,9 +90,9 @@ public class LaneMania extends Game {
         Sort.instance().sort(levels, (l1, l2) -> l1.gameplayOrder - l2.gameplayOrder);
 
         screens = new Stack<>();
-//        screens.push(new MenuScreen(this));
+        screens.push(new MenuScreen(this));
 //        screens.push(new MapSelectionScreen(this, levels));
-        screens.push(new PlayScreen(this, levels.get(10)));
+//        screens.push(new PlayScreen(this, levels.get(10)));
 
         setScreen(screens.peek());
 	}
