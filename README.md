@@ -1,3 +1,6 @@
 # LaneMania
 
-LaneMania (working title) is a physics-based puzzle game we are currently working on
+LaneMania is a physics-based puzzle game.
+It's the second prototype developed by the beemelonstudio team.
+
+![Preview image](lanemania.jpg)
